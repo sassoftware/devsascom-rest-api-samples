@@ -11,7 +11,7 @@ You are encouraged to contribute your own examples in the [User Contributions re
 * [Business Rules](businessRules.md)
 * [Data Mining](dataMining.md)
 * [Decisions](decisions.md)
-* [Micro Analytic Score](/microAnalyticScore.md)
+* [Micro Analytic Score](microAnalyticScore.md)
 * [Model Management](modelManagement.md)
 * [Model Publish](modelPublish.md)
 * [Model Repository](modelRepository.md)
