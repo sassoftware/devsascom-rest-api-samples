@@ -8,8 +8,8 @@ You are encouraged to contribute your own examples in the [User Contributions re
 
 ## Examples
 
-* [Categorization](TextAnalytics/categorization.md)
-* [Concepts](TextAnalytics/concepts.md)
-* [Sentiment Analysis](TextAnalytics/sentimentAnalysis.md)
-* [Text Parsing](TextAnalytics/textParsing.md)
-* [Topics](TextAnalytics/topics.md)
+* [Categorization](categorization.md)
+* [Concepts](concepts.md)
+* [Sentiment Analysis](sentimentAnalysis.md)
+* [Text Parsing](textParsing.md)
+* [Topics](topics.md)
