@@ -8,9 +8,9 @@ You are encouraged to contribute your own examples in the [User Contributions re
 
 ## Examples
 
-* [Annotations](CoreServices/annotations.md)
-* [Authorization](CoreServices/authorization.md)
-* [Files](CoreServices/files.md)
-* [Folders](CoreServices/folders.md)
-* [Projects](CoreServices/projects.md)
-* [SAS Logon](CoreServices/sasLogon.md)
+* [Annotations](annotations.md)
+* [Authorization](authorization.md)
+* [Files](files.md)
+* [Folders](folders.md)
+* [Projects](projects.md)
+* [SAS Logon](sasLogon.md)
