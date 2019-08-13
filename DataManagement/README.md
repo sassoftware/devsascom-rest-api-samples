@@ -8,6 +8,6 @@ You are encouraged to contribute your own examples in the [User Contributions re
 
 ## Examples
 
-* [Data Sources](DataManagement/dataSources.md)
-* [Data Tables](DataManagement/dataTables.md)
-* [Row Sets](DataManagement/rowSets.md)
+* [Data Sources](dataSources.md)
+* [Data Tables](dataTables.md)
+* [Row Sets](rowSets.md)
