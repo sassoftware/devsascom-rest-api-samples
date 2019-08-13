@@ -8,8 +8,8 @@ You are encouraged to contribute your own examples in the [User Contributions re
 
 ## Examples
 
-* [CAS Management](Compute/casManagement.md)
-* [Compute](Compute/compute.md)
+* [CAS Management](casManagement.md)
+* [Compute](compute.md)
 * [Job Definitions](jobDefinitions.md)
 * [Job Execution](jobExecution.md)
 
