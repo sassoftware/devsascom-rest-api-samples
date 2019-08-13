@@ -8,5 +8,5 @@ You are encouraged to contribute your own examples in the [User Contributions re
 
 ## Examples
 
-* [Report Images](Visualization/reportImages.md)
-* [Report Transforms](Visualization/reportTransforms.md)
+* [Report Images](reportImages.md)
+* [Report Transforms](reportTransforms.md)
