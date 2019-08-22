@@ -24,7 +24,7 @@ Simply change the HTTP verb from GET to HEAD, leaving other parameters the same.
 
 * [Get sessions](#GetSessions)
 * [Get single session](#GetSingleSession)
-* [Create session](#CreateSession)
+* [Create a new session](#CreateSession)
 * [Create a new session with options](#CreateSessionWithOptions)
 * [Create a new session in Korean local](#CreateSessionKoreanLocal)
 * [Determine if session is running](#SessionRunning)
@@ -199,7 +199,7 @@ Content-Type: application/vnd.sas.cas.session+json
 }
 ```
 
-##### <a name=CreateSessionKoreanLocal''>Create a New Session in Korean Locale</a>
+##### <a name='CreateSessionKoreanLocal'>Create a New Session in Korean Locale</a>
 
 ```
 POST /casManagement/servers/cas-shared-default/sessions?sessionId=9ed3a21a-736a-864f-a0e7-8070a959947f HTTP/1.1
