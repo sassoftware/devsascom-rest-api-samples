@@ -67,7 +67,7 @@ Here is an example of creating a definition for a SAS Micro Analytic Service pub
 json {
   "POST": "/modelPublish/destinations",
   "headers": {
-    "Content-Type": "application/vnd.sas.models.publishing.destination.cas",
+    "Content-Type": "application/vnd.sas.models.publishing.destination+json",
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
