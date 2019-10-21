@@ -69,13 +69,6 @@ run;
 /* Use JSON LIBNAME engine to read in response */
 libname startjob json;
 
-/* View startjob.root ouput */
-/* title 'Job Creation Output'; */
-/* proc print data=startjob.root noobs; */
-/* var id state creationTimeStamp; */
-/* run; */
-/* title; */
-
 /* capture the job id for step 2 */
 data _NULL_;
 	set startjob.root;
