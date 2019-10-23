@@ -153,4 +153,4 @@ run;
 
 /* place your report uri in the macro call below: */
 /* example: %create_VA_svg_image(/reports/reports/9d9d1a82-1e39-4284-a278-c3a05388ea72) */
-%create_VA_svg_image(/reports/reports/9d9d1a82-1e39-4284-a278-c3a05388ea72)
+%create_VA_svg_image(<- report URI ->)
