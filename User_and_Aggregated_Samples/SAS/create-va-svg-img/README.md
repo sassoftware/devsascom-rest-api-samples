@@ -4,21 +4,12 @@ The SAS code in this folder can be run from a SAS Studio 5.1 (or later) session.
 
 ![](./create_VA_svg_image.png)
 
-One of the questions my colleagues frequently ask is if SAS Visual Analytics can create visualizations similar to the graphs that they have created using traditional SAS graphing procedures (such as PROC GCHART).  In some cases the graph that they wish to recreate is a relatively a simple plot, but with some statistical window dressing.  Take a look at this [sample](http://support.sas.com/kb/24/871.html) from [support.sas.com](http://support.sas.com).  What a cool looking graph!  It’s a bar chart with error bars and min/max dots annotated on top of it.
+The image above shows the reportImages service output presented in the results tab.
 
-Well I have great news!  This is where the [SAS® Graph Builder](https://go.documentation.sas.com/?cdcId=vacdc&cdcVersion=8.3&docsetId=grbldrug&docsetTarget=titlepage.htm&locale=en) really shines!  It allows report developers to combine several different report objects and produce unique graphs suited to their specific reporting needs! These new custom graphs can then be used interactively in SAS Visual Analytics Reports.  
+Prerequesits:
 
-Using the SAS® Graph Builder, I was able to produce the following report:
-
-![](./BarChartWithErrorBars.png)
-
-This graph not only allows us to present the metric’s average value, but we can also display additional statistics of the metric's standard deviation and the min/max values!
-
-Data is obtained from this [support.sas.com sample](http://support.sas.com/kb/24/871.html) and processed with SAS Visual Analytics 8.3.1. 
-
-This branch contains the needed resources to recreate this custom graph including:
-* The code to which creates the final report_ready data set - BarChartErrorBars_ETL.sas
-* A JSON file containing the custom graph itself - BarChartWithErrorBars_CG.json
-* A JSON file containing the completed report - BarChartWithErrorBars.json
-
+* All code included in this folder must be submitted in a SAS Studio 5.1 (or later) session within a Viya 3.4 (or later) environment which contains the SAS Viya services that are being called. 
+* The Visual Analytics Report's URI must be placed in the macro call at the bottom of the code
+** example: %create_VA_svg_image(/reports/reports/9d9d1a82-1e39-4284-a278-c3a05388ea72)
+* All of the report's data sources are have been lifted into memory as CAS Datasets
 
