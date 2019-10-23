@@ -1,12 +1,12 @@
-One of the best features of The [SAS® Viya REST API](https://developer.sas.com/apis/rest/) is the ability to leverage the reportImages service to generate SVG images representing Visual Analytics Report(s).  This is particularly useful for programmers who are making updates to data that support reports and would like to get a quick view of how these changes are reflected.  More information on this service can be found on it's [developer.sas.com page](https://developer.sas.com/apis/rest/Visualization/#report-images)
+One of the best features of The [SAS® Viya REST API](https://developer.sas.com/apis/rest/) is the ability to leverage the reportImages service to generate SVG images representing Visual Analytics Report(s).  This is particularly useful for programmers who are making updates to a report's data source(s) and would like to get a quick view of how these changes are reflected in Visual Analytics.  More information on this service can be found on it's [developer.sas.com page](https://developer.sas.com/apis/rest/Visualization/#report-images)
 
-The SAS code in this folder can be run from a SAS Studio 5.1 (or later) session.  It will programtically call a Visual Analytics report and generate an SVG image from it.  More so, the SVG image is then presented in SAS Studio's results tab so the SAS developer can instantaly get a quick view of the report's current state.
+The SAS code in this folder will programtically call a Visual Analytics report using the reportImages service and generate an SVG image from it.  More so, the SVG image is then presented in SAS Studio's results tab so the SAS developer can instantaly get a view of the report's current state.
 
 ![](./create_VA_svg_image.png)
 
-The image above shows the reportImages service output presented in the results tab.
+The image above shows an SVG image of a SAS Visual Analytics report (created via the reportImages service) presented in the SAS Studio results tab.
 
-Prerequesits:
+Code Prerequesits:
 
 * All code included in this folder must be submitted in a SAS Studio 5.1 (or later) session within a Viya 3.4 (or later) environment which contains the SAS Viya services that are being called. 
 * The Visual Analytics Report's URI must be placed in the macro call at the bottom of the code
