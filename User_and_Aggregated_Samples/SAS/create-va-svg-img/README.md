@@ -14,5 +14,5 @@ Code Prerequisites:
 * All of the report's data sources are currently available in memory
 
 Notes:
-* This code by default creates an svg image with dimensions of 800x600.  This default size can be changed by placing different values in the two %let statements at the top of the code
-* By default, the reportImages service renders an SVG image of the first tab in a Visual Analytics report.  If you would like to have it create an SVG image of a different tab you can do so by adding the sectionIndex parameter to the API call.  More information on the reportImages service parameters can be found on [developer.sas.com](https://developer.sas.com/apis/rest/Visualization/#operations-2)
+* This code by default creates an SVG image with dimensions of 800x600.  This default size can be changed by placing different values in the two %let statements at the top of the code.
+* By default, the reportImages service renders an SVG image of the first tab in a Visual Analytics report.  If you would like to create an SVG image of a different tab you can do so by adding the sectionIndex parameter to the API call.  More information on the reportImages service parameters can be found on [developer.sas.com](https://developer.sas.com/apis/rest/Visualization/#operations-2)
