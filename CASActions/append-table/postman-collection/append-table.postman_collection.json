@@ -1,0 +1,476 @@
+{
+	"info": {
+		"_postman_id": "304c8f29-dd5f-4517-a04a-265edb3aafb6",
+		"name": "Halloween",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createCASSession",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "90f71b6e-c59b-48e2-bc62-04b2a75d30db",
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: pm.environment.get(\"token_url\")+\"/SASLogon/oauth/token\",\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Authorization': 'Basic '+ pm.environment.get(\"encoded_id_secret\"),\r",
+							"        'Accept': 'application/json',\r",
+							"        'Content-Type': 'application/x-www-form-urlencoded',\r",
+							"    },\r",
+							"    body: {\r",
+							"          mode: 'urlencoded',\r",
+							"          urlencoded: [\r",
+							"            {key: \"grant_type\", value: \"password\", disabled: false},\r",
+							"            {key: \"username\", value: pm.environment.get(\"OAUTH_USERNAME\"), disabled: false},\r",
+							"            {key: \"password\", value: pm.environment.get(\"OAUTH_PASSWORD\"), disabled: false}\r",
+							"        ]\r",
+							"    }\r",
+							"  }, function (err, res) {\r",
+							"        pm.environment.set(\"authToken\", res.json().access_token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3897c19d-d9fd-47ad-b17e-20b110ed3424",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.environment.set(\"sessionid\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.cas.session+json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/casManagement/servers/cas-shared-default/sessions",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"casManagement",
+						"servers",
+						"cas-shared-default",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createCaslib",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"HALLOWEEN\",\"path\":\"/home/sasdemo/halloween\",\"description\":\"HALLOWEEN\",\"subDirectories\":\"false\",\"permission\":\"PUBLICWRITE\",\"session\":\"false\",\"dataSource\":{\"srcType\":\"path\"},\"createDirectory\":\"true\",\"hidden\":\"false\",\"transient\":\"false\"}"
+				},
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}/actions/table.addCaslib",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}",
+						"actions",
+						"table.addCaslib"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createTempCaslib",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"TEMP\",\"path\":\"/home/sasdemo/temp\",\"description\":\"TEMP\",\"subDirectories\":\"false\",\"permission\":\"PUBLICWRITE\",\"session\":\"false\",\"dataSource\":{\"srcType\":\"path\"},\"createDirectory\":\"true\",\"hidden\":\"false\",\"transient\":\"false\"}"
+				},
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}/actions/table.addCaslib",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}",
+						"actions",
+						"table.addCaslib"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "loadCostumeTableToMem",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"path\":\"costumesByYear.xlsx\",\"caslib\":\"HALLOWEEN\",\"importOptions\":{\"fileType\":\"EXCEL\"},\"casOut\":{\"caslib\":\"TEMP\",\"name\":\"costumesByYear\",\"promote\":\"true\"}}"
+				},
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}/actions/table.loadTable",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}",
+						"actions",
+						"table.loadTable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createData2019Table",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					},
+					{
+						"key": "JSON-Parameters",
+						"value": "{\"casOut\":{\"caslib\":\"TEMP\",\"name\":\"data2019\",\"promote\":\"true\"},\"importOptions\":{\"fileType\":\"CSV\"}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "Year,Costume\n2019,The Golden Girls\n2019,Pennywise"
+				},
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}/actions/upload",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}",
+						"actions",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "appendNewDataToCostume",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"code\": \"data temp.costumesbyyear(append=force) ; set temp.data2019;run;\"}"
+				},
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}/actions/runCode",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}",
+						"actions",
+						"runCode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveCostumeTable",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"table\":{\"name\":\"costumesbyyear\",\"caslib\":\"TEMP\",\"singlePass\":\"false\"},\"name\":\"costumesbyyear\",\"replace\":\"true\",\"compress\":\"false\",\"caslib\":\"HALLOWEEN\",\"exportOptions\":{\"fileType\":\"BASESAS\"}}"
+				},
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}/actions/table.save",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}",
+						"actions",
+						"table.save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dropTempCaslib",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"caslib\":\"TEMP\"}"
+				},
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}/actions/table.dropCaslib",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}",
+						"actions",
+						"table.dropCaslib"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteCASSession",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "{{authToken}}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{sasserver}}:8777/cas/sessions/{{sessionid}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"port": "8777",
+					"path": [
+						"cas",
+						"sessions",
+						"{{sessionid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessToken",
+				"value": "{{authToken}}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"protocolProfileBehavior": {}
+}
