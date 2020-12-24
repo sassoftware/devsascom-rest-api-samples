@@ -1,5 +1,5 @@
-# Model Publish API 
-The Model Publish API provides support for publishing objects to CAS, Hadoop, Private Docker, SAS Micro Analytic Service, or Teradata, as well as container destinations such as Amazon Web Services (AWS), Azure, and Private Docker.
+# Model Publish API for SAS Viya 3.5
+The Model Publish API provides support for publishing objects to CAS, Hadoop, Private Docker, SAS Micro Analytic Service, or Teradata, as well as container destinations such as Amazon Web Services (AWS), and Private Docker.
 
 Here are the functions that this API provides:
 
@@ -15,9 +15,9 @@ Here are the functions that this API provides:
 <summary>Destinations</summary>
 
 * [Create a CAS destination](#CreateCASDestination)
+* [Create a SAS Micro Analytic Service destination](#CreateSASMASDestination)
 * [Create an Amazon Web Services destination](#CreateAWSDestination)
 * [Create a private docker destination](#CreateDockerDestination)
-* [Create an Azure destination](#CreateAzureDestination)
 * [Create a Teradata destination](#CreateTeradataDestination)
 * [Create a Hadoop destination](#CreateHadoopDestination)
 * [Update a CAS destination](#UpdateCASDestination)
@@ -41,9 +41,9 @@ Here are the functions that this API provides:
 <summary>See Also</summary>
 
 * [Model Publish API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#model-publish)
-* [Publish a decision to the maslocal destination API tutorial](https://documentation.sas.com/?docsetId=edmresttut&docsetTarget=p0scry8g4y8v6gn13esxsf9jg9xp.htm&docsetVersion=v_001&locale=en)
+* [Define a remote SAS Micro Analytic Service publishing destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.4&docsetId=edmresttut&docsetTarget=n11fzlp8s4zvson1gwv1xjty0099.htm&locale=en)
+* [Publish a decision to the maslocal destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.4&docsetId=edmresttut&docsetTarget=p0scry8g4y8v6gn13esxsf9jg9xp.htm&locale=en)
 </details>
-
 
 #### <a name='CreateCASDestination'>Create a CAS Destination</a>
 Here is an example of creating a definition for a CAS (SAS Cloud Analytic Services) publishing destination.
@@ -66,9 +66,29 @@ Here is an example of creating a definition for a CAS (SAS Cloud Analytic Servic
 ```
 <br>
 
+#### <a name='CreateSASMASDestination'>Create a SAS Micro Analytic Service Destination</a>
+Here is an example of creating a definition for a SAS Micro Analytic Service publishing destination that exists on an alternate SAS Viya deployment.
+
+```json
+{
+  "POST": "/modelPublish/destinations",
+  "headers": {
+    "Content-Type": "application/vnd.sas.models.publishing.destination.mas",
+    "Accept": "application/vnd.sas.models.publishing.destination+json"
+  },
+  "body": {
+	"name":"remoteMasEnv",
+	"masUri":"http://remoteViyaEnv.com",
+	"authenticationDomain" : "remoteDomain",
+	"destinationType":"microAnalyticService"
+  }
+}
+```
+<br>
+
 #### <a name='CreateAWSDestination'>Create an Amazon Web Services Destination</a>
 Here is an example of creating a definition for an Amazon Web Services (AWS) publishing destination.
-The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: userId`, `secrets : password`)
+If the property `accessKeyId` or `secretAccessKey` is not specified, the service uses the default AWS credentials provider chain.
 If the property 'region' is not specified, the `us-east-1` property value is used by default.
 
 ```json
@@ -81,8 +101,10 @@ If the property 'region' is not specified, the `us-east-1` property value is use
   "body": {
 	"name":"myAWS",
     "destinationType":"aws",
-    "properties": [{"name": "credDomainId",                
-                 "value": "domainName"},
+    "properties": [{"name": "accessKeyId",                
+                 "value": "myKeyId"},
+                {"name": "secretAccessKey",                 
+                 "value": "myAccessKey"},
                 {"name": "region",                 
                  "value": "us-east-1"},
                 {"name": "kubernetesCluster",                 
@@ -95,7 +117,6 @@ If the property 'region' is not specified, the `us-east-1` property value is use
 
 #### <a name='CreateDockerDestination'>Create a Private Docker Destination</a>
 Here is an example of creating a definition for a private docker publishing destination. 
-The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId`, `secrets : dockerRegistryPasswd`)
 The property `baseRepoUrl` is required. If the property `dockerHost` is not specified, the service uses the docker socket in the local system by default.
 
 ```json
@@ -108,46 +129,10 @@ The property `baseRepoUrl` is required. If the property `dockerHost` is not spec
   "body": {
 	"name":"myDocker",
     "destinationType":"privateDocker",
-    "properties": [{"name": "credDomainId",
-                  "value": "domainName"},
-                 {"name": "baseRepoUrl",                
+    "properties": [{"name": "baseRepoUrl",                
                  "value": "docker.mycompany.com/myfolder"},
                  {"name": "dockerHost",                
                  "value": "tcp://10.10.10.88:2375"}
-                  ]
-  }
-}
-```
-<br>
-
-#### <a name='CreateAzureDestination'>Create an Azure Destination</a>
-Here is an example of creating a definition for an Azure publishing destination. 
-The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId, azureAppId`, `secrets : dockerRegistryPasswd, azureAppPasswd`)
-
-```json
-{
-  "POST": "/modelPublish/destinations",
-  "headers": {
-    "Content-Type": "application/vnd.sas.models.publishing.destination.azure",
-    "Accept": "application/vnd.sas.models.publishing.destination+json"
-  },
-  "body": {
-	"name":"myAzure",
-    "destinationType":"azure",
-    "properties": [{"name": "credDomainId",                
-                 "value": "<myDomainId>"},
-                 {"name": "baseRepoUrl",                
-                 "value": "<baseRepoUrl>"},
-                 {"name": "tenantId",                
-                 "value": "<tenantId>"},
-                 {"name": "subscriptionId",                
-                 "value": "<subscriptionId>"},
-                 {"name": "resourceGroupName",                
-                 "value": "<resourceGroupName>"},
-                 {"name": "kubernetesCluster",                
-                 "value": "<kubernetesCluster>"},
-                 {"name": "externalIP",                
-                 "value": "<externalIP>"}
                   ]
   }
 }
@@ -390,4 +375,4 @@ Here is an example of retrieving a published model.
 ```
 
 
-version 5, last updated on 14 August, 2020
+version 4, last updated on 16 July, 2020

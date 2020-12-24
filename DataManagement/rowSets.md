@@ -6,7 +6,7 @@ The Row Sets API is used for retrieving row data that is contained in the SAS Vi
 The Row Sets API works in concert with the Data Sources and Data Tables APIs to navigate, reference, and retrieve data in the SAS Viya environment. The Row Set API enables retrieval of rectangular row data for data tables.
 
 In the example below, a CAS table, titled AIRLINES, has the following columns: AIRLINE ID, NAME, ALIAS, IATA, ICAO, CALLSIGN, COUNTRY and ACTIVE.
-For more information about navigating to a table, see the Data Tables API documentation.
+For more information about navigating to a table, see the [Data Tables API](https://developer.sas.com/apis/rest/DataManagement/#data-tables "Data Tables API") documentation.
 
 ### Differences Between Row Sets and Rows
 
@@ -46,9 +46,9 @@ Use the `rows` link to get the full row of data for the table, regardless of the
 #### <a name='RetrievingRows'>Retrieving Rows</a>
 
 The entry point into this service to retrieve row data should be from the
-[rows link](http://localhost/apis/dataTables/v2/swagger.json#Link_Relations_2 "Data Tables API")
-of the media type [`application/vnd.sas.data.table`] (http://developer.sas.com/reference/schema/application/vnd.sas.data.table "Data Tables API") from the
-[Data Tables](http://localhost/apis/dataTables/v2/swagger.json "Data Tables API") microservice.
+[rows link](https://developer.sas.com/apis/rest/DataManagement/#Link_Relations_2) 
+of the media type [`application/vnd.sas.data.table`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table) from the
+[Data Tables](https://developer.sas.com/apis/rest/DataManagement/#data-tables "Data Tables API") API.
 For example, performing a GET request on the
 [`application/vnd.sas.data.table`](http://developer.sas.com/reference/schema/application/vnd.sas.data.table "Data Tables API") resource below:
 
@@ -69,8 +69,8 @@ GET /dataTables/dataSources/cas~fs~casServer~fs~CasTestTmp/AIRLINES
 
 Performing a GET request using the URI `/rowSets/tables/cas~fs~casServer~fs~CASTestTmp~fs~AIRLINES/rows` returns an
 [`application/vnd.sas.collection`](https://developer.sas.com/apis/rest/Topics/#collections "application/vnd.sas.collection")
-resource containing [`application/vnd.sas.data.row`](http://developer.sas.com/reference/schema/application/v2/vnd.sas.data.row "Row Sets API") resources.
-See [Pagination, sorting and filtering](#pagination-sorting-filtering) for how to paginate the rows of this collection.
+resource containing [`application/vnd.sas.data.row`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.row "Row Sets API") resources.
+See [Pagination, sorting and filtering](https://developer.sas.com/apis/rest/Topics/#pagination) for how to paginate the rows of this collection.
 
 #### <a name='WhereClause'>Applying a WHERE Clause</a>
 
@@ -88,7 +88,7 @@ The API standard pagination, with its respective set of standard links of `next`
 
 Certain Row Sets service providers support session-based data retrieval.
 To determine whether this is supported by any particular provider, you can query `/rowSets/providers/{providerId}` to retrieve the media type
-`application/vnd.sas.data.provider`](http://developer.sas.com/reference/schema/application/vnd.sas.data.provider "Row Sets API") and check if the `usesSessions` member.
+`application/vnd.sas.data.provider`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.provider) and check if the `usesSessions` member.
 
 #### <a name='QueryParameters'>Query Parameters</a>
 
@@ -104,8 +104,8 @@ If sessions are supported by the provider, the following query parameters are su
 ##### session link
 
 The `session` link is added anytime the `sessionId` is provided by the user or the `preserveSession` query parameter is set to true.
-This `session` link should be the[`application/vnd.sas.data.session`](http://developer.sas.com/reference/schema/application/vnd.sas.data.session "Data Sources API")
-[media type](http://developer.sas.com/reference/Media_type "Media type"), and the href should be `/dataSources/providers/{providerId}/sources/{sourceId}/sessions/{sessionId}`.
+This `session` link should be the [`application/vnd.sas.data.session`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.session "Data Sources API")
+[media type](https://developer.sas.com/apis/rest/DataManagement/#media-type-samples-4 "Media type"), and the href should be `/dataSources/providers/{providerId}/sources/{sourceId}/sessions/{sessionId}`.
 This is provided so that the client can obtain further links to destroy the session if they want to destroy the session.
 
 ##### sessionScoped link
@@ -130,6 +130,6 @@ to the appropriate session in the path `/dataSources/providers/{providerId}/sour
 The `sessionId` should be appended as a query parameter to all links except the `self` link, and the `sessionScoped` link to the respective resource should be added.
 
 
-version 1, last updated 26 Nov, 2019
+version 1, last updated 13 OCT, 2020
 
 

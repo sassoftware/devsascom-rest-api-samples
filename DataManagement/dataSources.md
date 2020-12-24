@@ -121,7 +121,7 @@ Note: The data sources service is used to retrieve all available CAS servers and
 
 ##### <a name='RetrievingTopLevelDataSources'>Retrieving Top-Level Data Sources</a>
 Here is an example of following the `dataSources` link of the
-[`application/vnd.sas.data.provider`](#application-vnd.sas.data.provider) with the ID `cas` to perform a GET request to the URL `/dataSources/providers/cas/sources.`
+[`application/vnd.sas.data.provider`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.provider) with the ID `cas` to perform a GET request to the URL `/dataSources/providers/cas/sources.`
 
 * These sources are the top or root level data sources. In the case of the CAS provider, the sources are CAS servers.
 
@@ -221,7 +221,7 @@ Here is an example of following the `dataSources` link of the
 ##### <a name='RetrievingChildDataSources'>Retrieving Child Data Sources</a>
 Here is an example of using a `children` link to drill down the hierarchy when a data source has child data sources.
 
-* In the case of CAS, this returns the respective CAS server's caslibs as [`application/vnd.sas.data.source resources`](#application-vnd.sas.data.source).
+* In the case of CAS, this returns the respective CAS server's caslibs as [`application/vnd.sas.data.source resources`](https://developer.sas.com/apis/rest/DataManagement/#resource-reference-2).
 
 ```
 #Response application/vnd.sas.collection+json
@@ -540,11 +540,11 @@ Here is an example of using a `children` link to drill down the hierarchy when a
 
 
 ##### <a name='RetrievingTables'>Retrieving Tables</a>
-Here is an example of using a GET request on the [`application/vnd.sas.data.source`](#application-vnd.sas.data.source)to return a resource.
+Here is an example of using a GET request on the [`application/vnd.sas.data.source`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.source) to return a resource.
 
 * From a caslib data source, the `tables` link is provided to give the user the ability to list all of the available tables for that caslib. 
-* You can use the link to retrieve a collection of [`application/vnd.sas.data.table`](http://localhost/reference/schema/application/vnd.sas.data.table/v2/dataTable.json) 
-resources from the [Data Tables service](http://localhost/apis/dataTables/v1/swagger.json "Data Tables Microservice REST API").
+* You can use the link to retrieve a collection of [`application/vnd.sas.data.table`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table) 
+resources from the [Data Tables API](https://developer.sas.com/apis/rest/DataManagement/#data-tables).
 
 ````
  {
@@ -560,7 +560,7 @@ resources from the [Data Tables service](http://localhost/apis/dataTables/v1/swa
 
 ##### <a name='SessionHandling'>Session Handling</a>
 Certain Data Sources service providers support session-based data retrieval. To determine whether this is supported by any particular
-provider, query `/dataTables/providers/{providerId}` to retrieve the [`application/vnd.sas.data.provider`](#application-vnd.sas.data.provider)
+provider, query `/dataTables/providers/{providerId}` to retrieve the [`application/vnd.sas.data.provider`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.provider)
 media type. Then check the `usesSessions` member.
 
 
@@ -579,7 +579,7 @@ and `/dataSources/providers/{providerId}/sources/{sourceId}/children`:
 **Session Link**
 
 The `session` link is added anytime the `sessionId` is provided by the user or the `preserveSession` query parameter is set to true. 
-This `session` link uses the [application/vnd.sas.data.session](#application-vnd.sas.data.session) media type.
+This `session` link uses the [application/vnd.sas.data.session](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.session) media type.
 The `href` is `/dataSources/providers/{providerId}/sources/{sourceId}/sessions/{sessionId}`.
 This is provided so that the client can obtain further links to destroy the session if they want to do so.
 
@@ -848,6 +848,6 @@ Here is an example of using the `createSourceDefinition` link to create a source
 
 
 
-version 3, last updated 21 NOV, 2019
+version 3, last updated 13 OCT, 2020
 
 

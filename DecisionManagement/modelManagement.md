@@ -49,7 +49,6 @@ Here are the functions that this API provides:
 </details>
 
 
-
 #### <a name='CreatePerformanceTask'>Create a Performance Task</a>
 Here is an example of defining a performance task for a model. After submitting the request, a performance task definition is created and a task ID is returned. The task ID can be used later to execute a performance task.
 
@@ -163,7 +162,7 @@ Here is an example of the response:
     "id":"88a9b2bd-cb1c-4d66-9286-6cd131b90ec7",
     "taskId":"6f8e3b8c-be53-4a14-88a3-8e36335f7f1a",
     "task":"user score single",
-    "code":"options cashost='d7-fri-18w25.uda.sashq-r.openstack.sas.com' casport=5570;\ncas _mmcas_;\ncaslib _all_ assign;\n%let _MM_PerfExecutor = 1;\n%let _MM_ProjectUUID = %nrstr(ce3a3bdd-bdb0-4477-8a38-17c866eb414e);\n%let _MM_TargetVar = bad;\n%let _MM_TargetLevel = BINARY;\n%let _MM_PredictedVar = ;\n%let _MM_TargetEvent = 1;\n%let _MM_EventProbVar = score;\n%let _MM_KeepVars = score;\n%let _MM_CAKeepVars = CLAGE CLNO DEBTINC DELINQ DEROG JOB LOAN MORTDUE NINQ REASON VALUE YOJ;\n%let _MM_Trace = OFF;\n%let _MM_Max_Bins = 10;\n%let _MM_PerfOutCaslib = ModelPerformanceData;\n%let _MM_PerfInCaslib = Public;\n%let _MM_Perf_InTablePrefix = ;\n%let _MM_TableNameLevel = 3;\n%let _MM_PerfStaticTable = HMEQ-SCORE_1_Q1;\n%let _MM_ForceRunAllData = N;\n%let _MM_RunScore = N;\n%let _MM_SAVEPERFRESULT = Y;\n%let _MM_JobID = %nrstr(88a9b2bd-cb1c-4d66-9286-6cd131b90ec7);\n%let _MM_ModelID = %nrstr(ae57f85c-8450-4361-8b36-a135bc7ed11d);\n%let _MM_ModelName = %nrstr(reg1);\n%let _MM_ModelFlag = 0;\n%let _MM_ScoreCodeType = DATASTEP;\n%let _MM_ScoreCodeURI = ;%let _MM_ScoreAstURI = ;\n%mm_performance_monitor(\nperfLib=&_MM_PerfInCaslib,\nperfDataNamePrefix=&_MM_Perf_InTablePrefix,\nmm_mart=&_MM_PerfOutCaslib,\nrunScore=&_MM_RunScore,\nscorecodeURI=&_MM_ScoreCodeURI,\ndebug=OFF\n);\n%put &syserr;\n%put &syscc;","state":"completed","prefix":"","model":"reg1","dataLibrary":"Public","resultLibrary":"ModelPerformanceData","modelId":"ae57f85c-8450-4361-8b36-a135bc7ed11d","startTime":"2018-05-04T15:12:16.347Z","stopTime":"2018-05-04T15:12:50.542Z",
+    "code":"options cashost='myserver.com' casport=5570;\ncas _mmcas_;\ncaslib _all_ assign;\n%let _MM_PerfExecutor = 1;\n%let _MM_ProjectUUID = %nrstr(ce3a3bdd-bdb0-4477-8a38-17c866eb414e);\n%let _MM_TargetVar = bad;\n%let _MM_TargetLevel = BINARY;\n%let _MM_PredictedVar = ;\n%let _MM_TargetEvent = 1;\n%let _MM_EventProbVar = score;\n%let _MM_KeepVars = score;\n%let _MM_CAKeepVars = CLAGE CLNO DEBTINC DELINQ DEROG JOB LOAN MORTDUE NINQ REASON VALUE YOJ;\n%let _MM_Trace = OFF;\n%let _MM_Max_Bins = 10;\n%let _MM_PerfOutCaslib = ModelPerformanceData;\n%let _MM_PerfInCaslib = Public;\n%let _MM_Perf_InTablePrefix = ;\n%let _MM_TableNameLevel = 3;\n%let _MM_PerfStaticTable = HMEQ-SCORE_1_Q1;\n%let _MM_ForceRunAllData = N;\n%let _MM_RunScore = N;\n%let _MM_SAVEPERFRESULT = Y;\n%let _MM_JobID = %nrstr(88a9b2bd-cb1c-4d66-9286-6cd131b90ec7);\n%let _MM_ModelID = %nrstr(ae57f85c-8450-4361-8b36-a135bc7ed11d);\n%let _MM_ModelName = %nrstr(reg1);\n%let _MM_ModelFlag = 0;\n%let _MM_ScoreCodeType = DATASTEP;\n%let _MM_ScoreCodeURI = ;%let _MM_ScoreAstURI = ;\n%mm_performance_monitor(\nperfLib=&_MM_PerfInCaslib,\nperfDataNamePrefix=&_MM_Perf_InTablePrefix,\nmm_mart=&_MM_PerfOutCaslib,\nrunScore=&_MM_RunScore,\nscorecodeURI=&_MM_ScoreCodeURI,\ndebug=OFF\n);\n%put &syserr;\n%put &syscc;","state":"completed","prefix":"","model":"reg1","dataLibrary":"Public","resultLibrary":"ModelPerformanceData","modelId":"ae57f85c-8450-4361-8b36-a135bc7ed11d","startTime":"2018-05-04T15:12:16.347Z","stopTime":"2018-05-04T15:12:50.542Z",
     "dataTable":"HMEQ-SCORE_1_Q1",
     "projectVersion":"Version 1",
     "projectId":"ce3a3bdd-bdb0-4477-8a38-17c866eb414e"
@@ -171,15 +170,15 @@ Here is an example of the response:
 ```
 
 #### <a name='PublishModel'>Publish a Model</a>
-Here is an example of publishing a model to a publish destination.
+Here is an example of publishing a model to a publishing destination.
 
 * The `force` request parameter indicates to publish models by force, which means replacing the previous published model.
 
-* The `destinationName` argument is the name of the publish destination. You can get destinations by using the API `GET /modelPublish/destinations`, which is provided by the Model Publish service.
+* The `destinationName` argument is the name of the publishing destination. You can get destinations by using the API `GET /modelPublish/destinations`, which is provided by the Model Publish service.
 
 * The `sourceUri` argument is the URI of the model that is to be published.
 
-* The `publishLevel` argument is to specify the publish level from where the model is being published. Valid values are "`model`" or "`project`".
+* The `publishLevel` argument indicates the publish level from where the model is being published. Valid values are "`model`" or "`project`".
 
   Here are some examples:
   - If you publish models from a project version within the SAS Model Manager web application, the publish level is "`model`".
@@ -187,7 +186,7 @@ Here is an example of publishing a model to a publish destination.
 
 ```
 POST /publish?force=true
-    Content-Type: application/vnd.sas.models.publishing.request+json
+    Content-Type: application/vnd.sas.models.publishing.request.asynchronous+json
     Request Payload:
       {
         "name" : "Published model DS2EP",
@@ -202,6 +201,7 @@ POST /publish?force=true
       }
 ```
 The response is a collection of published models.
+
 Here is an example of the response:
 ```json
 {
@@ -555,4 +555,4 @@ Here is an example of the response:
 }
 ```
 
-version 3, last updated on 20 NOV, 2019
+version 3, last updated on 16 July, 2020

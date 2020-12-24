@@ -384,7 +384,7 @@ Here is an example of adding entries to a new content of one or more reference d
     "Content-Type": "text/csv;header=present",
     "Accept": "multipart/mixed, application/json"
   },
-  "body": "lookup_nm,description,folder_path,name,value\nserviceLevel,The service level designation.,/Public/domains/work,severe,1 hour\nserviceLevel,The service level designation.,/Public/lookup_tables,urgent,3 hours\nescapingNecessary,A second domain demonstration escape of characters,/Public/domains/test,\"key with an embedded comma that must be quoted (,)\",\"value with an embedded double quote (\"\") that must be escaped\"\nescapingNecessary,A second domain demonstration escape of characters,/Public/dominas/test,normal key, but leading and trailing spaces are not trimmed away in the key or value \n"
+  "body": "lookup_nm,description,folder_path,name,value\nserviceLevel,The service level designation.,/Public/domains/work,severe,1 hour\nserviceLevel,The service level designation.,/Public/lookup_tables,urgent,3 hours\nescapingNecessary,A second domain demonstration escape of characters,/Public/domains/test,\"key with an embedded comma that must be quoted (,)\",\"value with an embedded double quote (\"\") that must be escaped\"\nescapingNecessary,A second domain demonstration escape of characters,/Public/domains/test,normal key, but leading and trailing spaces are not trimmed away in the key or value \n"
 }
 ```
 <br>

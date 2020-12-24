@@ -407,7 +407,7 @@ Here is an example of retrieving a list of models.
 <br>
 
 ##### <a name='import-model-multipart-resources'>Import a Model with Multipart Form-data</a>
-Here is a example of importing model with multipart form-data.
+Here is an example of importing a model with multipart form-data.
 
 ```python
 headersContents = {

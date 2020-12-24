@@ -24,8 +24,8 @@ To see how to navigate to a caslib, see the [Data Sources API](https://developer
 #### <a name='example-get-tables'>Retrieving Tables</a>
 
 The entry point into this service must be from a [data source's `tables` link](https://developer.sas.com/apis/rest/DataManagement/#data-sources) to retrieve a collection of
-[`application/vnd.sas.data.table`](https://developer.sas.com/apis/rest/DataManagement/#tocStable) resources.
-For example, perform a GET request on the [`application/vnd.sas.data.source`](https://developer.sas.com/apis/rest/DataManagement/#data-sources") resource below:
+[`application/vnd.sas.data.table`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table) resources.
+For example, perform a GET request on the [`application/vnd.sas.data.source`](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.source) resource below:
 
 **Tables Link from the application/vnd.sas.data.source**
 
@@ -441,7 +441,7 @@ from the source to the target.
 
 ##### <a name='example-create-table'>Creating a Table</a>
 
-The request below uses the media type [application/vnd.sas.data.table.request+json](application-vnd.sas.data.table.request~json), which creates the table with all of the default options
+The request below uses the media type [application/vnd.sas.data.table.request+json](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table.request~json), which creates the table with all of the default options
 for a given source data table that is defined by the `tableUri` member of the `sourceArguments` object. For more information, see [available request media types](https://developer.sas.com/apis/rest/DataManagement/#media-types-3).
 
 ```
@@ -462,7 +462,7 @@ Content-Type: application/vnd.sas.data.table.request+json
 ```
 
 The service runs an asynchronous job to load the table and returns a status of `201 Created` HTTP Status Code if completed, or a `202 Accepted` if still running.
-For this example, the returned response is an [application/vnd.sas.data.table.job+json](application-vnd.sas.data.table.job~json) resource.
+For this example, the returned response is an [application/vnd.sas.data.table.job+json](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table.job~json) resource.
 
 ```
 202 Accepted
@@ -525,7 +525,7 @@ Content-Type: application/vnd.sas.data.table.job+json
 #### Monitoring the Table Create Job
 
 You can select the `state` link or the `self` link to check if the job is in the `pending` or `running` state.
-If additional information is needed by the [application/vnd.sas.data.table.job+json](application-vnd.sas.data.table.job~json) resource, use the `alternate` link to access the backing [`application/vnd.sas.job.execution.job+json`](http://developer.sas.com/reference/schema/application/vnd.job.execution.job).
+If additional information is needed by the [application/vnd.sas.data.table.job+json](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table.job~json) resource, use the `alternate` link to access the backing [`application/vnd.sas.job.execution.job+json`](http://developer.sas.com/reference/schema/application-vnd.job.execution.job~json).
 
 ##### <a name='example-polling-job-state'>Polling the Job's State</a>
 
@@ -635,7 +635,7 @@ Accept: application/vnd.sas.data.table.job+json
 ```
 
 The service runs an asynchronous job to delete the table. A `204 No Content` HTTP status code returns if the job completed with no body, or a `202 Accepted` returns if the job is running
-and the body contains a [application/vnd.sas.data.table.job+json](application-vnd.sas.data.table.job~json) resource. In both cases, a `Location` header exists in the response
+and the body contains a [application/vnd.sas.data.table.job+json](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table.job~json) resource. In both cases, a `Location` header exists in the response
 that contains the URI of the associated delete job. In this example, the request completed within the `30` second long polling time, and returned the response below.
 
 ```
@@ -650,7 +650,7 @@ In this example, the cas server is `cas`, the caslib is `CasTestTmp`, and the so
 
 ##### Creating the Table
 
-The request below uses the media type [application/vnd.sas.data.table.cas.delimited.request+json](application-vnd.sas.data.table.cas.delimited.request~json),
+The request below uses the media type [application/vnd.sas.data.table.cas.delimited.request+json](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table.cas.delimited.request~json),
 which creates the table from the source that is defined by the `casServer`, `caslib`, and `tablePath` member of the `sourceArguments` object. Note that `delimiter` is specified
 below. If the `delimiter` is not specified, the default is `,`. For more information, see [media types](https://developer.sas.com/apis/rest/DataManagement/#media-types-3).
 
@@ -674,7 +674,7 @@ Content-Type: application/vnd.sas.data.table.cas.delimited.request+json
 ```
 
 The request above uses [long polling](#example-long-polling), and in this case the job completes with the `201 Created` Http Status Code within the 30 second wait period.
-For this example, the returned response is an [application/vnd.sas.data.table.job+json](application-vnd.sas.data.table.job~json) resource. After the job has
+For this example, the returned response is an [application/vnd.sas.data.table.job+json](https://developer.sas.com/apis/rest/DataManagement/#application-vnd.sas.data.table.job~json) resource. After the job has
 completed, you can follow the job resource's `targetTable` link to retrieve the new table.
 
 ```
@@ -728,4 +728,4 @@ Content-Type: application/vnd.sas.data.table.job+json
 ```
 
 
-version 3, last updated 22 Nov, 2019
+version 3, last updated 13 OCT, 2020

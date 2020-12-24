@@ -1,6 +1,6 @@
-#  SAS REST API Examples
+#  SAS REST API Examples - SAS Viya Preview
 ## Overview
-This repository contains examples that show the capabilities of SAS REST APIs. You can use these examples for learning or for validating your environment. You are encouraged to contribute your own examples.
+This is a preview repository containing examples showing the capabilities of SAS REST APIs. You can use these examples for learning or for validating your environment. If you have comments or see needed corrections, please open an issue in GitHub. 
 
 The APIs are group into the following categories:
 
