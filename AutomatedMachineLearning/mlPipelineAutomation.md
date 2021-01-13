@@ -83,7 +83,7 @@ The request body is structured in three sections.
   - Project type (only "predictive" type is supported)
   - Data table URI
   - Project state
-  - The pipeline build method (either "automatic" or "template")
+  - The pipeline build method (either "automatic" or "template". Default is "automatic".)
 - Automation project settings, grouped under "settings"
   - A properties bag through which a user can pass arbitrary key/value pairs, regardless if they are
     used. The properties currently used are as follows.
@@ -91,19 +91,28 @@ The request body is structured in three sections.
       Default is set to true.)
     - autoRun (a flag to indicate whether to automatically start pipeline run at the time of
       project creation. Default is set to true.)
-    - numberOfModels (a positive integer to indicate maximum number of top models to return. Default
-      is set to 5)
+    - numberOfModels (a positive integer between 1 and 10 to indicate maximum number of top models to
+      return. Default is set to 5)
+    - maxModelingTime (the maximum time, in minutes, to use for modeling. Input is valid in icrements
+      of 0.1. Use 0 for unbounded. Default is set to 0.0)
+    - modelingMode (The modeling strategy that the automation project will use to select a champion
+      model. Currently only the default value of 'Standard' is supported.)
+    - locale (the locale to use for translating content. If this is left blank on the initial creation
+      request, the value of the Accept-Language header will be used to populate the value. If there is
+      no Accept-Language header, the default locale of 'en' will be used. This is intended to be
+      read-only, and it is recommended that the Accept-Language header be used to populate this.)
 
 - Analytics project attributes, grouped under "analyticsProjectAttributes"
 
   - Analytics project ID (automatically created by the service, read-only)
-  - Target variable
-  - Target event level
+  - Target variable (required)
+  - Target event level (optional)
   - classSelectionStatistic (a string to indicate class selection statistic, dependent upon the type
     of target variable. For 'BINARY' and 'NOMINAL' target variable types, the accepted values are
     listed below, where the default is set to 'ks'. The 'ORDINAL' target variable type is not
     supported.)
       - ase: Average squared error
+      - acc: Accuracy
       - c: Area under curve (C statistic)
       - capturedResponse: Captured response
       - cumulativeCapturedResponse: Cumulative captured response
@@ -120,7 +129,7 @@ The request body is structured in three sections.
       - mcll: Multiclass log loss
       - ks2: ROC separation
       - rase: Root average squared error
-      - misclassificationRateCutoff: Misclassification at cutoff
+      - misclassificationCutoff: Misclassification at cutoff
   - intervalSelectionStatistic (a string to indicate interval selection statistic, dependent upon
     the type of target variable. For 'INTERVAL' target variable types, the accepted values are
     listed below, where the default is set to 'ase'. This field is ignored for all other types,
@@ -129,7 +138,54 @@ The request body is structured in three sections.
       - rase: Root average squared error
       - rmae: Root mean absolute error
       - rmsle: Root mean squared logarithmic error
-  - Partition enabled flag
+  - partitionEnabled (A flag indicating whether partitioning is enabled. The default is true.
+  - selectionDepth (The selection depth.  Default is 5)
+    - 5
+    - 10
+    - 15
+    - 20
+  - selectionPartition (The selection partition. The default is 'default')
+    - default
+    - train
+    - validate
+    - test
+  - overrideClassificationCutoffEnabled (Flag to indicate whether the default classification cutoff
+    is overridden by the selected value. Default is false)
+  - overrideClassificationCutoffValue (The override value (percentage) to use if
+    overrideClassificationCutoffEnabled is true. This is a double in the range of 0.000001 to 0.999999
+    with a default value of 0.5)
+  - cutoffPercentage (The cutoff percentage. Default is 50)
+    - 5
+    - 10
+    - 15
+    - 20
+    - 25
+    - 30
+    - 35
+    - 40
+    - 45
+    - 50
+    - 55
+    - 60
+    - 65
+    - 70
+    - 75
+    - 80
+    - 85
+    - 90
+    - 95
+  - numberOfCutoffValues (The number of cutoff values. The default is 20)
+    - 10
+    - 20
+    - 50
+    - 100
+    - 500
+    - 1000
+  - samplingEnabled (The sampling strategy. Default is AUTO)
+    - YES
+    - NO
+    - AUTO
+  - samplingPercentage (The sampling percentage. This is a double from 1-99. Default is 50.0)
 
 ##### Request for Project with an Automatically Generated Pipeline
 ```
@@ -143,11 +199,11 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
     "pipelineBuildMethod": "automatic",
     "analyticsProjectAttributes": {
         "targetVariable" : "BAD",
-        "partitionEnabled" : "true",
+        "partitionEnabled" : true,
         "targetEventLevel" : "1"
     },
     "settings": {
-        "applyGlobalMetadata" : "false"
+        "applyGlobalMetadata" : false
     }
 }
 ```
@@ -158,90 +214,95 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 
 {
-    "creationTimeStamp": "2018-11-29T21:03:42.397Z",
-    "modifiedTimeStamp": "2018-11-29T21:04:10.372Z",
-    "createdBy": "emduser4",
-    "modifiedBy": "emduser4",
-    "id": "7bb9805c-e981-44a9-bd10-4ccf18153cb3",
+{
+    "creationTimeStamp": "2021-01-13T18:36:53.323214Z",
+    "createdBy": "emduser1",
+    "modifiedTimeStamp": "2021-01-13T18:36:53.323198Z",
+    "modifiedBy": "emduser1",
+    "revision": 0,
+    "id": "71d81bd8-a20f-47ff-afda-afac6fb74f03",
+    "name": "Test Project Creation (By MLPA Yuko3)",
+    "description": "Model Automation Test Project",
     "links": [
         {
             "method": "GET",
             "rel": "up",
             "href": "/mlPipelineAutomation/projects",
             "uri": "/mlPipelineAutomation/projects",
-            "type": "application/vnd.sas.collection+json",
+            "type": "application/vnd.sas.collection",
             "itemType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
         },
         {
             "method": "GET",
             "rel": "self",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
             "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
         },
         {
             "method": "PUT",
             "rel": "update",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
             "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
         },
         {
             "method": "DELETE",
             "rel": "delete",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3"
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03"
         },
         {
             "method": "DELETE",
             "rel": "propagateDelete",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3?propagate=true",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3?propagate=true"
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true"
         },
         {
             "method": "GET",
             "rel": "state",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
             "type": "text/plain"
         },
         {
             "method": "PUT",
             "rel": "updateState",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state?value={value}",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state?value={value}",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
             "responseType": "text/plain"
         }
     ],
-    "name": "Test Project Creation (By MLPA FT4Pp)",
-    "description": "",
-    "revision": 2,
-    "version": 1,
+    "version": 2,
     "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/APITESTHMEQ",
     "type": "predictive",
-    "pipelineBuildMethod": "automatic",
     "state": "pending",
-    "analyticsProjectAttributes": {
-      "analyticsProjectId": "37ca55af-e625-4062-b11e-55ba9ba0e742",
-      "targetVariable": "BAD",
-      "intervalSelectionStatistic": "ase",
-      "classSelectionStatistic": "KS",
-      "selectionDepth": "10",
-      "selectionPartition": "default",
-      "partitionEnabled": true,
-      "cutoffPercentage": "50",
-      "numberOfCutoffValues": "20",
-      "samplingEnabled": "AUTO",
-      "samplingPercentage": 50.0
-    },
     "settings": {
-      "numberOfModels": "3",
-      "modelingMode": "Standard",
-      "maxModelingTime": "0.0",
-      "autoRun": "true",
-      "applyGlobalMetadata": "true",
-      "locale": "zh-CN"
-    }
+        "applyGlobalMetadata": false,
+        "autoRun": true,
+        "locale": "en",
+        "maxModelingTime": 0.0,
+        "modelingMode": "Standard",
+        "numberOfModels": 5
+    },
+    "analyticsProjectAttributes": {
+        "analyticsProjectId": "193bd3f8-356e-4c7d-9830-72584a7b8c22",
+        "targetVariable": "BAD",
+        "targetEventLevel": "1",
+        "partitionEnabled": true,
+        "overrideClassificationCutoffEnabled": false,
+        "samplingEnabled": "AUTO",
+        "samplingPercentage": 50.0,
+        "intervalSelectionStatistic": "ase",
+        "classSelectionStatistic": "ks",
+        "selectionDepth": 10,
+        "selectionPartition": "default",
+        "overrideClassificationCutoffValue": 0.5,
+        "cutoffPercentage": 50,
+        "numberOfCutoffValues": 20
+    },
+    "championModel": {},
+    "pipelineBuildMethod": "automatic"
 }
 ```
 
@@ -258,11 +319,11 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
     "pipelineBuildMethod": "template",
     "analyticsProjectAttributes": {
         "targetVariable" : "BAD",
-        "partitionEnabled" : "true",
+        "partitionEnabled" : true,
         "targetEventLevel" : "1"
     },
     "settings": {
-        "applyGlobalMetadata" : "false"
+        "applyGlobalMetadata" : false
     },
     "links": [
             {
@@ -282,78 +343,93 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 
 {
-    "creationTimeStamp": "2018-11-29T21:03:42.397Z",
-    "modifiedTimeStamp": "2018-11-29T21:04:10.372Z",
-    "createdBy": "emduser4",
-    "modifiedBy": "emduser4",
-    "id": "7bb9805c-e981-44a9-bd10-4ccf18153cb3",
+    "creationTimeStamp": "2021-01-13T18:40:39.249377Z",
+    "createdBy": "emduser1",
+    "modifiedTimeStamp": "2021-01-13T18:40:39.249366Z",
+    "modifiedBy": "emduser1",
+    "revision": 0,
+    "id": "65c6508f-cf37-4789-8bdc-eb458712cdb6",
+    "name": "Test Project Creation (By MLPA bRGEp)",
     "links": [
         {
             "method": "GET",
             "rel": "up",
             "href": "/mlPipelineAutomation/projects",
             "uri": "/mlPipelineAutomation/projects",
-            "type": "application/vnd.sas.collection+json",
+            "type": "application/vnd.sas.collection",
             "itemType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
         },
         {
             "method": "GET",
             "rel": "self",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
+            "href": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6",
+            "uri": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6",
             "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
         },
         {
             "method": "PUT",
             "rel": "update",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
+            "href": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6",
+            "uri": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6",
             "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
         },
         {
             "method": "DELETE",
             "rel": "delete",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3"
+            "href": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6",
+            "uri": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6"
         },
         {
             "method": "DELETE",
             "rel": "propagateDelete",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3?propagate=true",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3?propagate=true"
+            "href": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6?propagate=true",
+            "uri": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6?propagate=true"
         },
         {
             "method": "GET",
             "rel": "state",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state",
+            "href": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6/state",
+            "uri": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6/state",
             "type": "text/plain"
         },
         {
             "method": "PUT",
             "rel": "updateState",
-            "href": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state?value={value}",
-            "uri": "/mlPipelineAutomation/projects/7bb9805c-e981-44a9-bd10-4ccf18153cb3/state?value={value}",
+            "href": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6/state?value={value}",
+            "uri": "/mlPipelineAutomation/projects/65c6508f-cf37-4789-8bdc-eb458712cdb6/state?value={value}",
             "responseType": "text/plain"
         }
     ],
-    "name": "Test Project Creation (By MLPA FT4Pp)",
-    "description": "",
-    "revision": 2,
     "version": 2,
-    "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/APITESTHMEQ",
+    "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/HMEQ",
     "type": "predictive",
-    "pipelineBuildMethod": "template",
-    "state": "waiting",
-    "analyticsProjectAttributes": {
-      "analyticsProjectId": "37ca55af-e625-4062-b11e-55ba9ba0e742",
-      "targetVariable" : "BAD",
-      "partitionEnabled" : "true",
-      "targetEventLevel" : "1"
-    },
+    "state": "pending",
     "settings": {
-      "applyGlobalMetadata" : "false"
-    }
+        "applyGlobalMetadata": false,
+        "autoRun": true,
+        "locale": "en",
+        "maxModelingTime": 0.0,
+        "modelingMode": "Standard",
+        "numberOfModels": 5
+    },
+    "analyticsProjectAttributes": {
+        "analyticsProjectId": "7ac1860e-7cf2-4fa3-a037-cfbe10fca352",
+        "targetVariable": "BAD",
+        "targetEventLevel": "1",
+        "partitionEnabled": true,
+        "overrideClassificationCutoffEnabled": false,
+        "samplingEnabled": "AUTO",
+        "samplingPercentage": 50.0,
+        "intervalSelectionStatistic": "ase",
+        "classSelectionStatistic": "ks",
+        "selectionDepth": 10,
+        "selectionPartition": "default",
+        "overrideClassificationCutoffValue": 0.5,
+        "cutoffPercentage": 50,
+        "numberOfCutoffValues": 20
+    },
+    "championModel": {},
+    "pipelineBuildMethod": "template"
 }
 ```
 
@@ -366,11 +442,11 @@ return a collection of existing automation projects. The parameters for this que
 | start     | Int             | The starting index in the database to search from.       | start=42
 | limit     | Int             | The max number of projects to return.                    | limit=10
 | sortBy    | \<key>:\<value> | Upon which parameter the results should be sorted.       | sortBy=projectId:descending
-| filter    | Expression      | The filter to apply to the query results.                | filter=eq(projectId, example-value)
+| filter    | Expression      | The filter to apply to the query results.                | filter=eq(projectId, 'example-value')
 
 ##### Request
 ```
-GET /mlPipelineAutomation/projects?start=0&limit=2&sortBy=projectId:ascending&filter=eq(projectId, exampleId) HTTP/1.1
+GET /mlPipelineAutomation/projects?start=0&limit=2&sortBy=projectId:ascending&filter=eq(projectId, 'exampleId') HTTP/1.1
 Accept: application/vnd.sas.collection+json
 ```
 
@@ -393,7 +469,7 @@ the project's attributes and settings with the following request and rerun the p
 This API is solely used for updating a project’s parameters. There is a separate endpoint for
 updating the state of a project, for example, stopping or restarting a project run.
 
-We do not support PATCH operation to update the automation project with changes only. According to
+We do not support the PATCH operation to update the automation project with changes only. According to
 standard, the user must enter the full project info in this PUT request, whether or not the parameters are to be changed.
 
 List of parameters that can be updated.
@@ -570,4 +646,4 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.score.data.output+j
 }
 ```
 
-version 1, last updated 2 Dec, 2019
+version 2, last updated 13 Jan, 2021
