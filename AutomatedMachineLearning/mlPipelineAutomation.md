@@ -77,14 +77,14 @@ pipeline, and runs the pipeline to completion. The entire process is fully autom
 The request body is structured in three sections.
 
 - Key information of the automation project
-  - Automation project ID (automatically created by the service, read-only)
-  - Name of the project (a random string is appended to ensure uniqueness)
-  - Description of the project
-  - Project type (only "predictive" type is supported)
-  - Data table URI
-  - Project state
-  - The pipeline build method (either "automatic" or "template". Default is "automatic".)
-- Automation project settings, grouped under "settings"
+  - id (Automation project ID (automatically created by the service, read-only))
+  - name (Name of the project (a random string is appended to ensure uniqueness))
+  - description (Description of the project)
+  - type (Project type (only "predictive" type is supported))
+  - dataTableUri (Data table URI)
+  - state (Project state)
+  - pipelineBuildMethod (The pipeline build method (either "automatic" or "template". Default is "automatic".))
+- settings (Automation project settings)
   - A properties bag through which a user can pass arbitrary key/value pairs, regardless if they are
     used. The properties currently used are as follows.
     - applyGlobalMetadata (a flag to indicate whether to apply global metadata during project creation.
@@ -101,12 +101,10 @@ The request body is structured in three sections.
       request, the value of the Accept-Language header will be used to populate the value. If there is
       no Accept-Language header, the default locale of 'en' will be used. This is intended to be
       read-only, and it is recommended that the Accept-Language header be used to populate this.)
-
-- Analytics project attributes, grouped under "analyticsProjectAttributes"
-
-  - Analytics project ID (automatically created by the service, read-only)
-  - Target variable (required)
-  - Target event level (optional)
+- analyticsProjectAttributes (Analytics project attributes)
+  - analyticsProjectId (Analytics project ID (automatically created by the service, read-only))
+  - targetVariable (Target variable (required))
+  - targetEventLevel (Target event level (optional))
   - classSelectionStatistic (a string to indicate class selection statistic, dependent upon the type
     of target variable. For 'BINARY' and 'NOMINAL' target variable types, the accepted values are
     listed below, where the default is set to 'ks'. The 'ORDINAL' target variable type is not
@@ -461,15 +459,10 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 ```
 
 #### <a name='updating-automation-projects'>Updating Automation Projects</a>
-In some cases, the user could select the wrong data set or target variables accidentally when creating
-an automation project. The project might fail to run or the result might not be what the user intended.
-The ability to update an automation project comes to rescue in those cases, where the user can update
-the project's attributes and settings with the following request and rerun the project (see [Updating Automation Project State](#updating-automation-project-state)).
+This API is solely used for updating a project’s values such as name and description.
+The retrain action is used to re-run a project with a different data URI and/or target variable.
 
-This API is solely used for updating a project’s parameters. There is a separate endpoint for
-updating the state of a project, for example, stopping or restarting a project run.
-
-We do not support the PATCH operation to update the automation project with changes only. According to
+This API does not support the PATCH operation to update the automation project with changes only. According to
 standard, the user must enter the full project info in this PUT request, whether or not the parameters are to be changed.
 
 List of parameters that can be updated.
@@ -479,6 +472,9 @@ List of parameters that can be updated.
 - dataTableUri
 - settings
 - analyticsProjectAttributes (all analytics attributes can be changed, except analytics project ID)
+
+Note that updating any of these fields via this endpoint will not result in the project being re-run. The retrain action
+should be used to modify settings, attributes, and data.
 
 List of parameters that cannot be updated. Any changes are ignored.
 
@@ -500,40 +496,566 @@ back to the client.
 
 ##### Request
 ```
-PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992 HTTP/1.1
-If-Match: 'Y29tLnNhcy5hbmFseXRpY3MuZGF0YW1pbmluZy5zZXR0aW5ncy5Qcm9qZWN0U2V0dGluZ3M=2'
+PUT /mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03 HTTP/1.1
+If-Match: W/"1610563552539418000"
 Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 
 {
+    "creationTimeStamp": "2021-01-13T18:36:53.323214Z",
+    "createdBy": "emduser1",
+    "modifiedTimeStamp": "2021-01-13T18:45:52.539418Z",
+    "modifiedBy": "emduser1",
+    "revision": 10,
+    "id": "71d81bd8-a20f-47ff-afda-afac6fb74f03",
     "name": "Modified Project Name",
+    "description": "Modified Project Description",
+    "links": [
+        {
+            "method": "GET",
+            "rel": "up",
+            "href": "/mlPipelineAutomation/projects",
+            "uri": "/mlPipelineAutomation/projects",
+            "type": "application/vnd.sas.collection",
+            "itemType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "GET",
+            "rel": "self",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "PUT",
+            "rel": "update",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "DELETE",
+            "rel": "delete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03"
+        },
+        {
+            "method": "DELETE",
+            "rel": "propagateDelete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true"
+        },
+        {
+            "method": "GET",
+            "rel": "state",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "type": "text/plain"
+        },
+        {
+            "method": "PUT",
+            "rel": "updateState",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "responseType": "text/plain"
+        },
+        {
+            "method": "PUT",
+            "rel": "retrainProject",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project",
+            "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "PUT",
+            "rel": "retrainProjectReplacePipelines",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject&replacePreviousPipelines=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject&replacePreviousPipelines=true",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project",
+            "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        }
+    ],
+    "version": 2,
     "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/APITESTHMEQ",
     "type": "predictive",
+    "state": "completed",
+    "settings": {
+        "applyGlobalMetadata": false,
+        "autoRun": true,
+        "locale": "en",
+        "maxModelingTime": 0.0,
+        "modelingMode": "Standard",
+        "numberOfModels": 5
+    },
     "analyticsProjectAttributes": {
-        "targetVariable" : "JOB",
-        "targetEventLevel" : "0"
-    }
+        "analyticsProjectId": "193bd3f8-356e-4c7d-9830-72584a7b8c22",
+        "pipelineId": "859959b8-8c21-4688-b825-ef1003fee7ee",
+        "targetVariable": "BAD",
+        "targetEventLevel": "1",
+        "partitionEnabled": true,
+        "overrideClassificationCutoffEnabled": false,
+        "samplingEnabled": "AUTO",
+        "samplingPercentage": 50.0,
+        "intervalSelectionStatistic": "ase",
+        "classSelectionStatistic": "ks",
+        "selectionDepth": 10,
+        "selectionPartition": "default",
+        "overrideClassificationCutoffValue": 0.5,
+        "cutoffPercentage": 50,
+        "numberOfCutoffValues": 20
+    },
+    "championModel": {
+        "name": "Forest (2)",
+        "links": [
+            {
+                "method": "GET",
+                "rel": "championModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel",
+                "type": "application/vnd.sas.analytics.ml.pipeline.automation.project.champion.model.report"
+            },
+            {
+                "method": "PUT",
+                "rel": "registerChampionModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=register",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=register"
+            },
+            {
+                "method": "PUT",
+                "rel": "publishChampionModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=publish",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=publish"
+            },
+            {
+                "method": "POST",
+                "rel": "scoreData",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel/scoreData",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel/scoreData",
+                "type": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.input",
+                "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.output"
+            }
+        ],
+        "publishDestinations": [
+            {
+                "name": "maslocal",
+                "description": "The default publishing destination for the Micro Analytic Score service.",
+                "destinationType": "microAnalyticService"
+            }
+        ]
+    },
+    "pipelineBuildMethod": "automatic"
 }
 ```
+
+##### Response
+```
+200 OK
+Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
+
+{
+    "creationTimeStamp": "2021-01-13T18:36:53.323214Z",
+    "createdBy": "emduser1",
+    "modifiedTimeStamp": "2021-01-19T20:38:01.330997Z",
+    "modifiedBy": "emduser1",
+    "revision": 11,
+    "id": "71d81bd8-a20f-47ff-afda-afac6fb74f03",
+    "name": "Modified Project Name",
+    "description": "Modified Project Description",
+    "links": [
+        {
+            "method": "GET",
+            "rel": "up",
+            "href": "/mlPipelineAutomation/projects",
+            "uri": "/mlPipelineAutomation/projects",
+            "type": "application/vnd.sas.collection",
+            "itemType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "GET",
+            "rel": "self",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "PUT",
+            "rel": "update",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "DELETE",
+            "rel": "delete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03"
+        },
+        {
+            "method": "DELETE",
+            "rel": "propagateDelete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true"
+        },
+        {
+            "method": "GET",
+            "rel": "state",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "type": "text/plain"
+        },
+        {
+            "method": "PUT",
+            "rel": "updateState",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "responseType": "text/plain"
+        },
+        {
+            "method": "PUT",
+            "rel": "retrainProject",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project",
+            "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "PUT",
+            "rel": "retrainProjectReplacePipelines",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject&replacePreviousPipelines=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject&replacePreviousPipelines=true",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project",
+            "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        }
+    ],
+    "version": 2,
+    "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/HMEQ",
+    "type": "predictive",
+    "state": "completed",
+    "settings": {
+        "applyGlobalMetadata": false,
+        "autoRun": true,
+        "locale": "en",
+        "maxModelingTime": 0.0,
+        "modelingMode": "Standard",
+        "numberOfModels": 5
+    },
+    "analyticsProjectAttributes": {
+        "analyticsProjectId": "193bd3f8-356e-4c7d-9830-72584a7b8c22",
+        "pipelineId": "859959b8-8c21-4688-b825-ef1003fee7ee",
+        "targetVariable": "BAD",
+        "targetEventLevel": "1",
+        "partitionEnabled": true,
+        "overrideClassificationCutoffEnabled": false,
+        "samplingEnabled": "AUTO",
+        "samplingPercentage": 50.0,
+        "intervalSelectionStatistic": "ase",
+        "classSelectionStatistic": "ks",
+        "selectionDepth": 10,
+        "selectionPartition": "default",
+        "overrideClassificationCutoffValue": 0.5,
+        "cutoffPercentage": 50,
+        "numberOfCutoffValues": 20
+    },
+    "championModel": {
+        "name": "Forest (2)",
+        "links": [
+            {
+                "method": "GET",
+                "rel": "championModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel",
+                "type": "application/vnd.sas.analytics.ml.pipeline.automation.project.champion.model.report"
+            },
+            {
+                "method": "PUT",
+                "rel": "registerChampionModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=register",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=register"
+            },
+            {
+                "method": "PUT",
+                "rel": "publishChampionModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=publish",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=publish"
+            },
+            {
+                "method": "POST",
+                "rel": "scoreData",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel/scoreData",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel/scoreData",
+                "type": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.input",
+                "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.output"
+            }
+        ],
+        "publishDestinations": [
+            {
+                "name": "maslocal",
+                "description": "The default publishing destination for the Micro Analytic Score service.",
+                "destinationType": "microAnalyticService"
+            }
+        ]
+    },
+    "pipelineBuildMethod": "automatic"
+}
+
+```
+
 #### <a name='retraining-an-automation-project'>Retraining an Automation Project</a>
-To retrain an automation project with changed parameters, use the retrainProject endpoint. By default, the service generates a new automated pipeline. This behavior can be overwritten with an optional query parameter
+To retrain an automation project with changed parameters, use the retrainProject endpoint. By default, the service generates an additional automated pipeline. This behavior can be overwritten with an optional query parameter
 `replacePreviousPipelines`. When set to true, the parameter instructs the service to remove all previous
 automatically generated pipelines before creating a new pipeline.
 
 ##### Request
 ```
-PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992?action=retrainProject HTTP/1.1
-If-Match: 'Y29tLnNhcy5hbmFseXRpY3MuZGF0YW1pbmluZy5zZXR0aW5ncy5Qcm9qZWN0U2V0dGluZ3M=2'
+PUT /mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject HTTP/1.1
+If-Match: W/"1611088681330997000"
 Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 
 {
+    "creationTimeStamp": "2021-01-13T18:36:53.323214Z",
+    "createdBy": "emduser1",
+    "modifiedTimeStamp": "2021-01-19T20:38:01.330997Z",
+    "modifiedBy": "emduser1",
+    "revision": 11,
+    "id": "71d81bd8-a20f-47ff-afda-afac6fb74f03",
     "name": "Modified Project Name",
-    "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/APITESTHMEQ",
+    "description": "Modified Project Description",
+    "links": [
+        {
+            "method": "GET",
+            "rel": "up",
+            "href": "/mlPipelineAutomation/projects",
+            "uri": "/mlPipelineAutomation/projects",
+            "type": "application/vnd.sas.collection",
+            "itemType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "GET",
+            "rel": "self",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "PUT",
+            "rel": "update",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "DELETE",
+            "rel": "delete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03"
+        },
+        {
+            "method": "DELETE",
+            "rel": "propagateDelete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true"
+        },
+        {
+            "method": "GET",
+            "rel": "state",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "type": "text/plain"
+        },
+        {
+            "method": "PUT",
+            "rel": "updateState",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "responseType": "text/plain"
+        },
+        {
+            "method": "PUT",
+            "rel": "retrainProject",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project",
+            "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "PUT",
+            "rel": "retrainProjectReplacePipelines",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject&replacePreviousPipelines=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?action=retrainProject&replacePreviousPipelines=true",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project",
+            "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        }
+    ],
+    "version": 2,
+    "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/HMEQ",
+    "type": "predictive",
+    "state": "completed",
+    "settings": {
+        "applyGlobalMetadata": false,
+        "autoRun": true,
+        "locale": "en",
+        "maxModelingTime": 0.0,
+        "modelingMode": "Standard",
+        "numberOfModels": 5
+    },
     "analyticsProjectAttributes": {
-        "targetVariable" : "JOB",
-        "targetEventLevel" : "1"
-    }
+        "analyticsProjectId": "193bd3f8-356e-4c7d-9830-72584a7b8c22",
+        "pipelineId": "859959b8-8c21-4688-b825-ef1003fee7ee",
+        "targetVariable": "BAD",
+        "targetEventLevel": "1",
+        "partitionEnabled": true,
+        "overrideClassificationCutoffEnabled": false,
+        "samplingEnabled": "AUTO",
+        "samplingPercentage": 50.0,
+        "intervalSelectionStatistic": "ase",
+        "classSelectionStatistic": "ks",
+        "selectionDepth": 10,
+        "selectionPartition": "default",
+        "overrideClassificationCutoffValue": 0.5,
+        "cutoffPercentage": 50,
+        "numberOfCutoffValues": 20
+    },
+    "championModel": {
+        "name": "Forest (2)",
+        "links": [
+            {
+                "method": "GET",
+                "rel": "championModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel",
+                "type": "application/vnd.sas.analytics.ml.pipeline.automation.project.champion.model.report"
+            },
+            {
+                "method": "PUT",
+                "rel": "registerChampionModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=register",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=register"
+            },
+            {
+                "method": "PUT",
+                "rel": "publishChampionModel",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=publish",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel?action=publish"
+            },
+            {
+                "method": "POST",
+                "rel": "scoreData",
+                "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel/scoreData",
+                "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel/scoreData",
+                "type": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.input",
+                "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.output"
+            }
+        ],
+        "publishDestinations": [
+            {
+                "name": "maslocal",
+                "description": "The default publishing destination for the Micro Analytic Score service.",
+                "destinationType": "microAnalyticService"
+            }
+        ]
+    },
+    "pipelineBuildMethod": "automatic"
+}
+```
+
+##### Response
+```
+202 Accepted
+Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
+
+{
+    "creationTimeStamp": "2021-01-13T18:36:53.323214Z",
+    "createdBy": "emduser1",
+    "modifiedTimeStamp": "2021-01-19T20:41:19.736495Z",
+    "modifiedBy": "emduser1",
+    "revision": 13,
+    "id": "71d81bd8-a20f-47ff-afda-afac6fb74f03",
+    "name": "Modified Project Name",
+    "description": "Modified Project Description",
+    "links": [
+        {
+            "method": "GET",
+            "rel": "up",
+            "href": "/mlPipelineAutomation/projects",
+            "uri": "/mlPipelineAutomation/projects",
+            "type": "application/vnd.sas.collection",
+            "itemType": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "GET",
+            "rel": "self",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "PUT",
+            "rel": "update",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "DELETE",
+            "rel": "delete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03"
+        },
+        {
+            "method": "DELETE",
+            "rel": "propagateDelete",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03?propagate=true"
+        },
+        {
+            "method": "GET",
+            "rel": "state",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state",
+            "type": "text/plain"
+        },
+        {
+            "method": "PUT",
+            "rel": "updateState",
+            "href": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "uri": "/mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value={value}",
+            "responseType": "text/plain"
+        }
+    ],
+    "version": 2,
+    "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/HMEQ",
+    "type": "predictive",
+    "state": "retraining",
+    "settings": {
+        "applyGlobalMetadata": false,
+        "autoRun": true,
+        "locale": "en",
+        "maxModelingTime": 0.0,
+        "modelingMode": "Standard",
+        "numberOfModels": 5,
+        "replacePreviousPipelines": false
+    },
+    "analyticsProjectAttributes": {
+        "analyticsProjectId": "193bd3f8-356e-4c7d-9830-72584a7b8c22",
+        "pipelineId": "859959b8-8c21-4688-b825-ef1003fee7ee",
+        "targetVariable": "BAD",
+        "targetEventLevel": "1",
+        "partitionEnabled": true,
+        "overrideClassificationCutoffEnabled": false,
+        "samplingEnabled": "AUTO",
+        "samplingPercentage": 50.0,
+        "intervalSelectionStatistic": "ase",
+        "classSelectionStatistic": "ks",
+        "selectionDepth": 10,
+        "selectionPartition": "default",
+        "overrideClassificationCutoffValue": 0.5,
+        "cutoffPercentage": 50,
+        "numberOfCutoffValues": 20
+    },
+    "championModel": {},
+    "pipelineBuildMethod": "automatic"
 }
 ```
 
@@ -541,6 +1063,7 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 Automation project state can be one of these enum values.
 
 - pending: indicates that the underlying analytics project was created but has not been run yet.
+- preparing: indicates that the underlying analytics project was created and the metadata is being updated.
 - waiting: indicates that the underlying analytics project metadata was updated.
 - ready: indicates that the underlying analytics project is preparing and ready to submit CASL code.
 - modeling: indicates that models are being composed and compared on CASL server.
@@ -551,34 +1074,44 @@ Automation project state can be one of these enum values.
 - completed: indicates that the underlying analytics project has run to completion without errors.
 - canceled: indicates that the underlying analytics project run was canceled by user.
 - failed: indicates that the underlying analytics project has encountered errors during pipeline run and has stopped.
+- oversampling: indicates that oversampling is being performed on the project.
+- retraining: indicates that retraining is being performed on the project.
 
 ##### Request
 ```
-GET /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/state HTTP/1.1
+GET /mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state HTTP/1.1
 ```
 
 ##### Response
 ```
-200 Ok
+200 OK
 Content-Type: text/plain
 
-runningPipeline
+completed
 ```
 
 #### <a name='updating-automation-project-state'>Updating Automation Project State</a>
-To stop/cancel an automation project, user can issue a PUT request with state "canceled".
+
+To stop/cancel an automation project from the modeling state, user can issue a PUT request with state "quiescing" if the project is in the "modeling"
+state. This will mark the project as 'quiescing' and allow the CASL job to finish processing and provide whatever results are
+available at the time. The project will then transition to "quiesced" when the operation is complete and partial results will be available.
+
+Since the application is event-driven, explicitly updating the state is not allowed except in very specific instances because
+asynchronous jobs are running while the project is running. If the state is updated by the user, then the completion of the job
+will then update the state again to a new value. For example, setting the state to canceling while the project is retraining will
+have no long-term effect because when the retraining job is completed, the project will transition to completed.
 
 ##### Request
 ```
-PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/state?value=canceled HTTP/1.1
+PUT /mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/state?value=quiescing HTTP/1.1
 ```
 
-In some cases, the user must restart a stopped project after adjusting parameters. This
-can be done by a PUT request with state "modeling".
-
-##### Request
+##### Response
 ```
-PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/state?value=modeling HTTP/1.1
+202 Accepted
+Content-Type: text/plain
+
+quiescing
 ```
 
 #### <a name='deleting-automation-projects'>Deleting Automation Projects</a>
@@ -602,11 +1135,19 @@ DELETE /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992?propa
 
 #### <a name='champion-model'>Champion Model</a>
 
-##### Retrieving Champion Model Report
+When a project completes, champion model information is added to the project body, and operations are available to be performed on the champion model
+
+##### Retrieving Champion Model Information
 
 ###### Request
 ```
-GET /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/championModel HTTP/1.1
+GET /mlPipelineAutomation/projects/71d81bd8-a20f-47ff-afda-afac6fb74f03/championModel HTTP/1.1
+Accept: application/vnd.sas.analytics.ml.pipeline.automation.project.champion.model.report
+```
+###### Response
+200 OK
+```
+[A collection of reports for the champion model]
 ```
 
 ##### Registering Champion Model with SAS Model Manager
@@ -620,6 +1161,16 @@ PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/champion
 ```
 
 ##### Score Data
+
+Score the champion model data. Fields in the score data input type can be used for either individual or bulk scoring.
+
+- scoreType (Individual or bulk)
+- destinationName (The name of the destination where the champion model is published)
+- inputDataTableURI (The data table to score when scoreType is set to bulk)
+- scoreOutputCaslibURI (The output caslib for the score outputs table when the scoreType is set to bulk)
+- scoreOutputTableName (The score output table name to generate when the scoreType is set to bulk)
+- inputs (a list of inputs to score when the scoreType is set to individual)
+
 ```
 POST /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/championModel/scoreData HTTP/1.1
 Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.score.data.input+json
@@ -646,4 +1197,4 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.score.data.output+j
 }
 ```
 
-version 2, last updated 13 Jan, 2021
+version 2, last updated 19 Jan, 2021
