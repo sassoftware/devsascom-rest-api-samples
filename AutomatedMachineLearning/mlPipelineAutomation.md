@@ -1093,7 +1093,7 @@ completed
 #### <a name='updating-automation-project-state'>Updating Automation Project State</a>
 
 To stop/cancel an automation project from the modeling state, user can issue a PUT request with state "quiescing" if the project is in the "modeling"
-state. This will mark the project as 'quiescing' and allow the CASL job to finish processing and provide whatever results are
+state (or earlier). This will mark the project as 'quiescing' and allow the CASL job to finish processing and provide whatever results are
 available at the time. The project will then transition to "quiesced" when the operation is complete and partial results will be available.
 
 Since the application is event-driven, explicitly updating the state is not allowed except in very specific instances because
