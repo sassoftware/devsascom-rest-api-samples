@@ -39,7 +39,7 @@ Version 1.0 of the Reference Data API supports reference data in lookup table fo
 * [Create a reference data domain](#CreateReferenceDataDomain)
 * [Get a reference data domain](#GetReferenceDataDomain)
 * [Delete a reference data domain](#DeleteReferenceDataDomain)
-* [Get the collection of reference data domains](#GetCollectionReferenceDataDomains)
+* [Get a collection of reference data domains](#GetCollectionReferenceDataDomains)
 </details>
 
 <details>
@@ -88,7 +88,7 @@ Here is an example of creating a reference data domain.
 
 #### Get a Reference Data Domain
 
-Here is an example of getting a reference data domain.
+Here is an example of retrieving a reference data domain.
 
 ```json
 {
@@ -111,9 +111,9 @@ Here is an example of deleting a reference data domain.
 ```
 <br>
 
-#### Get the Collection of Reference Data Domains
+#### Get a Collection of Reference Data Domains
 
-Here is an example of getting the collection of reference data domains.
+Here is an example of retrieving a collection of reference data domains.
 
 ```json
 {
@@ -421,6 +421,6 @@ Here is an example of getting indexed data of reference data domains.
 
 
 
-version 2, last updated 22 Nov, 2019
+version 4, last updated 25 January, 2020
 
 

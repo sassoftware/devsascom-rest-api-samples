@@ -1,11 +1,14 @@
 # Subject Contacts API
 You can use the Subject Contacts API to record a subject's response to a contact that consists of marketing offers. This information can be useful when making decisions about future marketing offers.
+
 The Subject Contacts API can be used in the following workflow:
 
 * Part of a suite of APIs that support real-time marketing decisions. Consultants, marketers, and application developers can use this API to craft applications that react to customers' interaction with the marketers' channels, such as websites, customer help lines, and advertisements (cellular, internet or broadcasts).
 * When a customer, also known as a subject, is in a channel of a marketer, the marketer wants to contact the customer to make offers that are likely to lead to a sale. Depending on the channel, the contact might be a text message or a pitch by a customer agent.
 * This API provides records of customer contact and responses to previous offers, also known as treatments. These records allow a merchant's marketing application to fine tune its treatments to a potential subject by using them in predictive models and business rules.
 * This API supports recording of subject contacts and responses.
+
+You can also use the Subject Contacts API to record text that is produced when executing a decision.
 
 ## API Request Examples Grouped by Object Type
 <details>
@@ -27,7 +30,7 @@ The Subject Contacts API can be used in the following workflow:
 * [Patch a contact record to record response to a treatment](#patch-record-treatment)
 * [Record multiple subject contacts using CSV text](#record-multiple-contacts-csv)
 * [Get the most recent contact records of a subject](#get-five-most-recent-contacts)
-* [Get the contact history of a subject between 2 timestamps](#get-contacts-between-timestamps)
+* [Get the contact history of a subject between two timestamps](#get-contacts-between-timestamps)
 * [Find the number of contacts for a subject within a period of time](#has-contacts-last-ten-days)
 * [Get the last contact history of an offer regardless of treatment version](#find-treatment-by-id)
 * [Get the records of a subject for responses made on the web](#get-subject-web-responses)
@@ -41,14 +44,27 @@ The Subject Contacts API can be used in the following workflow:
 </details>
 
 <details>
+<summary>Traces</summary>
+
+* [Append a trace](#append-a-trace)
+* [List traces](#list-traces-default-limit)
+* [Find traces that match filter conditions](#find-traces-with-filter)
+* [Update an existing trace](#update-traces)
+* [Delete traces that match filter conditions](#delete-traces-with-filter)
+* [Process a trace](#process-a-trace)
+</details>
+
+<details>
 <summary>See Also</summary>
 
 * [Subject Contacts API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#subject-contacts)
-* [Decision Management REST API Examples](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.4&docsetId=edmresttut&docsetTarget=titlepage.htm&locale=en)
+* [Decision Management REST API Examples](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=default&docsetId=edmresttut&docsetTarget=titlepage.htm)
 </details>
-
+<br>
 
 #### <a name='top-level-links'>Get Top-Level Links for the Subject Contacts API</a>
+
+Here is an example of retrieving a list of the top-level links for the Subject Contacts API.
 
 **Request**
 ```
@@ -96,7 +112,7 @@ The Subject Contacts API can be used in the following workflow:
 
 #### <a name='synchronous-record-contact-direct-presentation'>Synchronously Record Subject Contact with Direct Presentation</a>
 
-This example shows the creation of a contact record. In this contact, three treatments are presented to a subject for consideration. The presentation might be done via a web-page that is customized for this subject. 
+Here is an example of creating a contact record. The contact contains three treatments that are presented to a subject for consideration. The presentation can be done using a web page that is customized for this subject. 
 
 **Request**
 ```
@@ -289,7 +305,7 @@ This example shows the creation of a contact record. In this contact, three trea
 
 #### <a name='synchronous-record-contact-no-direct-presentation'>Synchronously Record Subject Contact without Direct Presentation</a>
 
-In the following example, the contact is received by an agent instead of by a subject.
+Here is an example of a contact that is received by an agent instead of by a subject.
 
 **Request**
 ```
@@ -429,7 +445,7 @@ In the following example, the contact is received by an agent instead of by a su
 
 #### <a name='asynchronous-record-contact-no-direct-presentation'>Asynchronously Record Subject Contact without Direct Presentation</a>
 
-This example shows the creation of a contact record asynchronously. The request parameter is set to "asynchronous=true". In the response, the input request is sent back with the ID field assigned a value. The response's Location header provides the record's URL for retrieving it. The response cannot provide an ETag header because the record has not been saved yet.
+Here is an example of creating a contact record asynchronously. The request parameter is set to "asynchronous=true". In the response, the input request is sent back with the ID field assigned a value. The response's location header provides the record's URL for retrieving it. The response cannot provide an ETag header because the record has not been saved yet.
 
 **Request**
 ```
@@ -513,7 +529,7 @@ This example shows the creation of a contact record asynchronously. The request 
 
 #### <a name='get-record-by-id'>Get a Contact Record by the Resource ID</a>
 
-Retrieve a subject contact record using its resource ID.
+Here is an example of retrieving a subject contact record using its resource ID.
 
 **Request**
 ```
@@ -621,7 +637,7 @@ Retrieve a subject contact record using its resource ID.
 
 #### <a name='get-record-by-reponse-tracking-code'>Get a Contact Record by the Response Tracking Code</a>
 
-Retrieve a subject contact record using a response tracking code. The record is returned in a collection of one item.
+Here is an example of retrieving a subject contact record using a response tracking code. The record is returned in a collection that contains only one item.
 
 **Request**
 ```
@@ -771,7 +787,8 @@ Retrieve a subject contact record using a response tracking code. The record is 
 
 #### <a name='patch-record-presentation'>Patch a Contact Record to Record Presentation</a>
 
-This example shows a recording presentation using the responseTrackingCode. This is the most common use case when the creation of the contact object is also asynchronous. The request body is a partial representation of the object.  Only the fields that will change together with the fields that identify the treatment are sent.
+Here is an example that shows a recording presentation using the `responseTrackingCode` field. This is the most common use case when creating a contact object that is also asynchronous. 
+The request body is a partial representation of the object.  Only the fields that are changing together with the fields that identify the treatment are sent.
 
 **Request**
 ```
@@ -893,7 +910,8 @@ This example shows a recording presentation using the responseTrackingCode. This
 
 #### <a name='update-record-presentation'>Update a Contact Record to Record Presentation</a>
 
-This example shows recording a presentation using the object ID. The entire object representation must be sent, including fields that are not updated. This is the alternative to the previous example.
+Here is an example that shows the recording a presentation using the object ID. The entire object representation must be sent, including fields that are not updated. 
+This is the alternative to the previous [patch example](#patch-record-presentation).
 
 **Request**
 ```
@@ -1037,7 +1055,8 @@ This example shows recording a presentation using the object ID. The entire obje
 
 #### <a name='patch-record-treatment'>Patch a Contact Record to Record Response to a Treatment</a>
 
-This example uses the responseTrackingCode parameter. The request body is a partial representation of the object. It must have an identifier of the record. In this case, it is the resourceTrackingCode field. Only the fields that will change are sent.
+Here is an example that uses the responseTrackingCode parameter. The request body is a partial representation of the object. It must have an identifier of the record, which in this case is the resourceTrackingCode field. 
+Only the fields that are being changing are sent within the request.
 
 
 **Request**
@@ -1200,7 +1219,8 @@ This example uses the responseTrackingCode parameter. The request body is a part
 
 #### <a name='record-multiple-contacts-csv'>Record Multiple Subject Contacts Using CSV Text</a>
 
-This example shows the creation of contact records using CSV records. The first row, the header row, lists the order of the columns. The second to fourth rows create the first contact. An error is deliberately introduced in the CSV for this contact for illustration purpose. The fifth row creates the second contact.
+Here is an example of creating contact records using CSV records. The first row is the header row and lists the order of the columns. The second through the fourth rows creates the first contact. 
+An error is deliberately introduced in the CSV content for this contact for illustration purposes. The fifth row creates the second contact.
 
 **Request**
 ```
@@ -1248,6 +1268,7 @@ Content-ID: Global-Issue
 
 #### <a name='get-five-most-recent-contacts'>Get the Most Recent Contact Records of a Subject</a>
 
+Here is an example of retrieving the most recent contact records of a subject.
 
 **Request**
 ```
@@ -1518,8 +1539,11 @@ Content-ID: Global-Issue
 
 <br>
 
-#### <a name='get-contacts-between-timestamps'>Get the Contact History of a Subject between 2 Timestamps</a>
-The response structure is similar to the response for the "Get the most recent 5 contact records of a subject" example. Therefore, it is omitted.
+#### <a name='get-contacts-between-timestamps'>Get the Contact History of a Subject between Two Timestamps</a>
+
+Here is an example of retrieving the contact history of a subject between two timestamps. 
+
+**Note:** The response structure is similar to the response for the [Get the Most Recent Contact Records of a Subject example](#get-five-most-recent-contacts). Therefore, it is omitted.
  
 **Request**
 ```
@@ -1541,9 +1565,11 @@ The response body is omitted here because it has contents similar to the respons
 
 #### <a name='has-contacts-last-ten-days'>Find the Number of Contacts for a Subject within a Period of Time</a>
 
+Here is an example of finding the number of contacts for a subject within a specific period of time.
+
 If today is 2018-06-13T00:00:00Z, 10 days ago would be 2018-06-03T00:00:00Z. If there is one item returned, then the subject has been contacted within the last 10 days. 
 
-The response structure is similar to the response for the "Get the most recent 5 contact records of a subject" example. Therefore, it is omitted.
+**Note:** The response structure is similar to the response for the [Get the Most Recent Contact Records of a Subject example](#get-five-most-recent-contacts) . Therefore, it is omitted.
 
 **Request**
 ```
@@ -1567,7 +1593,9 @@ The response body is omitted here because it has contents similar to the respons
 
 #### <a name='find-treatment-by-id'>Get the Last Contact History of an Offer Regardless of Treatment Version</a>
 
-The response structure is similar to the response for the "Get the most recent 5 contact records of a subject" example. Therefore, it is omitted.
+Here is an example of retrieving the last contact history of an offer regardless of the Treatment version.
+
+**Note:** The response structure is similar to the response for the [Get the Most Recent Contact Records of a Subject ](#get-five-most-recent-contacts). Therefore, it is omitted.
 
 **Request**
 ```
@@ -1588,9 +1616,9 @@ The response body is omitted here because it has contents similar to the respons
 
 <br>
 
-#### <a name='get-subject-web-responses'>Get the Records of a Subject for Responses Made on the Web</a>
+#### <a name='get-subject-web-responses'>Get the Records of a Subject for Responses Made On the Web</a>
 
-The response structure is similar to the response for the "Get the most recent 5 contact records of a subject" example. Therefore, it is omitted.
+**Note:** The response structure is similar to the response for the [Get the Most Recent Contact Records of a Subject ](#get-five-most-recent-contacts). Therefore, it is omitted.
 
 **Request**
 ```
@@ -1612,7 +1640,9 @@ The response body is omitted here because it has contents similar to the respons
 
 <br>
 
-#### <a name='query-capacity-reached'>Find the Number of Contacts Made using the Call Center Agent in a Time Domain for a Treatment</a>
+#### <a name='query-capacity-reached'>Find the Number of Contacts Made Using the Call Center Agent in a Time Domain for a Treatment</a>
+
+Here is an example of finding the number of contacts that were made using the Call Center Agent in a time domain for a treatment.
 
 If currently it is 2018-06-13T12:00:00Z, 2 hours ago would be 2018-06-13T10:00:00Z. This example can be used in rules dealing with capacity to determine whether there are sufficient resources to make an offer to an additional subject. 
 
@@ -2042,4 +2072,346 @@ The contact channels used in this example are web and phone. All the response ch
 
 ```
 
-version 1, last updated 22 Nov, 2019
+<br>
+
+#### <a name='append-a-trace'>Append a Trace</a>
+
+Here is an example of appending text to the Traces collection that is produced by executing a decision.
+
+The columns are separated by the tab character. Since there is no value in the `processornote` field, there are two tab characters (invisible) between the `objecturi` and text columns on the data line.
+The only restriction on the text column is that it must not contain the tab character. Other than that, it can be used to store any text.
+
+**Request**
+```
+  POST http://www.example.com/subjectContacts/traces
+  Headers:
+  * Content-Type = text/tab-separated-values
+  * Accept = multipart/mixed, application/json
+  Body:
+traceid	seqno	action	tracetimestamp	objecturi	processornote	text
+954931B7-2425-CB45-90D2-756189E18F72	1	append	2020-08-10T16:44:12Z	/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558		VVCT#STARTING_NODE_TRACE#954931B7-2425-CB45-90D2-756189E18F72
+VVCT#954931B7-2425-CB45-90D2-756189E18F72#/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558#Start
+VVCT#954931B7-2425-CB45-90D2-756189E18F72#a=1
+VVCT#954931B7-2425-CB45-90D2-756189E18F72#b=c
+VVCT#954931B7-2425-CB45-90D2-756189E18F72#c=b
+VVCT#954931B7-2425-CB45-90D2-756189E18F72#temp_dg_out=
+```
+
+**Response**
+```
+ Status: 200
+ Headers:
+ * Content-Type = multipart/mixed`
+ Body:
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_
+Content-Type: text/csv; charset="utf-8"
+Content-ID: Accepted-TSV
+
+954931B7-2425-CB45-90D2-756189E18F72,A record with the trace ID "954931B7-2425-CB45-90D2-756189E18F72" and order "1" is added.
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_
+Content-Type: text/csv; charset=utf-8
+Content-ID: Rejected-TSV
+
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_
+Content-Type: text/csv; charset=utf-8
+Content-ID: Global-Issue
+
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_--
+
+```
+<br>
+
+#### <a name='list-traces-default-limit'>List Traces</a>
+
+Here is an example of retrieving a list of traces that are produced by executing decisions.
+
+**Request**
+```
+  GET http://www.example.com/subjectContacts/traces
+  Headers:
+  * Accept = application/vnd.sas.collection+json
+  Body:
+```
+
+**Response**
+```
+ Status: 200
+ Headers:
+ * Content-Type = application/vnd.sas.collection+json
+ Body:
+{
+  "links": [
+    {
+      "method": "GET",
+      "rel": "collection",
+      "href": "/subjectContacts/traces",
+      "uri": "/subjectContacts/traces",
+      "type": "application/vnd.sas.collection",
+      "itemType": "application/vnd.sas.decision.trace"
+    },
+    {
+      "method": "GET",
+      "rel": "self",
+      "href": "/subjectContacts/traces?filter=eq(sequenceNumber,1)&sortBy=traceTimeStamp:ascending,sequenceNumber:ascending:secondary&start=0&limit=10",
+      "uri": "/subjectContacts/traces?filter=eq(sequenceNumber,1)&sortBy=traceTimeStamp:ascending,sequenceNumber:ascending:secondary&start=0&limit=10",
+      "type": "application/vnd.sas.collection",
+      "itemType": "application/vnd.sas.decision.trace"
+    },
+    {
+      "method": "GET",
+      "rel": "up",
+      "href": "/subjectContacts/",
+      "uri": "/subjectContacts/",
+      "type": "application/vnd.sas.api"
+    },
+    {
+      "method": "GET",
+      "rel": "next",
+      "href": "/subjectContacts/traces?filter=eq(sequenceNumber,1)&sortBy=traceTimeStamp:ascending,sequenceNumber:ascending:secondary&start=10&limit=10",
+      "uri": "/subjectContacts/traces?filter=eq(sequenceNumber,1)&sortBy=traceTimeStamp:ascending,sequenceNumber:ascending:secondary&start=10&limit=10",
+      "type": "application/vnd.sas.collection",
+      "itemType": "application/vnd.sas.decision.trace"
+    },
+    {
+      "method": "GET",
+      "rel": "last",
+      "href": "/subjectContacts/traces?filter=eq(sequenceNumber,1)&sortBy=traceTimeStamp:ascending,sequenceNumber:ascending:secondary&start=210&limit=10",
+      "uri": "/subjectContacts/traces?filter=eq(sequenceNumber,1)&sortBy=traceTimeStamp:ascending,sequenceNumber:ascending:secondary&start=210&limit=10",
+      "type": "application/vnd.sas.collection",
+      "itemType": "application/vnd.sas.decision.trace"
+    },
+    {
+      "method": "POST",
+      "rel": "create",
+      "href": "/subjectContacts/traces",
+      "uri": "/subjectContacts/traces",
+      "type": "text/tab-separated-values",
+      "responseType": "multipart/mixed"
+    }
+  ],
+  "name": "items",
+  "start": 0,
+  "count": 219,
+  "items": [
+    {
+      "traceId": "3d4120b3-1fe7-4fce-b333-0ae1b93aa03c",
+      "traceTimeStamp": "2020-08-07T18:02:23Z",
+      "processorNote": "",
+      "objectUri": "/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558",
+      "links": [
+        {
+          "method": "GET",
+          "rel": "self",
+          "href": "/subjectContacts/traces?filter=eq(traceId,'3d4120b3-1fe7-4fce-b333-0ae1b93aa03c')",
+          "uri": "/subjectContacts/traces?filter=eq(traceId,'3d4120b3-1fe7-4fce-b333-0ae1b93aa03c')",
+          "type": "application/vnd.sas.decision.trace"
+        },
+        {
+          "method": "GET",
+          "rel": "completeWithTraceText",
+          "href": "/subjectContacts/traces?filter=eq(traceId,'3d4120b3-1fe7-4fce-b333-0ae1b93aa03c')",
+          "uri": "/subjectContacts/traces?filter=eq(traceId,'3d4120b3-1fe7-4fce-b333-0ae1b93aa03c')",
+          "type": "text/tab-separated-values"
+        },
+        {
+          "method": "POST",
+          "rel": "update",
+          "href": "/subjectContacts/traces",
+          "uri": "/subjectContacts/traces",
+          "type": "text/tab-separated-values",
+          "responseType": "multipart/mixed"
+        },
+        {
+          "method": "DELETE",
+          "rel": "delete",
+          "href": "/subjectContacts/traces?filter=eq(traceId,'3d4120b3-1fe7-4fce-b333-0ae1b93aa03c')",
+          "uri": "/subjectContacts/traces?filter=eq(traceId,'3d4120b3-1fe7-4fce-b333-0ae1b93aa03c')"
+        }
+      ]
+    },
+    ...
+  ]
+}
+```
+
+
+<br>
+
+
+#### <a name='find-traces-with-filter'>Find Traces That Match Filter Conditions</a>
+
+Here is an example of finding text that is produced by executing decisions.
+
+* The columns are separated by the tab character.
+* The text column contains multiple newline characters.
+
+**Request**
+```
+  GET http://www.example.com/subjectContacts/traces?filter=and(ge(traceTimeStamp,'2020-08-07T12:00:00Z'),lt(traceTimeStamp,'2020-08-07T12:00:00Z'))
+  Headers:
+  * Accept = text/tab-separated-values
+  Body:
+```
+
+**Response**
+```
+ Status: 200
+ Headers:
+ * Content-Type = text/tab-separated-values` 
+ Body:
+traceid	seqno	tracetimestamp	objecturi	processornote	text	
+3d4120b3-1fe7-4fce-b333-0ae1b93aa03c	1	2020-08-07T18:02:23Z	/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558		VVCT#STARTING_NODE_TRACE#3d4120b3-1fe7-4fce-b333-0ae1b93aa03c
+VVCT#3d4120b3-1fe7-4fce-b333-0ae1b93aa03c#/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558#Start
+VVCT#3d4120b3-1fe7-4fce-b333-0ae1b93aa03c#a=6
+VVCT#3d4120b3-1fe7-4fce-b333-0ae1b93aa03c#b=Bond Park
+VVCT#3d4120b3-1fe7-4fce-b333-0ae1b93aa03c#c=Centennial Campus
+VVCT#3d4120b3-1fe7-4fce-b333-0ae1b93aa03c#temp_dg_out=[{ "metadata": [ { "id_ip": "string" }, { "id_profile": "string" }, { "cd_tp_channel": "decimal" }, { "cd_tp_slot": "decimal" }, { "id_lead": "decimal" }, { "id_offer": "decimal" }, { "id_communication": "decimal" }, { "id_campaign": "decimal" }, { "cd_tp_target": "decimal" }, { "cd_tp_decision": "decimal" }, { "param_1_text": "string" }, { "param_2_text": "string" }, { "param_3_text": "string" }, { "param_4_text": "string" }, { "param_5_text": "string" } ] }, { "data": [ [ "perf_test", "perf_test", 1899, 1899, 1899, 1899, 1899, 1899, 1899, 1899, "perf_test", "perf_test", "perf_test", "perf_test", "perf_test" ] ] }]
+VVCT#ENDING_NODE_TRACE#3d4120b3-1fe7-4fce-b333-0ae1b93aa03c
+b1c164de-397c-47ad-8029-2a52bc255f83	1	append	2020-08-07T18:02:23Z	/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558		VVCT#STARTING_NODE_TRACE#b1c164de-397c-47ad-8029-2a52bc255f83
+VVCT#b1c164de-397c-47ad-8029-2a52bc255f83#/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558#Start
+VVCT#b1c164de-397c-47ad-8029-2a52bc255f83#a=8
+VVCT#b1c164de-397c-47ad-8029-2a52bc255f83#b=biometric
+VVCT#b1c164de-397c-47ad-8029-2a52bc255f83#c=cryptological
+VVCT#b1c164de-397c-47ad-8029-2a52bc255f83#temp_dg_out=[ { "metadata": [ { "id_ip": "string" }, { "id_profile": "string" }, { "cd_tp_channel": "decimal" }, { "cd_tp_slot": "decimal" }, { "id_lead": "decimal" }, { "id_offer": "decimal" }, { "id_communication": "decimal" }, { "id_campaign": "decimal" }, { "cd_tp_target": "decimal" }, { "cd_tp_decision": "decimal" }, { "param_1_text": "string" }, { "param_2_text": "string" }, { "param_3_text": "string" }, { "param_4_text": "string" }, { "param_5_text": "string" } ] }, { "data": [ [ "perf_test", "perf_test", 1899, 1899, 1899, 1899, 1899, 1899, 1899, 1899, "perf_test", "perf_test", "perf_test", "perf_test", "perf_test" ], [ "perf_test", "perf_test", 1900, 1900, 1900, 1900, 1900, 1900, 1900, 1900, "perf_test", "perf_test", "perf_test", "perf_test", "perf_test" ], [ "perf_test", "perf_test", 1901, 1901, 1901, 1901, 1901, 1901, 1901, 1901, "perf_test", "perf_test", "perf_test", "perf_test", "perf_test" ] ] } ]
+VVCT#ENDING_NODE_TRACE#b1c164de-397c-47ad-8029-2a52bc255f83
+```
+
+
+<br>
+
+
+#### <a name='update-traces'>Update an Existing Trace</a>
+
+Here is an example of updating the `processorNote` field. 
+
+* The columns are separated by the tab character.
+* The `traceid` must be the first column.
+* On the data lines, there are five tab characters after the `traceId` column.
+* Each line is terminated by a newline character.
+
+**Request**
+```
+  POST http://www.example.com/subjectContacts/traces
+  Headers:
+  * Content-Type = text/tab-separated-values
+  * Accept = multipart/mixed, application/json
+  Body:
+traceid	text	objecturi	seqno	tracetimestamp	action	processorNote
+3d4120b3-1fe7-4fce-b333-0ae1b93aa03c					update	report:
+- proccessedTimeStamp:2020-08-26T16:19:03Z
+  reportUri: /files/files/5844fc3a-cbd2-41b7-b624-a2cf4aef46ba
+b1c164de-397c-47ad-8029-2a52bc255f83					update	report:
+- processedTimeStamp: 2020-08-26T16:23:54Z
+  reportUri: /files/files/e735d239-7cf2-42dc-bc93-d5906fec25d9
+
+```
+
+**Response**
+```
+ Status: 200
+ Headers:
+ * Content-Type = multipart/mixed`
+ Body:
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_
+Content-Type: text/csv; charset="utf-8"
+Content-ID: Accepted-TSV
+
+3d4120b3-1fe7-4fce-b333-0ae1b93aa03c,The record with the trace ID "3d4120b3-1fe7-4fce-b333-0ae1b93aa03c" is updated.
+b1c164de-397c-47ad-8029-2a52bc255f83,The record with the trace ID "b1c164de-397c-47ad-8029-2a52bc255f83" is updated.
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_
+Content-Type: text/csv; charset=utf-8
+Content-ID: Rejected-TSV
+
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_
+Content-Type: text/csv; charset=utf-8
+Content-ID: Global-Issue
+
+
+--_001_002_003_004_005_006_007_008_009_010_011_012_--
+
+```
+
+
+<br>
+
+#### <a name='delete-traces-with-filter'>Delete Traces That Match Filter Conditions</a>
+
+Here is an example of deleting all text where the `processorNote` field has a value.
+
+**Request**
+```
+  DELETE http://www.example.com/subjectContacts/traces?filter=not(isNull(processorNote))
+  Headers:
+  Body:
+```
+
+**Response**
+```
+ Status: 204
+ Headers:
+ Body:
+```
+
+<br>
+
+
+#### <a name='process-a-trace'>Process a Trace</a>
+
+Here is an example of processing a raw trace and storing the report as a Files service object.
+The `reportUri` and `processedTimeStamp` content is stored in the `processorNote` column of the raw trace record.
+
+**Request**
+```
+  POST http://www.example.com/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process
+  Headers:
+  Body:
+```
+
+**Response**
+```
+ Status: 201
+ Headers:
+   Content-Type: application/vnd.sas.decisions.trace.report+json
+ Body:
+ {
+  "version": 1,
+  "traceId":"6d707a51-62b3-40a4-4973-b2d9f12d20fe",
+  "traceTimeStamp":"2020-09-08T14:29:30.000Z",
+  "processedTimeStamp":"2020-09-08T14:35:27.000Z",
+  "reportUri":"/files/files/b8bc8dd8-6747-4194-8b64-6f574f0f1f42",
+  "objectUri":"/decisions/flows/501fa196-6d6e-4515-ac8f-3840ba576b56/revisions/37f0e7af-d27d-453c-b3a0-546f29c26a94",
+  "links":[
+     {
+       "method":"POST",
+       "rel":"self",
+       "href":"/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process",
+       "uri":"/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process",
+       "type":"application/vnd.sas.decision.trace.report"
+     },
+     {
+       "method":"GET",
+       "rel":"reportContent",
+       "href":"/files/files/b8bc8dd8-6747-4194-8b64-6f574f0f1f42/content",
+       "uri":"/files/files/b8bc8dd8-6747-4194-8b64-6f574f0f1f42/content"
+     },
+     {
+       "method":"GET",
+       "rel":"rawContent",
+       "href":"/subjectContacts/traces?filter=eq(traceId,'6d707a51-62b3-40a4-4973-b2d9f12d20fe')",
+       "uri":"/subjectContacts/traces?filter=eq(traceId,'6d707a51-62b3-40a4-4973-b2d9f12d20fe')",
+       "type":"text/tab-separated-values"
+     }
+  ]
+ }
+```
+
+<br>
+
+version 3, last updated 25 January, 2021

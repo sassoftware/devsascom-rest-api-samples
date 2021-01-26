@@ -1,4 +1,4 @@
-# Treatment Definitions API
+# Treatment Definitions API  for SAS Viya 3.5
 The Treatment Definitions API provides the ability to define treatment definitions and treatment definition groups. A treatment represents a response that is returned based on the result of a decision. For example, an offer determined by a decision to entice a subject to buy a product.
 The treatment contains name-value pairs that provide external system cues on how to act based on the result of the decision.
 The name-value pairs can also be used for information-only purposes for managing the treatments and to provide business context.

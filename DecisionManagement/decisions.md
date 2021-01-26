@@ -36,6 +36,7 @@ This API enables users to build and retrieve decision making processes that can 
 * [Create a decision](#CreateDecision)
 * [Create a decision with treatments](#CreateDecisionTreatments)
 * [Create a decision with branches](#CreateDecisionBranches)
+* [Create a decision with links](#CreateDecisionLinks)
 * [Update a decision](#UpdateDecision)
 * [Get a decision](#GetDecision)
 * [Get a decision summary](#GetDecisionSummary)
@@ -58,6 +59,12 @@ This API enables users to build and retrieve decision making processes that can 
 * [Get a code file summary](#GetCodeFileSummary)
 * [Delete a code file](#DeleteCodeFile)
 * [Get the collection of code files](#GetCollectionCodeFiles)
+* [Create a code file revision](#CreateCodeFileRevision)
+* [Get a code file revision](#GetCodeFileRevision)
+* [Get a code file revision summary](#GetCodeFileRevisionSummary)
+* [Delete a code file revision](#DeleteCodeFileRevision)
+* [Get the collection of code file revisions](#GetCollectionCodeFileRevisions)
+
 </details>
 
 <details>
@@ -1115,7 +1122,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1161,7 +1167,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1185,8 +1190,7 @@ Here is an example of creating a decision with branches.
                     "steps": []
                 },
                 "branchType": "range",
-                "name": "Range Branch on EM_PROBABILITY",
-                "type": "application/vnd.sas.decision.step.branch"
+                "name": "Range Branch on EM_PROBABILITY"
             },
             {
                 "type": "application/vnd.sas.decision.step.branch",
@@ -1227,7 +1231,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1285,7 +1288,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1331,7 +1333,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1355,8 +1356,7 @@ Here is an example of creating a decision with branches.
                     "steps": []
                 },
                 "branchType": "equals",
-                "name": "Equals Branch on origin",
-                "type": "application/vnd.sas.decision.step.branch"
+                "name": "Equals Branch on origin"
             },
             {
                 "type": "application/vnd.sas.decision.step.branch",
@@ -1397,7 +1397,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1407,7 +1406,7 @@ Here is an example of creating a decision with branches.
                                             "responseType": "application/vnd.sas.brm.rule.set"
                                         }
                                     ]
-                                }
+                                } 
                             ]
                         }
                     },
@@ -1455,7 +1454,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1501,7 +1499,6 @@ Here is an example of creating a decision with branches.
                                         "versionName": "1.0"
                                     },
                                     "mappings": [],
-                                    "type": "application/vnd.sas.decision.step.ruleset",
                                     "links": [
                                         {
                                             "method": "GET",
@@ -1525,8 +1522,7 @@ Here is an example of creating a decision with branches.
                     "steps": []
                 },
                 "branchType": "like",
-                "name": "Like Branch on email",
-                "type": "application/vnd.sas.decision.step.branch"
+                "name": "Like Branch on email"
             }
         ]
     },
@@ -1598,7 +1594,395 @@ Here is an example of creating a decision with branches.
 <br>
 
 
+#### <a name='CreateDecisionLinks'>Create a Decision with Links</a>
 
+Here is an example of creating a decision with links.
+
+```json
+{
+  "POST": "/decisions/flows/",
+  "headers": {
+            "Location": "/decisions/flows",
+            "Last-Modified": "Wed, 11 Apr 2018 01:39:02 GMT",
+            "Content-Type": "application/vnd.sas.decision+json"
+  },
+  "body": {
+
+    "name": "HMEQ_simple",
+    "description": "foo",
+    "signature": [
+        {
+            "direction": "inOut",
+            "name": "BAD",
+            "dataType": "decimal"
+        },
+        {
+            "direction": "output",
+            "name": "LOANAmount",
+            "dataType": "integer"
+        },
+        {
+            "direction": "inOut",
+            "name": "YOJ",
+            "dataType": "decimal"
+        }
+    ],
+    "flow": {
+        "steps": [
+            {
+                "type": "application/vnd.sas.decision.step.branch",
+                "branchCases": [
+                    {
+                        "label": "1==>GEN==>",
+                        "simpleCondition": {
+                            "lhsTerm": {
+                                "name": "BAD"
+                            },
+                            "operator": "=",
+                            "rhsConstant": "1"
+                        },
+                        "onTrue": {
+                            "steps": [
+                                {
+                                    "type": "application/vnd.sas.decision.step.ruleset",
+                                    "ruleset": {
+                                        "id": "55e8e121-7790-4921-957a-c65e766fa520",
+                                        "name": "HMEQ_simple",
+                                        "versionId": "babbcd10-f57f-408b-88b9-d685ce299e87",
+                                        "versionName": "1.0"
+                                    },
+                                    "mappings": [
+                                        {
+                                            "targetDecisionTermName": "LOANAmount",
+                                            "direction": "output",
+                                            "stepTermName": "LOANAmount"
+                                        },
+                                        {
+                                            "targetDecisionTermName": "YOJ",
+                                            "direction": "inOut",
+                                            "stepTermName": "YOJ"
+                                        }
+                                    ],
+                                    "publishedModule": {}
+                                },
+                                {
+                                  "type": "application/vnd.sas.decision.step.node.link",
+                                  "decisionNodeLinkTarget": "label1"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "defaultCase": {
+                    "steps": [
+                        {
+                            "type": "application/vnd.sas.decision.step.ruleset",
+                            "linkLabel": "label1",
+                            "ruleset": {
+                                "id": "268af411-f1bd-4245-8ae4-8bf5ee30c911",
+                                "name": "Another_HMEQ",
+                                "versionId": "436c4648-a1d4-469e-aa5d-98eeb7e505b4",
+                                "versionName": "1.0"
+                            },
+                            "mappings": [
+                                {
+                                    "targetDecisionTermName": "LOANAmount",
+                                    "direction": "output",
+                                    "stepTermName": "LOANAmount"
+                                },
+                                {
+                                    "targetDecisionTermName": "YOJ",
+                                    "direction": "inOut",
+                                    "stepTermName": "YOJ"
+                                }
+                            ],
+                            "publishedModule": {}
+                        }
+                    ]
+                },
+                "branchType": "equals",
+                "name": "Equals"
+            }
+        ]
+    },
+    "subjectLevel": "",
+    "folderType": "",
+    "version": 2
+  }
+}
+```
+
+`Partial response headers and body:`
+```json
+{
+  "headers" : {
+        "Location": "/decisions/decisionNodeTypes/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+        "Last-Modified": "2020-06-01T15:14:30.488Z",
+        "Content-Type": "application/vnd.sas.decision+json",
+        "ETag": "k4d50fo2"
+  },
+  "body": {
+              "creationTimeStamp": "2020-05-31T12:42:13.023Z",
+              "modifiedTimeStamp": "2020-06-01T15:14:30.488Z",
+              "createdBy": "sasdemo",
+              "modifiedBy": "sasdemo",
+              "id": "d0406115-6521-4ac6-8f34-83b809e3a2e7",
+              "name": "HMEQ_simple",
+              "description": "foo",
+              "majorRevision": 1,
+              "minorRevision": 0,
+              "signature": [
+                  {
+                      "creationTimeStamp": "2020-05-31T12:42:13.024Z",
+                      "modifiedTimeStamp": "2020-05-31T12:42:13.024Z",
+                      "createdBy": "sasdemo",
+                      "modifiedBy": "sasdemo",
+                      "id": "cd6f2de4-da33-4593-8b67-69e98bb057b6",
+                      "direction": "inOut",
+                      "name": "BAD",
+                      "dataType": "decimal"
+                  },
+                  {
+                      "creationTimeStamp": "2020-05-31T12:42:13.025Z",
+                      "modifiedTimeStamp": "2020-05-31T12:42:13.025Z",
+                      "createdBy": "sasdemo",
+                      "modifiedBy": "sasdemo",
+                      "id": "7d52164b-cd75-4bf5-be22-bdf414061883",
+                      "direction": "output",
+                      "name": "LOANAmount",
+                      "dataType": "integer"
+                  },
+                  {
+                      "creationTimeStamp": "2020-05-31T12:42:13.025Z",
+                      "modifiedTimeStamp": "2020-05-31T12:42:13.025Z",
+                      "createdBy": "sasdemo",
+                      "modifiedBy": "sasdemo",
+                      "id": "164752be-ee69-4ecf-ba99-24710dc0b94d",
+                      "direction": "inOut",
+                      "name": "YOJ",
+                      "dataType": "decimal"
+                  }
+              ],
+              "flow": {
+                  "creationTimeStamp": "2020-05-31T12:42:13.026Z",
+                  "modifiedTimeStamp": "2020-05-31T12:42:13.026Z",
+                  "createdBy": "sasdemo",
+                  "modifiedBy": "sasdemo",
+                  "id": "d59af196-7ece-4f3a-8013-c1c7a02cf8fa",
+                  "steps": [
+                      {
+                          "type": "application/vnd.sas.decision.step.branch",
+                          "creationTimeStamp": "2020-05-31T12:42:13.034Z",
+                          "modifiedTimeStamp": "2020-05-31T12:42:13.034Z",
+                          "createdBy": "sasdemo",
+                          "modifiedBy": "sasdemo",
+                          "id": "c11ab467-6772-4082-a0fa-1f3271686cc8",
+                          "branchCases": [
+                              {
+                                  "id": "92e53b71-b4b4-41c6-b6b7-0da9c87964a2",
+                                  "label": "1==>GEN==>",
+                                  "simpleCondition": {
+                                      "lhsTerm": {
+                                          "name": "BAD"
+                                      },
+                                      "operator": "=",
+                                      "rhsConstant": "1",
+                                      "id": "e1e88aec-793d-4270-8403-3c59ebf5ac7d"
+                                  },
+                                  "onTrue": {
+                                      "creationTimeStamp": "2020-05-31T12:42:13.066Z",
+                                      "modifiedTimeStamp": "2020-05-31T12:42:13.066Z",
+                                      "createdBy": "sasdemo",
+                                      "modifiedBy": "sasdemo",
+                                      "id": "283be007-af17-4054-8eea-88ed675c7212",
+                                      "steps": [
+                                          {
+                                              "type": "application/vnd.sas.decision.step.ruleset",
+                                              "creationTimeStamp": "2020-05-31T12:42:13.069Z",
+                                              "modifiedTimeStamp": "2020-05-31T12:42:13.069Z",
+                                              "createdBy": "sasdemo",
+                                              "modifiedBy": "sasdemo",
+                                              "id": "7a6e2711-b8ba-4a7f-a653-205cbb2ed66d",
+                                              "ruleset": {
+                                                  "id": "55e8e121-7790-4921-957a-c65e766fa520",
+                                                  "name": "HMEQ_simple",
+                                                  "versionId": "babbcd10-f57f-408b-88b9-d685ce299e87",
+                                                  "versionName": "1.0"
+                                              },
+                                              "mappings": [
+                                                  {
+                                                      "creationTimeStamp": "2020-05-31T12:42:13.069Z",
+                                                      "modifiedTimeStamp": "2020-05-31T12:42:13.069Z",
+                                                      "createdBy": "sasdemo",
+                                                      "modifiedBy": "sasdemo",
+                                                      "id": "5c370598-9a83-4a9a-af00-01807ad3758e",
+                                                      "targetDecisionTermName": "LOANAmount",
+                                                      "direction": "output",
+                                                      "stepTermName": "LOANAmount"
+                                                  },
+                                                  {
+                                                      "creationTimeStamp": "2020-05-31T12:42:13.069Z",
+                                                      "modifiedTimeStamp": "2020-05-31T12:42:13.069Z",
+                                                      "createdBy": "sasdemo",
+                                                      "modifiedBy": "sasdemo",
+                                                      "id": "a492b1e4-d38b-44cf-a0ff-6f45d45bc245",
+                                                      "targetDecisionTermName": "YOJ",
+                                                      "direction": "inOut",
+                                                      "stepTermName": "YOJ"
+                                                  }
+                                              ],
+                                              "publishedModule": {},
+                                              "links": [
+                                                  {
+                                                      "method": "GET",
+                                                      "rel": "ruleSet",
+                                                      "href": "/businessRules/ruleSets/55e8e121-7790-4921-957a-c65e766fa520",
+                                                      "uri": "/businessRules/ruleSets/55e8e121-7790-4921-957a-c65e766fa520",
+                                                      "responseType": "application/vnd.sas.brm.rule.set"
+                                                  }
+                                              ]
+                                          },
+                                          {
+                                              "type": "application/vnd.sas.decision.step.node.link",
+                                              "creationTimeStamp": "2020-06-01T15:14:30.457Z",
+                                              "modifiedTimeStamp": "2020-06-01T15:14:30.457Z",
+                                              "createdBy": "sasdemo",
+                                              "modifiedBy": "sasdemo",
+                                              "id": "b375f618-925a-42cd-948a-bca0989dd2c7",
+                                              "decisionNodeLinkTarget": "label1"
+                                          }
+                                      ]
+                                  }
+                              }
+                          ],
+                          "defaultCase": {
+                              "creationTimeStamp": "2020-05-31T12:42:13.031Z",
+                              "modifiedTimeStamp": "2020-05-31T12:42:13.031Z",
+                              "createdBy": "sasdemo",
+                              "modifiedBy": "sasdemo",
+                              "id": "e5472d8e-6cd6-49fb-a765-a0cc87652d25",
+                              "steps": [
+                                  {
+                                      "type": "application/vnd.sas.decision.step.ruleset",
+                                      "creationTimeStamp": "2020-05-31T12:42:13.033Z",
+                                      "modifiedTimeStamp": "2020-05-31T12:46:35.992Z",
+                                      "createdBy": "sasdemo",
+                                      "modifiedBy": "sasdemo",
+                                      "id": "71da2ab0-2cc9-4b3e-8b25-f1a32d95b821",
+                                      "linkLabel": "label1",
+                                      "ruleset": {
+                                          "id": "268af411-f1bd-4245-8ae4-8bf5ee30c911",
+                                          "name": "Another_HMEQ",
+                                          "versionId": "436c4648-a1d4-469e-aa5d-98eeb7e505b4",
+                                          "versionName": "1.0"
+                                      },
+                                      "mappings": [
+                                          {
+                                              "creationTimeStamp": "2020-05-31T12:42:13.034Z",
+                                              "modifiedTimeStamp": "2020-05-31T12:42:13.034Z",
+                                              "createdBy": "sasdemo",
+                                              "modifiedBy": "sasdemo",
+                                              "id": "75f41d58-8c1a-4648-877d-c8d985b6b6aa",
+                                              "targetDecisionTermName": "LOANAmount",
+                                              "direction": "output",
+                                              "stepTermName": "LOANAmount"
+                                          },
+                                          {
+                                              "creationTimeStamp": "2020-05-31T12:42:13.033Z",
+                                              "modifiedTimeStamp": "2020-05-31T12:42:13.033Z",
+                                              "createdBy": "sasdemo",
+                                              "modifiedBy": "sasdemo",
+                                              "id": "ec822da0-a79f-4598-ba9a-a2cf06d330bc",
+                                              "targetDecisionTermName": "YOJ",
+                                              "direction": "inOut",
+                                              "stepTermName": "YOJ"
+                                          }
+                                      ],
+                                      "publishedModule": {},
+                                      "links": [
+                                          {
+                                              "method": "GET",
+                                              "rel": "ruleSet",
+                                              "href": "/businessRules/ruleSets/268af411-f1bd-4245-8ae4-8bf5ee30c911",
+                                              "uri": "/businessRules/ruleSets/268af411-f1bd-4245-8ae4-8bf5ee30c911",
+                                              "responseType": "application/vnd.sas.brm.rule.set"
+                                          }
+                                      ]
+                                  }
+                              ]
+                          },
+                          "branchType": "equals",
+                          "name": "Equals"
+                      }
+                  ]
+              },
+              "links": [
+                  {
+                      "method": "GET",
+                      "rel": "self",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+                      "type": "application/vnd.sas.decision"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "revisions",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/revisions",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/revisions",
+                      "type": "application/vnd.sas.collection",
+                      "itemType": "application/vnd.sas.decision"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "currentRevision",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+                      "type": "application/vnd.sas.decision"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "code",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/code",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/code",
+                      "type": "text/vnd.sas.source.ds2"
+                  },
+                  {
+                      "method": "POST",
+                      "rel": "mappedCode",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/mappedCode",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/mappedCode",
+                      "type": "application/vnd.sas.score.code.generation.request",
+                      "responseType": "application/vnd.sas.score.mapped.code"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "externalArtifacts",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/externalArtifacts",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7/externalArtifacts",
+                      "type": "application/vnd.sas.collection",
+                      "itemType": "application/vnd.sas.decision.external.artifact"
+                  },
+                  {
+                      "method": "DELETE",
+                      "rel": "delete",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7"
+                  },
+                  {
+                      "method": "PUT",
+                      "rel": "update",
+                      "href": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+                      "uri": "/decisions/flows/d0406115-6521-4ac6-8f34-83b809e3a2e7",
+                      "type": "application/vnd.sas.decision",
+                      "responseType": "application/vnd.sas.decision"
+                  }
+              ],
+              "subjectLevel": "",
+              "folderType": "",
+              "version": 2
+          }
+}
+```
 
 
 #### <a name='UpdateDecision'>Update a Decision</a>
@@ -2119,6 +2503,38 @@ Here is an example of retrieving a list of code files.
 ```
 <br>
 
+#### <a name='CreateCodeFileRevision'>Create a Code File Revision</a>
+
+Here is an example of creating a code file revision.
+
+```json
+{
+    "POST": "/decisions/codeFiles/{codeFileId}/revisions?revisionType=major",
+    "headers":{
+        "Accept":"application/vnd.sas.decision.code.file+json",
+        "Content-Type":"application/vnd.sas.decisioncode.file+json"
+    },
+    "body":{
+       "fileUri": "/files/files/0c7281d8-063d-49dd-be6b-392e9c9e930d"
+    }
+}
+```
+<br>
+
+#### <a name='GetCodeFileRevision'>Get a Code File Revision</a>
+
+Here is an example of retrieving a specific code file revision.
+
+```json
+{
+  "GET": "/decisions/codeFiles/{codeFileId}/revisions/{revisionId}",
+  "headers":{
+        "Accept":"application/vnd.sas.decision.code.file+json"
+  }
+}
+```
+<br>
+
 #### <a name='CreateDecisionNodeType'>Create a Decision Node Type</a>
 
 Here is an example of creating a decision node type.
@@ -2219,6 +2635,45 @@ Here is an example of creating a decision node type.
                   }
               ]
           }
+}
+```
+<br>
+
+#### <a name='GetCodeFileRevisionSummary'>Get a Code File Revision Summary</a>
+
+Here is an example of retrieving the summary of the specific code file revision.
+
+```json
+{
+  "GET": "/decisions/codeFiles/{codeFileId}/revisions/{revisionId}",
+  "headers":{
+        "Accept":"application/vnd.sas.summary+json"
+    }
+}
+```
+<br>
+
+#### <a name='DeleteCodeFileRevision'>Delete a Code File Revision</a>
+
+Here is an example of deleting a specific code file revision.
+
+```json
+{
+  "DELETE": "/decisions/codeFiles/{codeFileId}/revisions/{revisionId}"
+}
+```
+<br>
+
+#### <a name='GetCollectionCodeFileRevisions'>Get the Collection of Code File Revisions</a>
+
+Here is an example of retrieving a list of code file revisions.
+
+```json
+{
+  "GET": "/decisions/codeFiles/{codeFileId}/revisions",
+  "headers": {
+    "Accept": "application/vnd.sas.collection+json"
+  }
 }
 ```
 <br>
@@ -2343,4 +2798,4 @@ Here is an example of retrieving decision step code for a specific decision node
 ```
 <br>
 
-version 6, last updated 17 November, 2020
+version 8, last updated 25 January, 2021

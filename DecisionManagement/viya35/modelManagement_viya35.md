@@ -1,4 +1,4 @@
-# Model Management API
+# Model Management API for SAS Viya 3.5
 The Model Management API consists of functions that integrate with the Model Repository API.
 
 Here are the functions that this API provides:
@@ -8,6 +8,8 @@ Here are the functions that this API provides:
 * Retrieve mapped model score code
 * Retrieve publishable model code
 * Associate an object with a workflow process
+
+For more information, see [_SAS Model Manager: User's Guide_](https://documentation.sas.com/?cdcId=mdlmgrcdc&cdcVersion=15.3&docsetId=mdlmgrug).
 
 ## API Request Examples Grouped by Object Type
 
@@ -50,9 +52,8 @@ Here are the functions that this API provides:
 <details>
 <summary>See Also</summary>
 
-* [Model Management API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#model-management)
+* [Model Management API documentation](https://developer.sas.com/apis/rest/v3.5/DecisionManagement/#model-management)
 </details>
-
 
 #### <a name='CreatePerformanceTask'>Create a Performance Task</a>
 Here is an example of defining a performance task for a model. After submitting the request, a performance task definition is created and a task ID is returned. The task ID can be used later to execute a performance task.
@@ -560,4 +561,4 @@ Here is an example of the response:
 }
 ```
 
-version 4, last updated on 25 January, 2021
+version 3, last updated on 25 January, 2021
