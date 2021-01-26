@@ -45,6 +45,7 @@ Here are the functions that this API provides:
 * [Publish a decision to the maslocal destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.4&docsetId=edmresttut&docsetTarget=p0scry8g4y8v6gn13esxsf9jg9xp.htm&locale=en)
 </details>
 
+
 #### <a name='CreateCASDestination'>Create a CAS Destination</a>
 Here is an example of creating a definition for a CAS (SAS Cloud Analytic Services) publishing destination.
 

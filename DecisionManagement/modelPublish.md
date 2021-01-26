@@ -16,8 +16,9 @@ Here are the functions that this API provides:
 
 * [Create a CAS destination](#CreateCASDestination)
 * [Create an Amazon Web Services destination](#CreateAWSDestination)
-* [Create a private docker destination](#CreateDockerDestination)
+* [Create a Private Docker destination](#CreateDockerDestination)
 * [Create an Azure destination](#CreateAzureDestination)
+* [Create a Git repository destination](#CreateGitDestination)
 * [Create a Teradata destination](#CreateTeradataDestination)
 * [Create a Hadoop destination](#CreateHadoopDestination)
 * [Update a CAS destination](#UpdateCASDestination)
@@ -148,6 +149,34 @@ The property `credDomainId` is created by the SAS Credentials service. These cre
                  "value": "<kubernetesCluster>"},
                  {"name": "externalIP",                
                  "value": "<externalIP>"}
+                  ]
+  }
+}
+```
+<br>
+
+#### <a name='CreateGitDestination'>Create a Git Repository Destination</a>
+Here is an example of creating a definition for a Git repository publishing destination. 
+The property `DomainID` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
+
+```json
+{
+  "POST": "/modelPublish/destinations",
+  "headers": {
+    "Content-Type": "application/vnd.sas.models.publishing.destination.git+json",
+    "Accept": "application/vnd.sas.models.publishing.destination+json"
+  },
+  "body": {
+	"name":"myGit",
+    "destinationType":"git",
+    "properties": [{"name": "DomainID",                
+                 "value": "<myDomainId>"},
+                 {"name": "RemoteRepositoryURL",                
+                 "value": "<RemoteRepositoryURL>"},
+                 {"name": "LocalRepositoryLocation",                
+                 "value": "<LocalRepositoryLocation>"},
+                 {"name": "UserEmail",                
+                 "value": "<UserEmail>"}
                   ]
   }
 }
@@ -389,5 +418,4 @@ Here is an example of retrieving a published model.
 }
 ```
 
-
-version 5, last updated on 14 August, 2020
+version 6, last updated on 24 December, 2020
