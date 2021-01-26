@@ -418,5 +418,4 @@ Here is an example of retrieving a published model.
 }
 ```
 
-
 version 6, last updated on 24 December, 2020
