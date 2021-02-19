@@ -18,6 +18,7 @@ Here are the functions that this API provides:
 * [Create an Amazon Web Services destination](#CreateAWSDestination)
 * [Create a Private Docker destination](#CreateDockerDestination)
 * [Create an Azure destination](#CreateAzureDestination)
+* [Create an Azure Machine Learning destination](#CreateAMLDestination)
 * [Create a Git repository destination](#CreateGitDestination)
 * [Create a Teradata destination](#CreateTeradataDestination)
 * [Create a Hadoop destination](#CreateHadoopDestination)
@@ -95,7 +96,7 @@ If the property 'region' is not specified, the `us-east-1` property value is use
 <br>
 
 #### <a name='CreateDockerDestination'>Create a Private Docker Destination</a>
-Here is an example of creating a definition for a private docker publishing destination. 
+Here is an example of creating a definition for a private docker publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId`, `secrets : dockerRegistryPasswd`)
 The property `baseRepoUrl` is required. If the property `dockerHost` is not specified, the service uses the docker socket in the local system by default.
 
@@ -122,7 +123,7 @@ The property `baseRepoUrl` is required. If the property `dockerHost` is not spec
 <br>
 
 #### <a name='CreateAzureDestination'>Create an Azure Destination</a>
-Here is an example of creating a definition for an Azure publishing destination. 
+Here is an example of creating a definition for an Azure publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId, azureAppId`, `secrets : dockerRegistryPasswd, azureAppPasswd`)
 
 ```json
@@ -155,9 +156,35 @@ The property `credDomainId` is created by the SAS Credentials service. These cre
 ```
 <br>
 
+#### <a name='CreateAMLDestination'>Create an Azure Machine Learning Destination</a>
+Here is an example of creating a definition for an Azure Machine Learning publishing destination.
+The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId, amlAppId`, `secrets : dockerRegistryPasswd, amlAppPasswd`)
+
+```json
+{
+  "POST": "/modelPublish/destinations",
+  "headers": {
+    "Content-Type": "application/vnd.sas.models.publishing.destination.aml",
+    "Accept": "application/vnd.sas.models.publishing.destination+json"
+  },
+  "body": {
+	"name":"myAml",
+    "destinationType":"aml",
+    "properties": [{"name": "credDomainId",                
+                 "value": "<myDomainId>"},
+                 {"name": "baseRepoUrl",                
+                 "value": "<baseRepoUrl>"},
+                 {"name": "subscriptionId",                
+                 "value": "<subscriptionId>"}
+                  ]
+  }
+}
+```
+<br>
+
 #### <a name='CreateGitDestination'>Create a Git Repository Destination</a>
-Here is an example of creating a definition for a Git repository publishing destination. 
-The property `DomainID` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
+Here is an example of creating a definition for a Git repository publishing destination.
+The property `credDomainID` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
 
 ```json
 {
@@ -169,14 +196,14 @@ The property `DomainID` is created by the SAS Credentials service. These credent
   "body": {
 	"name":"myGit",
     "destinationType":"git",
-    "properties": [{"name": "DomainID",                
+    "properties": [{"name": "credDomainID",                
                  "value": "<myDomainId>"},
-                 {"name": "RemoteRepositoryURL",                
-                 "value": "<RemoteRepositoryURL>"},
-                 {"name": "LocalRepositoryLocation",                
-                 "value": "<LocalRepositoryLocation>"},
-                 {"name": "UserEmail",                
-                 "value": "<UserEmail>"}
+                 {"name": "remoteRepositoryURL",                
+                 "value": "<remoteRepositoryURL>"},
+                 {"name": "localRepositoryLocation",                
+                 "value": "<localRepositoryLocation>"},
+                 {"name": "userEmail",                
+                 "value": "<userEmail>"}
                   ]
   }
 }
@@ -418,4 +445,4 @@ Here is an example of retrieving a published model.
 }
 ```
 
-version 6, last updated on 24 December, 2020
+version 7, last updated on 18 February, 2021

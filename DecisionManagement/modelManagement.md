@@ -48,11 +48,16 @@ Here are the functions that this API provides:
 </details>
 
 <details>
+<summary>SAS Model Manager News</summary>
+
+* [Retrieve SAS Model Manager RSS feed](#RetrieveModelManagerRSS)
+</details>
+
+<details>
 <summary>See Also</summary>
 
 * [Model Management API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#model-management)
 </details>
-
 
 #### <a name='CreatePerformanceTask'>Create a Performance Task</a>
 Here is an example of defining a performance task for a model. After submitting the request, a performance task definition is created and a task ID is returned. The task ID can be used later to execute a performance task.
@@ -560,4 +565,21 @@ Here is an example of the response:
 }
 ```
 
-version 4, last updated on 25 January, 2021
+#### <a name='RetrieveModelManagerRSS'>Retrieve SAS Model Manager RSS Feed</a>
+Here is an example of retrieving the RSS feed from SAS Communities for SAS Model Manager.
+
+```
+GET /news
+    Accept: application/rss+xml
+```
+
+The key data in this example are the following:
+
+* `featured=true` (default is true) pulls only articles that are marked "Featured" by a community manager or another delegate.
+* `description=false` (default is true) leaves out the body of the article (smaller feed).
+* `board=` specifies the board ID (in this case “library” for the SAS Community Library), which indicates the scope of the content.
+* `label=` specifies the label to match (in this case “SAS Model Manager”) within the library articles.
+
+These parameters are used in the bootstrap configuration for the Model Management API service. The result is an RSS feed https://communities.sas.com/plugins/custom/sasinstitute/sasinstitute/featured-rss
+
+version 5, last updated on 18 February, 2021
