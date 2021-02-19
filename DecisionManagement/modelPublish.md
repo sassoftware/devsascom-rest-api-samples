@@ -1,5 +1,5 @@
 # Model Publish API 
-The Model Publish API provides support for publishing objects to CAS, Hadoop, Private Docker, SAS Micro Analytic Service, or Teradata, as well as container destinations such as Amazon Web Services (AWS), Azure, and Private Docker.
+The Model Publish API provides support for publishing objects to CAS, Git, Hadoop, Private Docker, SAS Micro Analytic Service, or Teradata, as well as Azure Machine Learning (AML), and container destinations such as Amazon Web Services (AWS), Azure, and Private Docker.
 
 Here are the functions that this API provides:
 
