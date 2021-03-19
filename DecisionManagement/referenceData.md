@@ -3,22 +3,24 @@ Reference data defines key business values that are needed to be leveraged acros
 
 Here are some examples of reference data:
 
- * a list of country codes
- * a list of units suitable for measuring length
- * a list of service level agreements and what each level stands for
- * a mapping of companies to industry segments
+* a list of country codes
+* a list of units suitable for measuring length
+* a list of service level agreements and what each level stands for
+* a mapping of companies to industry segments
+* a list of global variables
 
 Note: These examples show the use of reference data as providing standards, types and codes, taxonomy, and relationships. Reference data can change at different intervals but changes are generally controlled and in most cases do not happen frequently.
 
 Reference data can be used in multiple ways. Reference data that provides criteria for a customer loyalty program can be used in expressions in business rules that when executed, renders a conclusion about something. Reference data that provides specifications of financial products can be used across layers of a financial enterprise to ensure the integrity of inter-operation with third parties.
 
-Reference data appear in lookup tables. A lookup table provides a link from one value to another value. For example, a lookup table of product codes allows a product to be identified using a code.
+One type of reference data is lookup tables. A lookup table provides a link from one value to another value. For example, a lookup table of product codes allows a product to be identified using a code.
 
 Reference data can be defined by standard bodies or by an organization for standardizing its own information. For the latter case, there is a need for properly managing reference data as the data are often used in a wide range of applications within the organization.
 
 The Reference Data API supports the life cycle of reference data from creation to CRUD operations to production publishing. This API provides an important aspect of reference data management by providing the history of data values.
 
 Version 1.0 of the Reference Data API supports reference data in lookup table form.
+Version 3.0 of the Reference Data API adds support for global variables.
 
 
 #### Why Use this API?
@@ -46,6 +48,7 @@ Version 1.0 of the Reference Data API supports reference data in lookup table fo
 <summary>Reference Data Domain Content</summary>
 
 * [Create a reference data domain content](#CreateReferenceDataDomainContent)
+* [Create a reference data domain content with entries](#CreateReferenceDataDomainContentWithEntries)
 * [Update a reference data domain content](#UpdateReferenceDataDomainContent)
 * [Get a reference data domain content](#GetReferenceDataDomainContent)
 * [Delete a reference data domain content](#DeleteReferenceDataDomainContent)
@@ -146,6 +149,34 @@ Here is an example of creating a reference data domain content.
 ```
 <br>
 
+#### Create a Reference Data Domain Content with Entries
+
+Here is an example of creating a reference data domain content with entries.
+
+```json
+{
+  "POST": "/referenceData/domains/{domainId}/contents",
+  "headers": {
+    "Content-Type": "application/vnd.sas.data.reference.domain.content.full+json",
+    "Accept": "application/vnd.sas.data.reference.domain.content.full+json"
+  },
+  "body": {
+    "label": "initiated",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "status": "developing",
+    "entries": [
+         { "key": "severe",
+           "value": "1 hour"
+         },
+         { "key": "urgent",
+           "value": "3 hours"
+         }
+    ]
+  }
+}
+```
+<br>
 
 #### Update a Reference Data Domain Content
 
@@ -421,6 +452,6 @@ Here is an example of getting indexed data of reference data domains.
 
 
 
-version 4, last updated 25 January, 2020
+version 6, last updated 19 March, 2021
 
 

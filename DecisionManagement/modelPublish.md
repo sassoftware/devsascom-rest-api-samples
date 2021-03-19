@@ -28,6 +28,8 @@ Here are the functions that this API provides:
 * [Get a destination](#GetDestination)
 * [Delete a destination](#DeleteDestination)
 * [Get the collection of destinations](#GetCollectionDestinations)
+* [Get the collection of Git folders](#GetGitFolders)
+* [Get a Git folder](#GetGitFolder)
 </details>
 
 <details>
@@ -390,7 +392,6 @@ Here is an example of publishing a model to a specified publishing destination.
 ```
 <br>
 
-
 #### <a name='PublishModelAnalyticStoreDestination'>Publish a Model with an Analytic Store to a Destination</a>
 Here is an example of publishing a model that contains an analytic store CAS table to a specified destination.
 
@@ -445,4 +446,48 @@ Here is an example of retrieving a published model.
 }
 ```
 
-version 7, last updated on 18 February, 2021
+<br>
+
+#### <a name='GetGitFolders'>Get the Collection of Git Folders</a>
+Here is an example of retrieving a list of the Git destination folders.
+
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders",
+  "headers": {
+    "Accept": "application/vnd.sas.collection+json"
+  }
+}
+```
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders?parentGitFolder={/parentFolder}",
+  "headers": {
+    "Accept": "application/vnd.sas.collection+json"
+  }
+}
+```
+
+<br>
+
+#### <a name='GetGitFolder'>Get a Git folder</a>
+Here is an example of retrieving a Git destination folder.
+
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders/{gitFolderName}",
+  "headers": {
+    "Accept": "application/vnd.sas.models.publishing.destination.git.folder+json"
+  }
+}
+```
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders/{gitFolderName}?parentGitFolder={/parentFolder}",
+  "headers": {
+    "Accept": "application/vnd.sas.models.publishing.destination.git.folder+json"
+  }
+}
+```
+
+version 8, last updated on 19 March, 2021

@@ -2083,12 +2083,12 @@ The only restriction on the text column is that it must not contain the tab char
 
 **Request**
 ```
-  POST http://www.example.com/subjectContacts/traces
+  POST http://www.example.com/subjectContacts/traces?scope=step
   Headers:
   * Content-Type = text/tab-separated-values
   * Accept = multipart/mixed, application/json
   Body:
-traceid	seqno	action	tracetimestamp	objecturi	processornote	text
+traceid	seqno	action	tracetimestamp	objecturi	processornote	text	
 954931B7-2425-CB45-90D2-756189E18F72	1	append	2020-08-10T16:44:12Z	/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558		VVCT#STARTING_NODE_TRACE#954931B7-2425-CB45-90D2-756189E18F72
 VVCT#954931B7-2425-CB45-90D2-756189E18F72#/decisions/flows/835b0890-bca3-42f1-8a50-9dcce2c4a377/revisions/6f5c045a-94a6-4f9b-9adc-cc1dde33558#Start
 VVCT#954931B7-2425-CB45-90D2-756189E18F72#a=1
@@ -2131,7 +2131,7 @@ Here is an example of retrieving a list of traces that are produced by executing
 
 **Request**
 ```
-  GET http://www.example.com/subjectContacts/traces
+  GET http://www.example.com/subjectContacts/traces?scope=step
   Headers:
   * Accept = application/vnd.sas.collection+json
   Body:
@@ -2251,7 +2251,7 @@ Here is an example of finding text that is produced by executing decisions.
 
 **Request**
 ```
-  GET http://www.example.com/subjectContacts/traces?filter=and(ge(traceTimeStamp,'2020-08-07T12:00:00Z'),lt(traceTimeStamp,'2020-08-07T12:00:00Z'))
+  GET http://www.example.com/subjectContacts/traces?filter=and(ge(traceTimeStamp,'2020-08-07T12:00:00Z'),lt(traceTimeStamp,'2020-08-07T12:00:00Z'))&scope=step
   Headers:
   * Accept = text/tab-separated-values
   Body:
@@ -2295,7 +2295,7 @@ Here is an example of updating the `processorNote` field.
 
 **Request**
 ```
-  POST http://www.example.com/subjectContacts/traces
+  POST http://www.example.com/subjectContacts/traces?scope=step
   Headers:
   * Content-Type = text/tab-separated-values
   * Accept = multipart/mixed, application/json
@@ -2343,11 +2343,11 @@ Content-ID: Global-Issue
 
 #### <a name='delete-traces-with-filter'>Delete Traces That Match Filter Conditions</a>
 
-Here is an example of deleting all text where the `processorNote` field has a value.
+Here is an example of deleting all text where the `processorNote` field has a value. By using the scope parameter with the "all" value, both decision step boundary traces and variable assignment variable traces are deleted in the same operation.
 
 **Request**
 ```
-  DELETE http://www.example.com/subjectContacts/traces?filter=not(isNull(processorNote))
+  DELETE http://www.example.com/subjectContacts/traces?filter=not(isNull(processorNote))&scope=all
   Headers:
   Body:
 ```
@@ -2369,7 +2369,7 @@ The `reportUri` and `processedTimeStamp` content is stored in the `processorNote
 
 **Request**
 ```
-  POST http://www.example.com/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process
+  POST http://www.example.com/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process?scope=step
   Headers:
   Body:
 ```
@@ -2391,8 +2391,8 @@ The `reportUri` and `processedTimeStamp` content is stored in the `processorNote
      {
        "method":"POST",
        "rel":"self",
-       "href":"/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process",
-       "uri":"/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process",
+       "href":"/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process?scope=step",
+       "uri":"/subjectContacts/traces/6d707a51-62b3-40a4-4973-b2d9f12d20fe/process?scope=step",
        "type":"application/vnd.sas.decision.trace.report"
      },
      {
@@ -2404,8 +2404,8 @@ The `reportUri` and `processedTimeStamp` content is stored in the `processorNote
      {
        "method":"GET",
        "rel":"rawContent",
-       "href":"/subjectContacts/traces?filter=eq(traceId,'6d707a51-62b3-40a4-4973-b2d9f12d20fe')",
-       "uri":"/subjectContacts/traces?filter=eq(traceId,'6d707a51-62b3-40a4-4973-b2d9f12d20fe')",
+       "href":"/subjectContacts/traces?filter=eq(traceId,'6d707a51-62b3-40a4-4973-b2d9f12d20fe')&scope=step",
+       "uri":"/subjectContacts/traces?filter=eq(traceId,'6d707a51-62b3-40a4-4973-b2d9f12d20fe')&scope=step",
        "type":"text/tab-separated-values"
      }
   ]
@@ -2414,4 +2414,4 @@ The `reportUri` and `processedTimeStamp` content is stored in the `processorNote
 
 <br>
 
-version 3, last updated 25 January, 2021
+version 4, last updated 19 March, 2021
