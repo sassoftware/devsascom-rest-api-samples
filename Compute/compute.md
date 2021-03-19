@@ -138,7 +138,7 @@ The following attributes can be set in the media types for requests that are use
 
 ##### sessionInactiveTimeout
 
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request), [`Session Request`](#application-vnd.sas.compute.session.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request), [`Session Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.session.request)
 * Type: Integer
 * Units: Seconds
 
@@ -151,7 +151,7 @@ session that is created from that context.  If specified in a session request, t
 
 ##### resetLogLineNumbers
 
-* Valid: [`Job Request`](#application-vnd.sas.compute.job.request)
+* Valid: [`Job Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.job.request)
 * Type: Boolean
 * Availability: Added in version 2 of the resource.
 
@@ -159,7 +159,7 @@ If this attribute is set for a job request, then the log line numbers are reset 
 execution.
 
 ##### allowXCMD
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
 * Type: String
 * Availability:  Added in version 3 of the API.
 
@@ -170,7 +170,7 @@ such as *"powerUsers"*, then the users that are members of that Identity group a
 
 ##### homeDirectory
 
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request), [`Session Request`](#application-vnd.sas.compute.session.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request), [`Session Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.session.request)
 * Type: String
 * Availability:  Added in version 3 of the API.
 
@@ -182,7 +182,7 @@ The home directory has the same life time as the Compute session.
 
 ##### unsafeJobCharacters
 
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
 * Type: String
 * Availability: Added in version 3 of the API.
 
@@ -206,7 +206,7 @@ Even when the attribute is disabled, semicolons (;) are always stripped from a v
 
 ##### runServerAs
 
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
 * Type: String
 * Availability:  Added in version 3 of the API.
 
@@ -218,7 +218,7 @@ in the Examples section for more information.
 
 ##### reuseServerProcesses
 
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
 * Type: Boolean
 * Availability:  Added in version 3 of the API.
 
@@ -227,7 +227,7 @@ also have a *runServerAs* attribute specified.
 
 ##### serverInactiveTimeout
 
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
 * Type: Integer
 * Availability:  Added in version 3 of the API.
 
@@ -237,7 +237,7 @@ active Compute sessions.
 
 ##### reuseServerLimit
 
-* Valid: [`Context Request`](#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
 * Type: Integer
 * Availability:  Added in version 3 of the API.
 
@@ -305,6 +305,7 @@ the *n*th Compute session is created, no additional sessions are created. When t
 * [Assign a new fileref](#AssignNewFileref)
 * [Download file from a fileref](#DownloadFileFromFileref)
 * [Upload a file to a fileref](#UploadFileToFileref)
+* [Upload a Unicode-encoded file to a fileref](#UploadUnicodeFileToFileref)
 * [Handle a directory fileref](#HandleDirectoryFileref)
 * [Handle a concatenation fileref](#HandleConcatenationFileref)
 </details>
@@ -318,6 +319,7 @@ the *n*th Compute session is created, no additional sessions are created. When t
 * [Delete a file or directory](#DeleteFileViaPath)
 * [List members of a directory](#ListDirMembers)
 * [Create a directory](#CreateDirectory)
+* [Create an empty file](#CreateFile)
 * [Rename a file or a directory](#RenameFileDirectory)
 * [Copy a file or directory](#CopyFileDirectory)
 </details>
@@ -362,7 +364,7 @@ project to handle the creation of their contexts for them. See Compute-Bootstrap
 By default, Compute servers run under the account that is associated with the client token that is provided to the Compute
 API.  However, there might be cases when it is preferable to run under a shared service account.
 In these cases, the server runs under the shared service account, but the user's identity is used in the session.
-This avoids the need to have each end user defined on the machines or nodes where the Compute server is deployed.
+This avoids the need to define each end user on the machines or nodes where the Compute server is deployed.
 
 To make Compute servers run under a shared service account, specify a `runServerAs` attribute with the user name of the
 service account credential as the value. The service account credential is then used by the Compute context to configure Compute servers. See the
@@ -411,7 +413,7 @@ Alternatively, you can add the `runServerAs` attribute when you update an existi
 
 ##### <a name='ReuseComputeServers'>Reuse Compute Servers</a>
 By default, a Compute server is used only for a single Compute session. The server terminates when the
-session is destroyed. There are cases where it might be useful to have the server continue to run so
+session is destroyed. There are cases where it might be useful to continue to run the server so
 that it can be reused for a later Compute session. When you enable reuse, a server is reused when reuse is possible.  Servers still
 allow only a single session at any given time.
 
@@ -419,7 +421,7 @@ To enable server reuse, you must configure the server to run as a shared account
 to control the reuse of a Compute server process.
 
 * reuseServerProcesses - A Boolean value that indicates that servers should be reused.
-* serverInactiveTimeout - A timeout value, in seconds, that indicates how long an idle
+* serverInactiveTimeout - A time-out value, in seconds, that indicates how long an idle
                           server continues to run before it is shut down. A server is idle when it
                           does not currently have an active Compute session. The default value
                           is 600 (10 minutes).
@@ -427,6 +429,10 @@ to control the reuse of a Compute server process.
                      By default, the server can be reused as
                      many times as necessary. If the limit is specified as *n*, then when the *nth* session is deleted,
                      the server shuts down.
+* serverMinAvailable - A value that indicates the minimum number of available servers that the Compute
+                     service attempts to keep available.  This value is optional.  When this
+                     attribute is set, an application should not need to wait for the launching
+                     of a server process when a request for a Compute session is made.
 
 You can specify these attributes when you create a context:
 ```
@@ -447,7 +453,8 @@ You can specify these attributes when you create a context:
         "runServerAs" : "myuser",
         "reuseServerProcesses" : true,
         "serverInactiveTimeout" : 300,
-        "serverReuseLimit" : 10
+        "serverReuseLimit" : 10,
+        "serverMinAvailable" : 1
      }
   }
 ```
@@ -470,7 +477,8 @@ Alternatively, you can specify these attributes when you update an existing cont
         "runServerAs" : "myuser",
         "reuseServerProcesses" : true,
         "serverInactiveTimeout" : 300,
-        "serverReuseLimit" : 10
+        "serverReuseLimit" : 10,
+        "serverMinAvailable" : 1
       }
   }
 ```
@@ -598,7 +606,7 @@ Compute sessions protect against code injection by using variables that are prov
 Variable values are processed and the following character is removed by default:
 * ; (semicolon)
 
-Additionally, these characters are masked by the %NRSTR quoting function by default:
+Also, these characters are masked by the %NRSTR quoting function by default:
 * & (ampersand)
 * " (double-quote)
 * ' (single-quote)
@@ -688,7 +696,7 @@ that are defined when the context is created.
 * The Compute server process runs under the identity of the user that is requesting the session.
 
 ##### <a name='AddSessionOpts'>Add Session Options</a>
-A session can be created with customized startup options that use the options array in the environment object of
+A session can be created with customized start up options that use the options array in the environment object of
 application/vnd.sas.compute.session.request.
 
 The options apply directly to the SAS session that is started.
@@ -700,7 +708,7 @@ An example would be:
      "name": "MySession",
      "description": "This is my session for doing some simple work.",
      "attributes": {
-    
+
      },
      "environment": {
        "options": [
@@ -790,7 +798,7 @@ Variables are never shown in results, so the output member has no effect here.
 Compute server expects the URI to point to a source definition
 resource that has been created using the DataSources API. A SAS libref with the same name as the source definition resource is
 created, and the libref is defined to reference the information that is stored in this
-source defintion resource. Your code can then access this SAS libref and the tables
+source definition resource. Your code can then access this SAS libref and the tables
 that are available in this library. For resources that are assigned JOB scope, the
 libref is deassigned when the associated job completes.
 
@@ -804,7 +812,7 @@ job must fail if the resource cannot be created.
 
 ##### <a name='SpecifyServiceAccountCredentials'>Specify Service Account Credentials</a>
 Service account credentials allow Compute servers to be run under a specific shared service
-account rather than the end user account. Service account credentials allow users who do not have an account on the
+account rather than the end-user account. Service account credentials allow users who do not have an account on the
 Compute server host to use a Compute server.
 
 Many service account credentials can exist in the Credentials service at any given time. The
@@ -822,7 +830,7 @@ and the second request adds the service account credential to the domain.
 The following example shows the requests that are necessary to create a service account credential
 for the user *userName* with password *password* (BASE64 encoded as *cGFzc3dvcmQ=*). The
 domain ID can be any unique value such as a UUID. These requests must be performed by a
-user in the SAS Adminstrators group.
+user in the SAS Administrators group.
 
 ```
 PUT /credentials/9fba5e25-9238-4d02-8a2f-ece09cccc2dd/domainId
@@ -922,15 +930,18 @@ processing. To obtain the Compute session log, make a request to the following e
 ```
    GET /compute/sessions/{sessionId}/log
 ```
-You can add query parameters to a request. The most useful is the timeout parameter that enables long polling
-for an endpoint. The timeout value tells the Compute server the longest amount of time (in seconds) to wait
-for information to return. If no timeout value is specified, a default value of 60 seconds is used.
+You can add query parameters to a request. The most useful is the time-out parameter that enables long polling
+for an endpoint. The time-out value tells the Compute server the maximum time (in seconds) to wait
+for at least one line of output to be generated that meets the criteria specified by the other query parameters,
+as shown in the following example:
 
 ```
    GET /compute/sessions/{sessionId}/log?timeout=30
 ```
-The response to this request is a collection of application/vnd.sas.compute.logline entries that describe the lines of the
-log.
+By default, the response to this request is a collection of application/vnd.sas.compute.logline entries that describe the
+lines of the session log.  However, if the Accept header on the request specifies text/plain, the entire session log is returned
+as ordinary text encoded in UTF-8 with CRLF as the line delimiters.  No query parameters are honored when requesting
+the output as plain text.
 
 ##### <a name='GetJobLog'>Get the Log from a Job</a>
 
@@ -940,15 +951,18 @@ from a job is a subset of the log from the Compute session. The request itself i
 ```
    GET /compute/sessions/{sessionId}/jobs/{jobId}/log
 ```
-You can add query parameters to a request. The most useful is the timeout parameter, that enables long polling
-for an endpoint. The timeout value tells the Compute server the longest amount of time (in seconds) to wait
-for information to return. If no timeout is specified, a default value of 60 seconds is used.
+You can add query parameters to a request. The most useful is the time-out parameter, that enables long polling
+for an endpoint. The time-out value tells the Compute server the maximum time (in seconds) to wait
+for at least one line of output to be generated that meets the criteria specified by the other query parameters or
+for the job to end, as shown in the following example:
 
 ```
    GET /compute/sessions/{sessionId}/jobs/{jobId}/log?timeout=30
 ```
-The response to this request is a collection of application/vnd.sas.compute.logline entries that describe the lines of the
-log.
+By default, the response to this request is a collection of application/vnd.sas.compute.logline entries that describe the
+lines of the job log.  However, if the Accept header on the request specifies text/plain, the entire job log is returned
+as ordinary text encoded in UTF-8 with CRLF as the line delimiters.  No query parameters are honored when requesting
+the output as plain text.
 
 ##### <a name='ResetLineNumbers'>Reset Log Line Numbers</a>
 
@@ -1015,7 +1029,7 @@ and the value is returned as text.
 
 ##### <a name='AccessSessionOpts'>Access Session Options</a>
 You can access SAS options via the options endpoint on the session. To get the value of a specific SAS option that is
-used in the session, such as VALIDVARNAME, submit the following submit the following request.
+used in the session, such as VALIDVARNAME, submit the following request.
 
 ```
   GET /compute/sessions/{sessionId}/options/VALIDVARNAME
@@ -1036,7 +1050,7 @@ category, a 400 error is returned.
 
 ##### <a name='GetEngines'>Get Available Engines</a>
 
-To support the Data Sources API, we allow you to request the list of available SAS libref engines for
+To support the Data Sources API, you can request the list of available SAS libref engines for
 a Compute context. To get the list of available engines from the Compute service, submit the following
 request.
 
@@ -1233,7 +1247,7 @@ If you have the correct permissions, you can delete a table or data set by submi
 ```
 
 
-#### Accessing Files Via Filerefs
+#### Accessing Files via Filerefs
 The following are descriptions of how to work with files via filerefs in the Compute service. The term fileref is based on the
 concept of a SAS fileref.
 
@@ -1274,6 +1288,27 @@ body of the request is written to the file.
 Conditional PUT support is enabled for this endpoint. To submit data to update the fileref, the current ETag must be
 provided.
 
+##### <a name='UploadUnicodeFileToFileref'>Upload a Unicode-encoded File to a Fileref</a>
+In following example, a fileref "myref" is assigned to a Unicode-encoded physical file "NC_Counties.shp".
+When a 'uploadFileContent' operation is performed through "myref" fileref,
+SAS would write out a BOM (byte-order marker) prefix by default.
+To avoid a BOM prefix written out, set SAS system option BOMFILE as NOBOMFIE.
+Refer to SAS documentation on BOMFILE option for more details.
+```
+  POST /compute/sessions/{sessionId}/filerefs
+
+  {
+  "accessMethod": "DISK",
+  "name": "myref",
+  "options": "encoding='utf8' recfm=D termstr=LF",
+  "path": "/sasuser/NC_Counties.shp",
+  }
+
+  PUT /compute/sessions/{sessionId}/filerefs/myref}/content
+  If-Match: "<etag>"
+  Content-Type: application/octet-stream
+```
+
 ##### <a name='AppendFileToFileref'>Append a File to a Fileref</a>
 To append a file to the server that is using the fileref, submit a POST request to the content endpoint for that fileref.
 The body of the request is appended to the file.
@@ -1283,7 +1318,7 @@ The body of the request is appended to the file.
 ```
 
 ##### <a name='HandleDirectoryFileref'>Handle a Directory Fileref</a>
-If a fileref refers to a directory rather than a single file, you can get a directoy listing by setting the Accept
+If a fileref refers to a directory rather than a single file, you can get a directory listing by setting the Accept
 header on the GET request for the content endpoint to application/vnd.sas.collection. A collection of
 application/vnd.sas.compute.fileref.directory.member objects is returned.
 
@@ -1319,18 +1354,18 @@ To append a member file in the directory, submit a POST request to the content e
 
 ##### <a name='HandleConcatenationFileref'>Handle a Concatenated Fileref</a>
 In some cases, a fileref refers to a concatenated list of flat files, such as "('file1.txt' 'file2.txt' ..)".
-A GET request to the content endpoint for this kind of fileref downloads the content of all the flat files in the
+A GET request to the content endpoint for this type of fileref downloads the content of all the flat files in the
 concatenation list.
 ```
   GET /compute/sessions/{sessionId}/filerefs/{fileref}/content
 ```
-A PUT request on the content endpoint for this kind of fileref uploads content to the first file in the
+A PUT request on the content endpoint for this type of fileref uploads content to the first file in the
 concatenation list.
 ```
   PUT /compute/sessions/{sessionId}/filerefs/{fileref}/content
 ```
 In some cases, a fileref refers to a concatenated list of directories, such as "('dir1' 'dir2' ...)".
-A GET request on the content endpoint for this kind of fileref returns a list of all members in all
+A GET request on the content endpoint for this type of fileref returns a list of all members in all
 directories in the concatenation list.
 ```
  GET /compute/sessions/{sessionId}/filerefs/{fileref}/content
@@ -1338,7 +1373,7 @@ directories in the concatenation list.
 A fileref that refers to a concatenation of files and directories is not supported and receives an error at fileref
 assignment.
 
-#### Accessing Files Via a File or Directory Path
+#### Accessing Files via a File or Directory Path
 The following are descriptions of how to work with files via file paths in the Compute service.
 
 ##### <a name='GetFileDirectoryProperties'>Get the Properties of a File or Directory</a>
@@ -1382,6 +1417,15 @@ The `isDirectory` attribute should be set as *true*.
   POST /compute/sessions/{sessionId}/files/{directoryPath}
 ```
 
+##### <a name='CreateFile'>Create an Empty File</a>
+
+To create an empty file, submit a POST request with a request body of type application/vnd.sas.compute.file.properties.
+The URL specifies the directory path.  The request body specifies the file name.
+The `isDirectory` attribute should be set as *false*.
+```
+  POST /compute/sessions/{sessionId}/files/{directoryPath}
+```
+
 ##### <a name='RenameFileDirectory'>Rename a File or a Directory</a>
 To rename a file or directory, submit a PUT request with a request body of type application/vnd.sas.compute.file.properties.
 The URL specifies the original file or directory path.
@@ -1412,4 +1456,4 @@ This forces the Session to be destroyed.
 are no longer reachable.
 
 
-version 3, last updated 26 Nov, 2019
+version 5, last updated 19 March, 2021
