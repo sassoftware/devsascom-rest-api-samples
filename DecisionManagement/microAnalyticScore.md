@@ -60,6 +60,8 @@ These examples are written in [UnRAVL](https://github.com/sassoftware/unravl).
 * [Execute the module step with time-out (execution completed before time-out period)](#execute-step-wait-completed)
 * [Execute the module step with time-out(execution not completed before the time-out period)](#execute-step-wait-timedOut)
 * [Execute the module step with binary input](#execute-step-binary)
+* [Execute the module step with metadata](#execute-step-with_metadata)
+
 </details>
 
 <details>
@@ -649,7 +651,9 @@ Validate the module step inputs and submit for execution. If the execution does 
 ```
 ##### <a name="execute-step-binary">Execute the Module Step with Binary Input and Output</a>
 
-Use the `encoding` field on any `inputs` variable to execute a step with binary input. Upon successful execution, any `outputs` variable that is a base64 encoded binary value has `encoding` set to `b64`. Any input or output variable that has `encoding` set to null is not a base64 encoded binary value.
+Use the `encoding` field on any `inputs` variable to execute a step with a binary input. Upon successful execution, any `outputs` variable that is a base64 encoded binary value has `encoding` set to `b64`. Any input or output variable that has `encoding` set to null is not a base64 encoded binary value.
+
+Binary parameters must be a scalar encoded string, an array of encoded strings, or null.
 
 ```json {
     "POST": "http://www.example.com/microanalyticScore/modules/36af8e3c-6a37-4494-a8e0-9cc96ad62232/steps/test_binary",
@@ -660,13 +664,22 @@ Use the `encoding` field on any `inputs` variable to execute a step with binary 
     "body": {
         "inputs": [
             {
-                "name": "binaryInput",
+                "name": "scalarBinaryInput",
                 "value": "3q2+7w==",
                 "encoding": "b64"
             },
             {
-                "name": "notBinaryInput",
+                "name": "arrayBinaryInput",
+                "value": ["3q2+7w==", "3q2+7w==", "3q2+7w=="],
+                "encoding": "b64"
+            },
+            {
+                "name": "scalarNonBinaryInput",
                 "value": "this is a string"
+            },
+            {
+                "name": "arrayNonBinaryInput",
+                "value": ["this is a string", "this is another string"]
             }
         ]
     },
@@ -683,14 +696,23 @@ Use the `encoding` field on any `inputs` variable to execute a step with binary 
                 "executionState": "completed",
                 "output": [
                     {
-                        "name": "binaryOutput",
+                        "name": "scalarBinaryOutput",
                         "value": "3q2+7w==",
                         "encoding": "b64"
                     },
                     {
-                        "name": "notBinaryOutput",
+                        "name": "arrayBinaryOutput",
+                        "value": ["3q2+7w==", "3q2+7w==", "3q2+7w=="],
+                        "encoding": "b64"
+                    },
+                    {
+                        "name": "scalarNonBinaryOutput",
                         "value": "this is a string"
                     },
+                    {
+                        "name": "arrayNonBinaryOutput",
+                        "value": ["this is a string", "this is another string"]
+                    }
                 ],
                 "version": 2            
             }
@@ -698,6 +720,113 @@ Use the `encoding` field on any `inputs` variable to execute a step with binary 
     ]
 }
 ```
+
+##### <a name="execute-step-with_metadata">Execute the Module Step with Metadata and Return the Results with Metadata</a>
+
+Using the inputs, execute the step and receive the resulting output. Also send the metadata to group the executions with client_id and transaction_id. Upon successful execution, the `outputs` variable in the reply contains the output of the execution. The server sends back metadata in the output consisting of client_id and transaction_id markers from the input. The `executionState` variable in the reply is assigned the value "completed".
+
+```json {
+    "POST": "http://www.example.com/microanalyticScore/modules/36af8e3c-6a37-4494-a8e0-9cc96ad62232/steps/test_all_types",
+    "headers": {
+        "Accept" : "application/vnd.sas.microanalytic.module.step.input",
+        "Content-Type": "application/vnd.sas.microanlytic.module.step.output"
+    },
+    "body": {
+        "inputs": [
+            {
+                "name": "in_string",
+                "value": "This is a test..."
+            },
+            {
+                "name": "in_bigint",
+                "value": 987654321
+            },
+            {
+                "name": "in_int",
+                "value": 7654321
+            },
+            {
+                "name": "in_double",
+                "value": 0.9997
+            }
+        ],
+        "metadata": { 
+            "client_id": "client123",
+            "transaction_id": "12345"
+        }
+    },
+    "assert": [
+        { 
+            "headers": { 
+                "Content-Type": "application/vnd.sas.microanalytic.module.step.output+json;charset=UTF-8"
+            }
+        },
+        {
+            "body": {
+                "moduleId": "0BCA724F-53D7-3540-8A62-4E2731D69813",
+                "stepId": "test_all_types",
+                "executionState": "completed",
+                "output": [
+                    {
+                        "name": "out_string",
+                        "value": "This is a test..."
+                    },
+                    {
+                        "name": "out_bigint",
+                        "value": 987654321
+                    },
+                    {
+                        "name": "out_int",
+                        "value": 7654321
+                    },
+                    {
+                        "name": "out_double",
+                        "value": 0.9997
+                    },
+                    {
+                        "name": "string_arr",
+                        "value": [
+                          "This is a test...",
+                          "This is a test...",
+                          "This is a test..."
+                        ]
+                    },
+                    {
+                        "name": "bigint_arr",
+                        "value": [
+                          987654321,
+                          987654321,
+                          987654321
+                        ]
+                    },
+                    {
+                        "name": "int_arr",
+                        "value": [
+                          7654321,
+                          7654321,
+                          7654321
+                        ]
+                    },
+                    {
+                        "name": "double_arr",
+                        "value": [
+                          0.9997,
+                          0.9997,
+                          0.9997
+                        ]
+                    }
+                ],
+                "version": 2 ,
+          "metadata": { 
+            "client_id": "client123",
+            "transaction_id": "12345",
+            }                
+          }
+        }
+    ]
+}
+```
+
 
 #### <a name="create-a-module-asynchronously">Create a Module Asynchronously</a>
 
@@ -761,4 +890,4 @@ Create a job to asynchronously publish DS2 source into memory. This takes a modu
 
 
 
-version 4, last updated 21 Nov, 2019
+version 6, last updated 19 March, 2021

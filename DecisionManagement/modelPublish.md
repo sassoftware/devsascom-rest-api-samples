@@ -1,5 +1,5 @@
 # Model Publish API 
-The Model Publish API provides support for publishing objects to CAS, Hadoop, Private Docker, SAS Micro Analytic Service, or Teradata, as well as container destinations such as Amazon Web Services (AWS), Azure, and Private Docker.
+The Model Publish API provides support for publishing objects to CAS, Git, Hadoop, Private Docker, SAS Micro Analytic Service, or Teradata, as well as Azure Machine Learning (AML), and container destinations such as Amazon Web Services (AWS), Azure, and Private Docker.
 
 Here are the functions that this API provides:
 
@@ -18,6 +18,7 @@ Here are the functions that this API provides:
 * [Create an Amazon Web Services destination](#CreateAWSDestination)
 * [Create a Private Docker destination](#CreateDockerDestination)
 * [Create an Azure destination](#CreateAzureDestination)
+* [Create an Azure Machine Learning destination](#CreateAMLDestination)
 * [Create a Git repository destination](#CreateGitDestination)
 * [Create a Teradata destination](#CreateTeradataDestination)
 * [Create a Hadoop destination](#CreateHadoopDestination)
@@ -27,6 +28,8 @@ Here are the functions that this API provides:
 * [Get a destination](#GetDestination)
 * [Delete a destination](#DeleteDestination)
 * [Get the collection of destinations](#GetCollectionDestinations)
+* [Get the collection of Git folders](#GetGitFolders)
+* [Get a Git folder](#GetGitFolder)
 </details>
 
 <details>
@@ -95,7 +98,7 @@ If the property 'region' is not specified, the `us-east-1` property value is use
 <br>
 
 #### <a name='CreateDockerDestination'>Create a Private Docker Destination</a>
-Here is an example of creating a definition for a private docker publishing destination. 
+Here is an example of creating a definition for a private docker publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId`, `secrets : dockerRegistryPasswd`)
 The property `baseRepoUrl` is required. If the property `dockerHost` is not specified, the service uses the docker socket in the local system by default.
 
@@ -122,7 +125,7 @@ The property `baseRepoUrl` is required. If the property `dockerHost` is not spec
 <br>
 
 #### <a name='CreateAzureDestination'>Create an Azure Destination</a>
-Here is an example of creating a definition for an Azure publishing destination. 
+Here is an example of creating a definition for an Azure publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId, azureAppId`, `secrets : dockerRegistryPasswd, azureAppPasswd`)
 
 ```json
@@ -155,9 +158,35 @@ The property `credDomainId` is created by the SAS Credentials service. These cre
 ```
 <br>
 
+#### <a name='CreateAMLDestination'>Create an Azure Machine Learning Destination</a>
+Here is an example of creating a definition for an Azure Machine Learning publishing destination.
+The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId, amlAppId`, `secrets : dockerRegistryPasswd, amlAppPasswd`)
+
+```json
+{
+  "POST": "/modelPublish/destinations",
+  "headers": {
+    "Content-Type": "application/vnd.sas.models.publishing.destination.aml",
+    "Accept": "application/vnd.sas.models.publishing.destination+json"
+  },
+  "body": {
+	"name":"myAml",
+    "destinationType":"aml",
+    "properties": [{"name": "credDomainId",                
+                 "value": "<myDomainId>"},
+                 {"name": "baseRepoUrl",                
+                 "value": "<baseRepoUrl>"},
+                 {"name": "subscriptionId",                
+                 "value": "<subscriptionId>"}
+                  ]
+  }
+}
+```
+<br>
+
 #### <a name='CreateGitDestination'>Create a Git Repository Destination</a>
-Here is an example of creating a definition for a Git repository publishing destination. 
-The property `DomainID` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
+Here is an example of creating a definition for a Git repository publishing destination.
+The property `credDomainID` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
 
 ```json
 {
@@ -169,14 +198,14 @@ The property `DomainID` is created by the SAS Credentials service. These credent
   "body": {
 	"name":"myGit",
     "destinationType":"git",
-    "properties": [{"name": "DomainID",                
+    "properties": [{"name": "credDomainID",                
                  "value": "<myDomainId>"},
-                 {"name": "RemoteRepositoryURL",                
-                 "value": "<RemoteRepositoryURL>"},
-                 {"name": "LocalRepositoryLocation",                
-                 "value": "<LocalRepositoryLocation>"},
-                 {"name": "UserEmail",                
-                 "value": "<UserEmail>"}
+                 {"name": "remoteRepositoryURL",                
+                 "value": "<remoteRepositoryURL>"},
+                 {"name": "localRepositoryLocation",                
+                 "value": "<localRepositoryLocation>"},
+                 {"name": "userEmail",                
+                 "value": "<userEmail>"}
                   ]
   }
 }
@@ -363,7 +392,6 @@ Here is an example of publishing a model to a specified publishing destination.
 ```
 <br>
 
-
 #### <a name='PublishModelAnalyticStoreDestination'>Publish a Model with an Analytic Store to a Destination</a>
 Here is an example of publishing a model that contains an analytic store CAS table to a specified destination.
 
@@ -418,4 +446,48 @@ Here is an example of retrieving a published model.
 }
 ```
 
-version 6, last updated on 24 December, 2020
+<br>
+
+#### <a name='GetGitFolders'>Get the Collection of Git Folders</a>
+Here is an example of retrieving a list of the Git destination folders.
+
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders",
+  "headers": {
+    "Accept": "application/vnd.sas.collection+json"
+  }
+}
+```
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders?parentGitFolder={/parentFolder}",
+  "headers": {
+    "Accept": "application/vnd.sas.collection+json"
+  }
+}
+```
+
+<br>
+
+#### <a name='GetGitFolder'>Get a Git folder</a>
+Here is an example of retrieving a Git destination folder.
+
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders/{gitFolderName}",
+  "headers": {
+    "Accept": "application/vnd.sas.models.publishing.destination.git.folder+json"
+  }
+}
+```
+```json
+{
+  "GET": "/modelPublish/destinations/{gitDestinationName}/gitFolders/{gitFolderName}?parentGitFolder={/parentFolder}",
+  "headers": {
+    "Accept": "application/vnd.sas.models.publishing.destination.git.folder+json"
+  }
+}
+```
+
+version 8, last updated on 19 March, 2021
