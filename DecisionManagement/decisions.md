@@ -37,6 +37,7 @@ This API enables users to build and retrieve decision making processes that can 
 * [Create a decision with treatments](#CreateDecisionTreatments)
 * [Create a decision with branches](#CreateDecisionBranches)
 * [Create a decision with links](#CreateDecisionLinks)
+* [Create a decision using workflow](#CreateDecisionWorkflow)
 * [Update a decision](#UpdateDecision)
 * [Get a decision](#GetDecision)
 * [Get a decision summary](#GetDecisionSummary)
@@ -49,6 +50,8 @@ This API enables users to build and retrieve decision making processes that can 
 * [Get all versions for a decision](#GetAllVersionsDecision)
 * [Get the last modified date and time for a decision version](#GettheLastModifiedDateTimeDecisionVersion)
 * [Get the generated code for a specific version of a decision](#GetGeneratedCodeSpecificVersionDecision)
+* [Get the decision node reference objects for a specific version of a decision](#GetDecisionNodeReferenceObjects)
+* [Get all checkouts of a specific version of a decision](#GetAllCheckoutsDecision)
 </details>
 
 <details>
@@ -2430,6 +2433,34 @@ Here is an example of retrieving the DS2 package code for a specific version of 
 ```
 <br>
 
+#### <a name='GetDecisionNodeReferenceObjects'>Get the Decision Node Reference Objects for a Decision Version</a>
+
+Here is an example of retrieving the decision node reference objects of a decision version.
+
+```json
+{
+	"GET":"/decisions/flows/{decisionId}/revisions/{revisionId}/nodeObjects",
+	"headers": {
+        "Accept":"application/vnd.sas.collection"
+	}
+}
+```
+<br>
+
+#### <a name='GetAllCheckoutsDecision'>Get All the Checkouts for a Decision Version</a>
+
+Here is an example of retrieving all the checkouts for a decision version.
+
+```json
+{
+	"GET":"/decisions/flows/{decisionId}/revisions/{revisionId}/checkOuts",
+	"headers": {
+        "Accept":"application/vnd.sas.collection"
+	}
+}
+```
+<br>
+
 
 #### <a name='CreateCodeFile'>Create a Code File</a>
 
@@ -2638,6 +2669,372 @@ Here is an example of creating a decision node type.
 }
 ```
 <br>
+#### <a name='CreateDecisionWorkflow'>Create a Decision with the Workflow Configuration Enabled</a>
+
+Here is an example of creating a decision where the workflow configuration is enabled.  
+<br>
+Note: The API request is identical to a create request when the workflow configuration is disabled. However, the response also contains information about the state of the decision's workflow and a link to retrieve the decision workflow tasks.
+
+```json
+{
+	"POST": "/decisions/flows/",
+	"headers":{
+		"Accept":"application/vnd.sas.decision+json",
+		"Content-Type":"application/vnd.sas.decision+json"
+	},
+	"body":{
+	   "name": "CreditOffer",
+	   "signature": [
+	      {
+	         "name": "CustIncome",
+	         "direction": "inOut",
+	         "dataType": "decimal"
+	      },
+	      {
+	         "name": "EM_PROBABILITY",
+	         "direction": "output",
+	         "dataType": "decimal"
+	      },
+	      {
+	         "name": "EM_SEGMENT",
+	         "direction": "input",
+	         "dataType": "decimal"
+	      },
+	      {
+	         "name": "YOJ",
+	         "direction": "inOut",
+	         "dataType": "decimal"
+	      },
+	      {
+	         "name": "DELINQ",
+	         "direction": "inOut",
+	         "dataType": "decimal"
+	      },
+	      {
+	         "name": "origin",
+	         "direction": "input",
+	         "dataType": "string",
+	         "defaultValue" : "WEB"
+	      },
+	      {
+	         "name": "CreditAmount",
+	         "direction": "output",
+	         "dataType": "integer"
+	      },
+	      {
+	         "name": "customerId",
+	         "direction": "output",
+	         "dataType": "string"
+	      },
+	      {
+	         "name": "hasBadTransactionFlag",
+	         "direction": "output",
+	         "dataType": "integer"
+	      },
+	      {
+	         "name": "transactions",
+	         "direction": "input",
+	         "dataType": "dataGrid",
+	         "dataGridExtension": [
+                 {
+                     "name": "type",
+                     "dataType": "string",
+                     "length": 100
+                 },
+                 {
+                     "name": "amount",
+                     "dataType": "decimal"
+                 },
+                 {
+                     "name": "isBad",
+                     "dataType": "integer"
+                 }
+             ]
+	      }
+	   ],
+	   "subjectId": {
+		   "name":"customerId"	   
+		},
+	   "subjectLevel": "customer",		   
+	   "flow": {
+	      "steps": [
+	         {
+	             "type": "application/vnd.sas.decision.step.ruleset",
+	             "ruleset": {
+	                 "name": "Transaction Check",
+	                 "id": "e73870fa-1d40-44d1-99b9-2157a084adcc",
+	                 "versionId": "55555555-f66c-4090-89ed-331c3743eaf2"
+	              },
+	              "mappingDataGridName": "transactions",
+	              "mappings": [
+	                  {
+	                      "stepTermName": "YOJ",
+	                      "direction": "input",
+	                      "targetDecisionTermName": "YOJ"
+	                  },
+	                  {
+                          "targetDataGridTermName": "type",
+                          "direction": "input",
+                          "stepTermName": "transType"
+                      },
+                      {
+                          "targetDataGridTermName": "amount",
+                          "direction": "input",
+                          "stepTermName": "amount"
+                      },
+                      {
+                          "targetDataGridTermName": "isBad",
+                          "direction": "output",
+                          "stepTermName": "badTransaction"
+                      }
+	              ]
+	         },
+	         {
+	             "type": "application/vnd.sas.decision.step.ruleset",
+	             "ruleset": {
+	                 "name": "Aggregate Transaction Flag",
+	                 "id": "e73870fa-5631-44d1-99b9-2157a084adcc",
+	                 "versionId": "123456-f66c-4090-89ed-331c3743eaf2"
+	              },
+	              "mappings": [
+	                  {
+	                      "stepTermName": "flaggedTransactions",
+	                      "direction": "input",
+	                      "targetDecisionTermName": "transactions"
+	                  },
+	                  {
+	                      "stepTermName": "hasBadTransactionFlag",
+	                      "direction": "input",
+	                      "targetDecisionTermName": "hasBadTransactionFlag"
+	                  }
+	              ]
+	         }, 
+	         {
+	            "type": "application/vnd.sas.decision.step.model",
+	            "model": {
+	               "name": "CreditScore",
+	               "id": "dfeda8cc-2d5a-4e86-bfcd-17add2b08b87"
+	            },
+	            "mappings": [
+	               {
+	                  "stepTermName": "CustIncome",
+	                  "direction": "input",
+	                  "targetDecisionTermName": "CustIncome"
+	               },
+	               {
+	                  "stepTermName": "EM_PROBABILITY",
+	                  "direction": "output",
+	                  "targetDecisionTermName": "EM_PROBABILITY"
+	               },
+	               {
+	                  "stepTermName": "EM_SEGMENT",
+	                  "direction": "output",
+	                  "targetDecisionTermName": "EM_SEGMENT"
+	               }
+	            ]            
+	         },
+             {
+                "type": "application/vnd.sas.decision.step.custom.object",
+                "customObject": {
+                   "uri": "/files/files/6135a87e-f568-11e7-8c3f-9a214cf093ae",
+                   "name": "ExtendedCreditScoreFromFile",
+                   "type" : "decisionDs2CodeFile"
+                },
+                "mappings": [
+                   {
+                      "stepTermName": "CustIncome",
+                      "direction": "input",
+                      "targetDecisionTermName": "CustIncome"
+                   },
+                   {
+                      "stepTermName": "EM_PROBABILITY",
+                      "direction": "output",
+                      "targetDecisionTermName": "EM_PROBABILITY"
+                   },
+                   {
+                      "stepTermName": "EM_SEGMENT",
+                      "direction": "output",
+                      "targetDecisionTermName": "EM_SEGMENT"
+                   }
+                ]
+             },
+             {
+                "type": "application/vnd.sas.decision.step.record.contact",
+                "recordContact": {
+                   "name": "Record Contact 1",
+                   "ruleFiredTracking" : true,
+                   "pathTracking" : false,
+                   "channelTerm" : "origin",
+                   "auditTerms" : [
+                       {"name":"EM_PROBABILITY"},
+                       {"name":"CustIncome"}
+                   ]
+                }
+             },
+	         {
+	            "type": "application/vnd.sas.decision.step.condition",
+	            "condition": {
+	               "lhsTerm": {
+	                  "name": "EM_PROBABILITY"
+	               },
+	               "rhsConstant": ".8",
+	               "operator": ">"
+	            },
+	            "onTrue": {
+	               "steps": [
+	                  {
+	                     "type": "application/vnd.sas.decision.step.ruleset",
+	                     "ruleset": {
+	                        "name": "OfferCredit",
+	                        "id": "d71140fa-1d40-44d1-99b9-2157a084adcc",
+	                        "versionId": "3483ed58-f66c-4090-89ed-331c3743eaf2"
+	                     },
+	                     "mappings": [
+	                        {
+	                           "stepTermName": "YOJ",
+	                           "direction": "inOut",
+	                           "targetDecisionTermName": "YOJ"
+	                        },
+	                        {
+	                           "stepTermName": "DELINQ",
+	                           "direction": "inOut",
+	                           "targetDecisionTermName": "DELINQ"
+	                        },
+	                        {
+	                           "stepTermName": "CreditAmount",
+	                           "direction": "output",
+	                           "targetDecisionTermName": "CreditAmount"
+	                        }
+	                     ]
+	                  }
+	               ]
+	            },
+	            "onFalse": {
+	               "steps": [
+	                  {
+	                     "type": "application/vnd.sas.decision.step.ruleset",
+	                     "ruleset": {
+	                        "name": "DenyCredit",
+	                        "id": "686c1a62-0a71-486d-afca-f011c231abfc",
+	                        "versionId": "fca7da09-b3fb-4261-8c28-6f8918bab7ba"
+	                     },
+	                     "mappings": [
+	                        {
+	                           "stepTermName": "CreditAmount",
+	                           "direction": "output",
+	                           "targetDecisionTermName": "CreditAmount"
+	                        }
+	                     ]
+	                  }
+	               ]
+	            }
+	         }
+	      ]
+	   }
+	}
+}
+```
+
+`Partial response headers and body:`
+```json
+{
+      "headers" : {
+            "Location": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7",
+            "Last-Modified": "Wed, 11 Apr 2018 01:39:02 GMT",
+            "Content-Type": "application/vnd.sas.decision+json"
+      },
+      "body" : {
+           "name": "CreditOffer", 
+           "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
+           "modifiedTimeStamp": "2018-04-11T01:39:02.912Z", 
+           "creationTimeStamp": "2018-04-11T01:39:02.912Z", 
+           "createdBy": "userdoe", 
+           "modifiedBy": "userdoe", 
+           "majorRevision": 1,
+           "minorRevision": 0,
+           "properties" : 
+              {
+                  "workflowModifiedBy": "userdoe",
+                  "workflowModifiedTimeStamp": "2021-04-22T17:05:54.451Z",
+                  "workflowProcessId": "WFee71056c-e563-2112-af3b-d9799de39de5",
+                  "workflowState": "Developing"
+              },
+           "links": [
+              {
+                  "rel": "self", 
+                  "method": "GET",
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7", 
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7",
+                  "type": "application/vnd.sas.decision"
+              }, 
+              {
+                  "rel": "revisions", 
+                  "method": "GET",
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/revisions", 
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/revisions", 
+                  "type": "application/vnd.sas.collection", 
+                  "itemType": "application/vnd.sas.decision"
+              }, 
+              {
+                  "rel": "currentRevision", 
+                  "method": "GET",
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7", 
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7",
+                  "type": "application/vnd.sas.decision"
+              }, 
+              {
+                  "rel": "code", 
+                  "method": "GET",
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/code", 
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/code",
+                  "type": "text/vnd.sas.source.ds2"
+              }, 
+              {
+                  "rel": "mappedCode", 
+                  "method": "POST",
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/mappedCode", 
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/mappedCode", 
+                  "type": "application/vnd.sas.score.code.generation.request", 
+                  "responseType": "application/vnd.sas.score.mapped.code"
+              }, 
+              {
+                  "rel": "externalArtifacts", 
+                  "method": "GET",
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/externalArtifacts", 
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7/externalArtifacts", 
+                  "type": "application/vnd.sas.collection", 
+                  "itemType": "application/vnd.sas.decision.external.artifact"
+              }, 
+              {
+                  "rel": "delete", 
+                  "method": "DELETE",
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7", 
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7"
+              }, 
+              {
+                  "rel": "update", 
+                  "method": "PUT",
+                  "uri": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7", 
+                  "href": "/decisions/flows/43f73aff-2040-4152-9923-9dbb37e73ba7", 
+                  "type": "application/vnd.sas.decision", 
+                  "responseType": "application/vnd.sas.decision"
+              },
+			  {
+                  "href": "/workflow/processes/WFee71056c-e563-2112-af3b-d9799de39de5/tasks",
+                  "itemType": "application/vnd.sas.workflow.task",
+                  "method": "GET",
+                  "rel": "workflowtasks",
+                  "type": "application/vnd.sas.collection",
+                  "uri": "/workflow/processes/WFee71056c-e563-2112-af3b-d9799de39de5/tasks"			  
+			  }
+           ], 
+           "version": 2 
+        }
+}
+
+```
+
+<br>
 
 #### <a name='GetCodeFileRevisionSummary'>Get a Code File Revision Summary</a>
 
@@ -2798,4 +3195,4 @@ Here is an example of retrieving decision step code for a specific decision node
 ```
 <br>
 
-version 8, last updated 25 January, 2021
+version 11, last updated 16 June, 2021
