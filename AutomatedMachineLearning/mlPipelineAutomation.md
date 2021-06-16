@@ -46,7 +46,7 @@ Accept: application/vnd.sas.api+json
 ##### Response
 ```
 {
-    "version": 2,
+    "version": 3,
     "links": [
         {
             "method": "GET",
@@ -228,7 +228,7 @@ Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
     "name": "Test Project Creation (By MLPA FT4Pp)",
     "description": "",
     "revision": 2,
-    "version": 2,
+    "version": 3,
     "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/APITESTHMEQ",
     "type": "predictive",
     "pipelineBuildMethod": "automatic",
@@ -352,7 +352,7 @@ Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project+json
     "name": "Test Project Creation (By MLPA FT4Pp)",
     "description": "",
     "revision": 2,
-    "version": 2,
+    "version": 3,
     "dataTableUri": "/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/APITESTHMEQ",
     "type": "predictive",
     "pipelineBuildMethod": "template",
@@ -451,7 +451,7 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
     }
 }
 ```
-#### <a name='retraining-an-automation-project'>Retraining an automation project</a>
+#### <a name='retraining-an-automation-project'>Retraining an Automation Project</a>
 To retrain an automation project with changed parameters, use the retrainProject endpoint. By default, the service generates a new automated pipeline. This behavior can be overwritten with an optional query parameter
 `replacePreviousPipelines`. When set to true, the parameter instructs the service to remove all previous
 automatically generated pipelines before creating a new pipeline.
@@ -477,7 +477,7 @@ Accept: application/vnd.sas.analytics.ml.pipeline.automation.project+json
 Automation project state can be one of these enum values.
 
 - pending: indicates that the underlying analytics project was created but has not been run yet.
-- preparing: indicates that the underyling analytics project and pipeline metadata is being updated.
+- preparing: indicates that the underlying analytics project and pipeline metadata is being updated.
 - waiting: indicates that the data is being profiled.
 - ready: indicates that the underlying analytics project is prepared and ready to submit CASL code.
 - modeling: indicates that models are being composed and compared on CASL server.
@@ -813,4 +813,4 @@ GET /mlPipelineAutomation/pipelineTemplates/dm.basicbinarytargetpl.template HTTP
 }
 ```
 
-version 2, last updated on 19 March, 2021
+version 3, last updated on 16 June, 2021
