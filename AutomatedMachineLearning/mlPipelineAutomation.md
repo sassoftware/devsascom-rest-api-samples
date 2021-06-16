@@ -540,6 +540,66 @@ DELETE /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992?propa
 GET /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@championModel HTTP/1.1
 ```
 
+###### Response
+```
+200 OK
+Content-Type: application/vnd.sas.analytics.ml.pipeline.automation.project.champion.model+json
+
+{
+    "name": "Forest",
+    "links": [
+        {
+            "method": "GET",
+            "rel": "up",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project"
+        },
+        {
+            "method": "GET",
+            "rel": "self",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project.champion.model"
+        },
+        {
+            "method": "GET",
+            "rel": "championModelReports",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel/reports",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel/reports",
+            "type": "application/vnd.sas.collection"
+        },
+        {
+            "method": "PUT",
+            "rel": "registerChampionModel",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel?action=register",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel?action=register"
+        },
+        {
+            "method": "PUT",
+            "rel": "publishChampionModel",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel?action=publish",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel?action=publish"
+        },
+        {
+            "method": "POST",
+            "rel": "scoreData",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel/scoreData",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel/scoreData",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.input",
+            "responseType": "application/vnd.sas.analytics.ml.pipeline.automation.score.data.output"
+        }
+    ],
+    "publishDestinations": [
+        {
+            "name": "maslocal",
+            "description": "The default publishing destination for the Micro Analytic Score service.",
+            "destinationType": "microAnalyticService"
+        }
+    ]
+}
+```
+
 ##### Retrieving Champion Model Reports
 
 ###### Request
@@ -547,11 +607,115 @@ GET /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@
 GET /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@championModel/reports HTTP/1.1
 ```
 
+###### Response
+```
+200 OK
+Content-Type: application/vnd.sas.collection+json
+
+{
+    "version": 2,
+    "accept": "application/vnd.sas.collection+json",
+    "count": 2,
+    "start": 0,
+    "limit": 0,
+    "name": "collection",
+    "items": [
+        {
+            "creationTimeStamp": "0001-01-01T00:00:00Z",
+            "modifiedTimeStamp": "0001-01-01T00:00:00Z",
+            "revision": 0,
+            "name": "iterplot",
+            "description": "Average Squared Error",
+            "links": [
+                {
+                    "method": "GET",
+                    "rel": "document",
+                    "href": "/naturalLanguageGeneration/documents/1539c745-166e-48cc-941b-08fb41190d9d",
+                    "uri": "/naturalLanguageGeneration/documents/1539c745-166e-48cc-941b-08fb41190d9d",
+                    "type": "application/vnd.sas.cognitive.natural.language.generation.document"
+                }
+            ],
+            "version": 0,
+            "groupName": "SAS",
+            "order": 1001,
+            "type": "seriesPlot",
+            "parameterMap": {
+                "ASE": {
+                    "label": "Average Squared Error",
+                    "length": 8,
+                    "order": 4,
+                    "parameter": "ASE",
+                    "preformatted": false,
+                    "type": "num",
+                    "values": [
+                        "ASE"
+                    ]
+                },
+                // remainder omitted for brevity
+            },
+            "data": [
+                {
+                    "dataMap": {
+                        "ASE": "0.0904249061688",
+                        "DataSource": "TRAIN",
+                        "MISC": "0.124161073826",
+                        "Trees": "1"
+                    },
+                    "rowNumber": 1
+                },
+                // remainder omitted for brevity
+            ],
+            "xInteger": false,
+            "yInteger": false
+        },
+        // remainder omitted for brevity
+    ],
+    "links": [
+        {
+            "method": "GET",
+            "rel": "up",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel",
+            "type": "application/vnd.sas.analytics.ml.pipeline.automation.project.champion.model"
+        },
+        {
+            "method": "GET",
+            "rel": "self",
+            "href": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel/reports?reportName=iterplot&reportName=varimportance&reportName=dmcas_lift&reportName=dmcas_roc&reportName=dmcas_fitstat&reportName=dmcas_misc&reportName=dmcas_miscTable&reportName=dmcas_nommisc",
+            "uri": "/mlPipelineAutomation/projects/f90e6f2e-8dcc-4bd5-9fcb-f7a4fa9b2d06/models/@championModel/reports?reportName=iterplot&reportName=varimportance&reportName=dmcas_lift&reportName=dmcas_roc&reportName=dmcas_fitstat&reportName=dmcas_misc&reportName=dmcas_miscTable&reportName=dmcas_nommisc",
+            "type": "application/vnd.sas.collection"
+        }
+    ]
+}
+```
+
 ##### Retrieving Champion Model Reports with Filter
+The `reportName` parameter can be used to specify one or multiple specific reports 
+to be retrieved. If the reportName parameter is not included, a list of default
+reports are returned. The default reports returned by target type are:
+- Binary
+    - iterplot
+    - varimportance
+    - dmcas_lift
+    - dmcas_roc
+    - dmcas_fitstat
+    - dmcas_misc. The default
+- Interval
+    - iterplot
+    - varimportance
+    - dmcas_lift
+    - dmcas_fitstat
+- Nominal
+    - dmcas_lift
+    - dmcas_roc
+    - dmcas_fitstat
+    - dmcas_misc
+    - dmcas_miscTable
+    - dmcas_nommisc
 
 ###### Request
 ```
-GET /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@championModel/reports?reportName=projectSummary&reportName=varimportance HTTP/1.1
+GET /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@championModel/reports?reportName=iterplot&reportName=varimportance HTTP/1.1
 ```
 
 ##### Registering Champion Model with SAS Model Manager
