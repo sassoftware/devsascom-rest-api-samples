@@ -725,7 +725,7 @@ PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@
 
 ##### Publishing Champion Model
 ```
-PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@championModel?action=publish&destination=maslocal HTTP/1.1
+PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/models/@championModel?action=publish&destinationName=maslocal HTTP/1.1
 ```
 
 ##### Score Individual Data
