@@ -505,14 +505,31 @@ runningPipeline
 ```
 
 #### <a name='updating-automation-project-state'>Updating Automation Project State</a>
-To update the state of an automation project to "canceled", user can issue a PUT request with state "canceled".
 
-##### Request
-```
-PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/state?value=canceled HTTP/1.1
+To stop the automated modeling process, a user can issue a PUT request with
+state 'quiescing'. This state transition is only valid when the automation
+project is in the 'modeling' state. If the project has progressed past the
+modeling state at the time of the request, the request will be ignored. After a
+successful request, the project will reflect the updated 'quiescing' state,
+complete any currently running models, and attempt to construct the best
+available pipeline at that point.
+
+##### Request to Update an Automation Project State
+
+```html
+PUT /mlPipelineAutomation/projects/981738b3-10b4-48ce-8911-17b1132b7992/state?value=quiescing HTTP/1.1
 ```
 
-##### <a name='deleting-automation-projects'>Deleting Automation Projects</a>
+##### Response to Update an Automation Project State
+
+```html
+200 Ok
+Content-Type: text/plain
+
+quiescing
+```
+
+#### <a name='deleting-automation-projects'>Deleting Automation Projects</a>
 When it is not needed anymore, the automation project can be deleted with the request below. By
 default, this API deletes the automation project while keeping its associated analytics project.
 To delete both projects, use this API
