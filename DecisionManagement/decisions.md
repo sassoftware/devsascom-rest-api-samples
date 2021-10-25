@@ -73,12 +73,14 @@ This API enables users to build and retrieve decision making processes that can 
 <details>
 <summary>Decision Node Types</summary>
 
-* [Create a decision node type](#CreateDecisionNodeType)
+* [Create a static decision node type](#CreateStaticDecisionNodeType)
+* [Create a restful decision node type](#CreateRestDecisionNodeType)
 * [Get a decision node type](#GetDecisionNodeType)
 * [Get a decision node type summary](#GetDecisionNodeTypeSummary)
 * [Delete a decision node type](#DeleteDecisionNodeType)
 * [Get the collection of decision node types](#GetCollectionDecisionNodeTypes)
-* [Add content to a decision node type](#AddDecisionNodeTypeContent)
+* [Add content to a static decision node type](#AddStaticDecisionNodeTypeContent)
+* [Add content to a restful decision node type](#AddRestDecisionNodeTypeContent)
 * [Get the content for a decision node type](#GetDecisionNodeTypeContent)
 * [Get decision step code for a decision node type](#GetDecisionNodeTypeDecisionStepCode)
 </details>
@@ -2566,9 +2568,9 @@ Here is an example of retrieving a specific code file revision.
 ```
 <br>
 
-#### <a name='CreateDecisionNodeType'>Create a Decision Node Type</a>
+#### <a name='CreateStaticDecisionNodeType'>Create a Static Decision Node Type</a>
 
-Here is an example of creating a decision node type.
+Here is an example of creating a static decision node type.
 
 ```json
 {
@@ -2668,6 +2670,119 @@ Here is an example of creating a decision node type.
           }
 }
 ```
+
+#### <a name='CreateRestDecisionNodeType'>Create a Restful Decision Node Type</a>
+
+Here is an example of creating a restful decision node type.
+
+```json
+{
+  "POST": "/decisions/decisionNodeTypes",
+  "headers": {
+    "Content-Type": "application/vnd.sas.decision.node.type+json",
+    "Accept": "application/vnd.sas.decision.node.type+json"
+  },
+  "body": {
+    "name": "Demo Node Type",
+    "hasProperties": false,
+    "hasInputs": true,
+    "hasOutputs": true,
+    "inputDatagridMappable": false,
+    "outputDatagridMappable": false,
+    "inputDecisionTermMappable": true,
+    "outputDecisionTermMappable": true,
+    "independentMappings": false,
+    "themeId": "DNT_THEME1",
+    "type": "rest",
+    "style": {
+      "icon": {
+        "id": "f0c6",
+        "ref": "sas.icons.HC.BUSINESSRULES"
+      },
+      "color": 1
+    }
+  }
+}
+```
+`Partial response headers and body:`
+```json
+{
+  "headers" : {
+        "Location": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
+        "Last-Modified": "Tue, 12 Oct 2021 13:52:05 GMT",
+        "Content-Type": "application/vnd.sas.decision.node.type+json",
+        "ETag": "kuo58aix"
+  },
+  "body": {
+    "creationTimeStamp": "2021-10-12T13:52:05.193Z",
+    "modifiedTimeStamp": "2021-10-12T13:52:05.193Z",
+    "createdBy": "sasdemo",
+    "modifiedBy": "sasdemo",
+    "id": "68d60767-a9ab-43ec-92f6-9bcedae9289d",
+    "name": "Demo Node Type",
+    "hasProperties": false,
+    "hasInputs": true,
+    "hasOutputs": true,
+    "inputDatagridMappable": false,
+    "outputDatagridMappable": false,
+    "inputDecisionTermMappable": true,
+    "outputDecisionTermMappable": true,
+    "independentMappings": false,
+    "themeId": "DNT_THEME1",
+    "type": "rest",
+    "description": "Receive DS2 code from the uri provided in content.",
+    "iconId": "f0c6",
+    "iconRef": "sas.icons.HC.BUSINESSRULES",
+    "color": 1,
+    "links": [
+      {
+        "method": "GET",
+        "rel": "self",
+        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
+        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
+        "responseType": "application/vnd.sas.decision.node.type"
+      },
+      {
+        "method": "DELETE",
+        "rel": "delete",
+        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
+        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d"
+      },
+      {
+        "method": "PUT",
+        "rel": "update",
+        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
+        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
+        "type": "application/vnd.sas.decision.node.type",
+        "responseType": "application/vnd.sas.decision.node.type"
+      },
+      {
+        "method": "POST",
+        "rel": "setContent",
+        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
+        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
+        "type": "application/vnd.sas.decision.node.type.content",
+        "responseType": "application/vnd.sas.decision.node.type.content"
+      },
+      {
+        "method": "GET",
+        "rel": "content",
+        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
+        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
+        "responseType": "application/vnd.sas.decision.node.type.content"
+      },
+      {
+        "method": "GET",
+        "rel": "decisionStepCode",
+        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/decisionStepCode",
+        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/decisionStepCode",
+        "responseType": "application/vnd.sas.decision.step.code"
+      }
+    ]
+  }
+}
+```
+
 <br>
 #### <a name='CreateDecisionWorkflow'>Create a Decision with the Workflow Configuration Enabled</a>
 
@@ -3129,9 +3244,9 @@ Here is an example of retrieving a list of all decision node types.
 ```
 <br>
 
-#### <a name='AddDecisionNodeTypeContent'>Add Content to a Decision Node Type</a>
+#### <a name='AddStaticDecisionNodeTypeContent'>Add Static Content to a Decision Node Type</a>
 
-Here is an example of setting the content for a decision node type.
+Here is an example of setting the content for a static decision node type.
 
 ```json
 {
@@ -3162,6 +3277,30 @@ Here is an example of setting the content for a decision node type.
         }
     
       ]
+    }
+}
+```
+<br>
+
+#### <a name='AddRestDecisionNodeTypeContent'>Add Rest Content to a Decision Node Type</a>
+
+Here is an example of setting the content for a rest decision node type.
+
+```json
+{
+  "POST": "/decisions/decisionNodeTypes/{nodeTypeId}/content",
+  "headers": {
+    "Content-Type": "application/vnd.sas.decision.node.type.content+json",
+    "Accept": "application/vnd.sas.decision.node.type.content+json"
+  },
+  "body": 
+    {
+      "restContent": {
+        "uri":"/businessRules/ruleSets",
+        "objectTypeName":"ruleSet",
+        "editorAppId":"decisionmanager",
+        "versioned":true
+      }
     }
 }
 ```
