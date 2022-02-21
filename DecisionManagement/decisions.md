@@ -86,6 +86,16 @@ This API enables users to build and retrieve decision making processes that can 
 </details>
 
 <details>
+<summary>Decision Types</summary>
+
+* [Get a collection of decision types](#GetCollectionDecisionTypes)
+* [Create a decision type](#CreateDecsionType)
+* [Get a decision type](#GetDecisionType)
+* [Update a decision type](#UpdateDecisionType)
+* [Delete a decision type](#DeleteDecisionType)
+</details>
+
+<details>
 <summary>See Also</summary>
 
 * [Decisions API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#decisions)
@@ -3330,6 +3340,193 @@ Here is an example of retrieving decision step code for a specific decision node
   "headers": {
     "Accept": "application/vnd.sas.decision.step.code+json"
   }
+}
+```
+<br>
+
+<br>
+
+#### <a name='GetCollectionDecisionTypes'>Get a Collection of Decision Types</a>
+
+Here is an example of getting a collection of decision types.
+
+```json
+{
+  "GET": "/decisions/flowTypes",
+  "headers": {
+    "Accept": "application/vnd.sas.collection+json",
+    "Accept-Item": "application/vnd.sas.decision.type+json"
+  }
+}
+```
+
+<br>
+
+
+#### <a name='CreateDecisionType'>Create a Decision Type</a>
+
+Here is an example of creating a decision type.
+
+```json
+{
+  "POST": "/decisions/flowTypes",
+  "headers": {
+    "Content-Type": "application/vnd.sas.decision.type+json",
+    "Accept": "application/vnd.sas.decision.type+json"
+  },
+  "body":
+    {
+      "name": "Fraud",  
+      "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+      "denyDecisionNodeTypes": [
+        "ruleSet"
+      ],
+      "allowDecisionNodeTypes": [
+        "98879d99-4aaf-4d40-b18a-483659ffc32",
+        "d28e6407-6f5a-4839-8c39-d505cebff6b8"
+      ]
+    }
+}
+```
+
+`Partial response headers and body:`
+```json
+{
+      "headers" : {
+            "Location": "/decisions/flowTypes/43f73aff-2040-4152-9923-9dbb37e73ba7",
+            "Last-Modified": "Wed, 11 Apr 2018 01:39:02 GMT",
+            "Content-Type": "application/vnd.sas.decision.type+json"
+      },
+      "body" : {
+            "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
+            "name": "Fraud",
+            "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+            "denyDecisionNodeTypes": [
+                "ruleSet"
+            ],
+            "allowDecisionNodeTypes": [
+                "98879d99-4aaf-4d40-b18a-483659ffc32",
+                "d28e6407-6f5a-4839-8c39-d505cebff6b8"
+            ],
+            "creationTimeStamp": "2021-10-25T17:12:50.202Z",
+            "modifiedTimeStamp": "2021-10-25T17:12:50.202Z",
+            "createdBy": "edmdev",
+            "modifiedBy": "edmdev",
+            "version": 1
+      }
+}
+```
+
+<br>
+
+
+#### <a name='GetDecisionType'>Get a Decision Type</a>
+
+Here is an example of gettting a decision type.
+
+```json
+{
+  "GET": "/decisions/flowTypes/43f73aff-2040-4152-9923-9dbb37e73ba7",
+  "headers": {
+    "Accept": "application/vnd.sas.decision.type+json",
+  }
+}
+```
+
+`Partial response headers and body:`
+```json
+{
+      "headers" : {
+            "Last-Modified": "Wed, 11 Apr 2018 01:39:02 GMT",
+            "Content-Type": "application/vnd.sas.decision.type+json"
+      },
+      "body" : {
+            "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
+            "name": "Fraud",
+            "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+            "denyDecisionNodeTypes": [
+                "ruleSet"
+            ],
+            "allowDecisionNodeTypes": [
+                "98879d99-4aaf-4d40-b18a-483659ffc32",
+                "d28e6407-6f5a-4839-8c39-d505cebff6b8"
+            ],
+            "creationTimeStamp": "2021-10-25T17:12:50.202Z",
+            "modifiedTimeStamp": "2021-10-25T17:12:50.202Z",
+            "createdBy": "edmdev",
+            "modifiedBy": "edmdev",
+            "version": 1
+      }
+}
+```
+
+<br>
+
+
+#### <a name='UpdateDecisionType'>Update a Decision Type</a>
+
+Here is an example of updating a decision type.
+
+```json
+{
+  "PUT": "/decisions/flowTypes/43f73aff-2040-4152-9923-9dbb37e73ba7",
+  "headers": {
+    "Content-Type": "application/vnd.sas.decision.type+json",
+    "Accept": "application/vnd.sas.decision.type+json"
+  },
+  "body":
+    {
+      "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
+      "name": "Fraud",
+      "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+      "denyDecisionNodeTypes": [
+        "ruleSet"
+      ],
+      "allowDecisionNodeTypes": [
+        "98879d99-4aaf-4d40-b18a-483659ffc32",
+        "d28e6407-6f5a-4839-8c39-d505cebff6b8"
+      ]
+    }
+}
+```
+
+`Partial response headers and body:`
+```json
+{
+      "headers" : {
+            "Last-Modified": "Wed, 11 Apr 2018 02:37:02 GMT",
+            "Content-Type": "application/vnd.sas.decision.type+json"
+      },
+      "body" : {
+            "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
+            "name": "Fraud",
+            "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+            "denyDecisionNodeTypes": [
+                "ruleSet"
+            ],
+            "allowDecisionNodeTypes": [
+                "98879d99-4aaf-4d40-b18a-483659ffc32",
+                "d28e6407-6f5a-4839-8c39-d505cebff6b8"
+            ],
+            "creationTimeStamp": "2021-10-25T17:12:50.202Z",
+            "modifiedTimeStamp": "2021-10-25T17:12:50.202Z",
+            "createdBy": "edmdev",
+            "modifiedBy": "edmdev",
+            "version": 1
+      }
+}
+```
+
+<br>
+
+
+#### <a name='DeleteDecisionType'>Delete a Decision Type</a>
+
+Here is an example of deleting a decision type.
+
+```json
+{
+  "DELETE": "/decisions/flowTypes/{flowTypeId}"
 }
 ```
 <br>
