@@ -98,9 +98,9 @@ If the property 'region' is not specified, the `us-east-1` property value is use
 <br>
 
 #### <a name='CreateDockerDestination'>Create a Private Docker Destination</a>
-Here is an example of creating a definition for a private docker publishing destination.
+Here is an example of creating a definition for a private Docker publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId`, `secrets : dockerRegistryPasswd`)
-The property `baseRepoUrl` is required. If the property `dockerHost` is not specified, the service uses the docker socket in the local system by default.
+The property `baseRepoUrl` is required.
 
 ```json
 {
@@ -113,11 +113,9 @@ The property `baseRepoUrl` is required. If the property `dockerHost` is not spec
 	"name":"myDocker",
     "destinationType":"privateDocker",
     "properties": [{"name": "credDomainId",
-                  "value": "domainName"},
-                 {"name": "baseRepoUrl",                
-                 "value": "docker.mycompany.com/myfolder"},
-                 {"name": "dockerHost",                
-                 "value": "tcp://10.10.10.88:2375"}
+                   "value": "domainName"},
+                   {"name": "baseRepoUrl",                
+                   "value": "docker.mycompany.com/myfolder"}
                   ]
   }
 }
@@ -439,9 +437,30 @@ Here is an example of retrieving a published model.
 
 ```json
 {
-  "GET": "/modelPublish/models/{modelId}",
+  "GET": "/modelPublish/models/{publishId}",
   "headers": {
     "Accept": "application/json"
+  }
+}
+```
+Here is an example of retrieving the Dockerfile metadata for a published model.
+
+```json
+{
+  "GET": "/modelPublish/models/{publishId}/dockerfile",
+  "headers": {
+    "Accept": "application/vnd.sas.file+json"
+  }
+}
+```
+
+Here is an example of retrieving the Dockerfile content for a published model.
+
+```json
+{
+  "GET": "/modelPublish/models/{publishId}/dockerfile/content",
+  "headers": {
+    "Accept": "text/plain"
   }
 }
 ```
@@ -470,7 +489,7 @@ Here is an example of retrieving a list of the Git destination folders.
 
 <br>
 
-#### <a name='GetGitFolder'>Get a Git folder</a>
+#### <a name='GetGitFolder'>Get a Git Folder</a>
 Here is an example of retrieving a Git destination folder.
 
 ```json
@@ -490,4 +509,4 @@ Here is an example of retrieving a Git destination folder.
 }
 ```
 
-version 8, last updated on 19 March, 2021
+version 12, last updated on 21 February, 2022

@@ -51,36 +51,40 @@ This API enables users to build and retrieve decision making processes that can 
 * [Get the last modified date and time for a decision version](#GettheLastModifiedDateTimeDecisionVersion)
 * [Get the generated code for a specific version of a decision](#GetGeneratedCodeSpecificVersionDecision)
 * [Get the decision node reference objects for a specific version of a decision](#GetDecisionNodeReferenceObjects)
-* [Get all checkouts of a specific version of a decision](#GetAllCheckoutsDecision)
+* [Get all checkouts of a specific version of a decision](#GetALlCheckoutsDecision)
+* [Get a collection of decision legacy variables](#GetDecisionLegacyVariables)
+* [Get the direct dependent objects of a decision](#GetDecisionDirectDependentObjects)
 </details>
 
 <details>
 <summary>Code Files</summary>
 
-* [Create a code file](#CreateCodeFile)
+* [Create a DS2 code file](#CreateCodeFile)
+* [Create a custom context DS2 code file](#CreateCustomContextDS2CodeFile)
 * [Get a code file](#GetCodeFile)
 * [Get a code file summary](#GetCodeFileSummary)
+* [Get the direct dependent objects of a code file](#GetCodeFileDirectDependentObjects)
 * [Delete a code file](#DeleteCodeFile)
 * [Get the collection of code files](#GetCollectionCodeFiles)
 * [Create a code file revision](#CreateCodeFileRevision)
 * [Get a code file revision](#GetCodeFileRevision)
 * [Get a code file revision summary](#GetCodeFileRevisionSummary)
 * [Delete a code file revision](#DeleteCodeFileRevision)
-* [Get the collection of code file revisions](#GetCollectionCodeFileRevisions)
-
+* [Get a collection of code file revisions](#GetCollectionCodeFileRevisions)
 </details>
 
 <details>
 <summary>Decision Node Types</summary>
 
-* [Create a static decision node type](#CreateStaticDecisionNodeType)
-* [Create a restful decision node type](#CreateRestDecisionNodeType)
+* [Create a static decision node type](#CreateDecisionNodeTypeStatic)
+* [Create a localized static decision node type](#CreateLocalizedDecisionNodeTypeStatic)
+* [Create a REST decision node type](#CreateDecisionNodeTypeRest)
 * [Get a decision node type](#GetDecisionNodeType)
 * [Get a decision node type summary](#GetDecisionNodeTypeSummary)
 * [Delete a decision node type](#DeleteDecisionNodeType)
 * [Get the collection of decision node types](#GetCollectionDecisionNodeTypes)
-* [Add content to a static decision node type](#AddStaticDecisionNodeTypeContent)
-* [Add content to a restful decision node type](#AddRestDecisionNodeTypeContent)
+* [Add content to a static decision node type](#AddDecisionNodeTypeContentStatic)
+* [Add content to a REST decision node type](#AddDecisionNodeTypeContentRest)
 * [Get the content for a decision node type](#GetDecisionNodeTypeContent)
 * [Get decision step code for a decision node type](#GetDecisionNodeTypeDecisionStepCode)
 </details>
@@ -244,6 +248,8 @@ Here is an example of creating a decision.
 		   "name":"customerId"	   
 		},
 	   "subjectLevel": "customer",		   
+	   "customContextUri": "/decisions/codeFiles/b7e29c8d-10af-4101-aaf4-daffffc46807/revisions/8dfbf3f1-64b2-426e-aa2b-55d412f9a012",
+	   "customContextMicroAnalyticServiceUri": "/decisions/codeFiles/4cdd0b67-25c1-40bf-b897-74cc163fb4bd/revisions/fb7d2e7c-b995-4de8-a17a-0e1cdae4efe3",
 	   "flow": {
 	      "steps": [
 	         {
@@ -2009,8 +2015,8 @@ Here is an example of updating the content of a decision.
 	"PUT": "/decisions/flows/",
 	"headers":{
 		"Accept":"application/vnd.sas.decision+json",
-		"Content-Type":"application/vnd.sas.decision+json",
-		"If-Unmodified-Since" : "Wed, 11 Apr 2018 01:39:02 GMT"
+		"Content-Type":"application/vnd.sas.decision+json", 
+		"If-Match" : "\"kknyjgku\""
 	},
 	"body":{
 	   "name": "CreditOffer",
@@ -2474,9 +2480,9 @@ Here is an example of retrieving all the checkouts for a decision version.
 <br>
 
 
-#### <a name='CreateCodeFile'>Create a Code File</a>
+#### <a name='CreateCodeFile'>Create a DS2 Code File</a>
 
-Here is an example of creating a code file.
+Here is an example of creating a DS2 code file.
 
 ```json
 {
@@ -2487,7 +2493,27 @@ Here is an example of creating a code file.
     },
     "body":{
        "type": "decisionDS2PackageFile",
-       "fileUri": "/files/files/0c7281d8-063d-49dd-be6b-392e9c9e930c"
+       "fileUri": "/files/files/0c7281d8-063d-49dd-be6b-392e9c9e930c",
+       "testCustomContextUri": "/decisions/codeFiles/b7e29c8d-10af-4101-aaf4-daffffc46807/revisions/8dfbf3f1-64b2-426e-aa2b-55d412f9a012"
+    }
+}
+```
+<br>
+
+#### <a name='CreateCustomContextDS2CodeFile'>Create a Custom Context DS2 Code File</a>
+
+Here is an example of creating a custom context DS2 code file.
+
+```json
+{
+    "POST": "/decisions/codeFiles",
+    "headers":{
+        "Accept":"application/vnd.sas.decision.code.file+json",
+        "Content-Type":"application/vnd.sas.decisioncode.file+json"
+    },
+    "body":{
+       "type": "decisionCustomContextDS2CodeFile",
+       "fileUri": "/files/files/de266c05-7dcf-469f-9b5f-6a680d6e414d"
     }
 }
 ```
@@ -2517,6 +2543,34 @@ Here is an example of retrieving the summary of the specific code file.
   "headers":{
         "Accept":"application/vnd.sas.summary+json"
     }
+}
+```
+<br>
+
+#### <a name='GetCodeFileDirectDependentObjects'>Get the Direct Dependent Objects of a Code File</a>
+
+Here is an example of retrieving the direct dependent objects of a code file. The dependent objects include two revision comments and one test custom context.
+
+```json
+{
+  "GET": "/decisions/codeFiles/bfc65ced-b02e-4faf-a9e5-463575c71c6d/dependencies",
+  "headers": {
+    "Accept": "application/vnd.sas.transfer.dependencies+json"
+  }
+}
+```
+
+`Response:`
+```json
+{
+   "uri": "/decisions/codeFiles/bfc65ced-b02e-4faf-a9e5-463575c71c6d",
+   "name": "Calculate bias",
+   "dependentUris" : [
+      "/comments/comments/58bab699-0039-48a0-a68b-58bfb3b326e4",
+      "/comments/comments/1810d5fd-fdaa-4a81-aa4a-6d838c47ac25",
+      "/decisions/codeFiles/8f92126d-9d72-4273-ba5c-95bb0588e4d5"
+   ],
+   "version":2
 }
 ```
 <br>
@@ -2578,7 +2632,7 @@ Here is an example of retrieving a specific code file revision.
 ```
 <br>
 
-#### <a name='CreateStaticDecisionNodeType'>Create a Static Decision Node Type</a>
+#### <a name='CreateDecisionNodeTypeStatic'>Create a Static Decision Node Type</a>
 
 Here is an example of creating a static decision node type.
 
@@ -2680,10 +2734,115 @@ Here is an example of creating a static decision node type.
           }
 }
 ```
+<br>
+#### <a name='CreateLocalizedDecisionNodeTypeStatic'>Create a Localized Static Decision Node Type</a>
 
-#### <a name='CreateRestDecisionNodeType'>Create a Restful Decision Node Type</a>
+Here is an example of creating a localized static decision node type.
 
-Here is an example of creating a restful decision node type.
+```json
+{
+  "POST": "/decisions/decisionNodeTypes",
+  "headers": {
+    "Content-Type": "application/vnd.sas.decision.node.type+json",
+    "Accept": "application/vnd.sas.decision.node.type+json",
+    "Accept-Language": "en_US"
+  },
+  "body": {
+    "name": "Demo Node Type",
+    "hasProperties": false,
+    "hasInputs": true,
+    "hasOutputs": true,
+    "inputDatagridMappable": false,
+    "outputDatagridMappable": false,
+    "inputDecisionTermMappable": true,
+    "outputDecisionTermMappable": true,
+    "independentMappings": false,
+    "themeId": "DNT_THEME1",
+    "type": "static",
+    "l10nKey": "decisionnodetype-api-icu.demonodetype.label"
+  }
+}
+```
+`Partial response headers and body:`
+```json
+{
+  "headers" : {
+        "Location": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+        "Last-Modified": "Thu, 19 Dec 2019 19:48:09 GMT",
+        "Content-Type": "application/vnd.sas.decision.node.type+json",
+        "ETag": "k4d50fo2"
+  },
+  "body": {
+              "creationTimeStamp": "2019-12-19T19:48:09.938Z",
+              "modifiedTimeStamp": "2019-12-19T19:48:09.938Z",
+              "createdBy": "sasdemo",
+              "modifiedBy": "sasdemo",
+              "id": "8df82895-5cc8-4929-b5e0-d5401277ee52",
+              "name": "DemoNodeType",
+              "displayName": "Demo Node Type",
+              "hasProperties": false,
+              "hasInputs": true,
+              "hasOutputs": true,
+              "inputDatagridMappable": false,
+              "outputDatagridMappable": false,
+              "inputDecisionTermMappable": true,
+              "outputDecisionTermMappable": true,
+              "independentMappings": false,
+              "themeId": "DNT_THEME1",
+              "type": "static",
+              "l10nKey": "decisionnodetype-api-icu.demonodetype.label",
+              "links": [
+                  {
+                      "method": "GET",
+                      "rel": "self",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "responseType": "application/vnd.sas.decision.node.type"
+                  },
+                  {
+                      "method": "DELETE",
+                      "rel": "delete",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52"
+                  },
+                  {
+                      "method": "PUT",
+                      "rel": "update",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "type": "application/vnd.sas.decision.node.type",
+                      "responseType": "application/vnd.sas.decision.node.type"
+                  },
+                  {
+                      "method": "POST",
+                      "rel": "setContent",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "type": "application/vnd.sas.decision.node.type.content",
+                      "responseType": "application/vnd.sas.decision.node.type.content"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "content",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "responseType": "application/vnd.sas.decision.node.type.content"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "decisionStepCode",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/decisionStepCode",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/decisionStepCode",
+                      "responseType": "application/vnd.sas.decision.step.code"
+                  }
+              ]
+          }
+}
+```
+<br>
+#### <a name='CreateDecisionNodeTypeRest'>Create a REST Decision Node Type</a>
+
+Here is an example of creating a REST decision node type.
 
 ```json
 {
@@ -2702,15 +2861,14 @@ Here is an example of creating a restful decision node type.
     "inputDecisionTermMappable": true,
     "outputDecisionTermMappable": true,
     "independentMappings": false,
-    "themeId": "DNT_THEME1",
-    "type": "rest",
     "style": {
       "icon": {
         "id": "f0c6",
         "ref": "sas.icons.HC.BUSINESSRULES"
       },
       "color": 1
-    }
+    },
+    "type": "rest"
   }
 }
 ```
@@ -2718,81 +2876,83 @@ Here is an example of creating a restful decision node type.
 ```json
 {
   "headers" : {
-        "Location": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
-        "Last-Modified": "Tue, 12 Oct 2021 13:52:05 GMT",
+        "Location": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+        "Last-Modified": "Thu, 19 Dec 2019 19:48:09 GMT",
         "Content-Type": "application/vnd.sas.decision.node.type+json",
-        "ETag": "kuo58aix"
+        "ETag": "k4d50fo2"
   },
   "body": {
-    "creationTimeStamp": "2021-10-12T13:52:05.193Z",
-    "modifiedTimeStamp": "2021-10-12T13:52:05.193Z",
-    "createdBy": "sasdemo",
-    "modifiedBy": "sasdemo",
-    "id": "68d60767-a9ab-43ec-92f6-9bcedae9289d",
-    "name": "Demo Node Type",
-    "hasProperties": false,
-    "hasInputs": true,
-    "hasOutputs": true,
-    "inputDatagridMappable": false,
-    "outputDatagridMappable": false,
-    "inputDecisionTermMappable": true,
-    "outputDecisionTermMappable": true,
-    "independentMappings": false,
-    "themeId": "DNT_THEME1",
-    "type": "rest",
-    "description": "Receive DS2 code from the uri provided in content.",
-    "iconId": "f0c6",
-    "iconRef": "sas.icons.HC.BUSINESSRULES",
-    "color": 1,
-    "links": [
-      {
-        "method": "GET",
-        "rel": "self",
-        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
-        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
-        "responseType": "application/vnd.sas.decision.node.type"
-      },
-      {
-        "method": "DELETE",
-        "rel": "delete",
-        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
-        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d"
-      },
-      {
-        "method": "PUT",
-        "rel": "update",
-        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
-        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d",
-        "type": "application/vnd.sas.decision.node.type",
-        "responseType": "application/vnd.sas.decision.node.type"
-      },
-      {
-        "method": "POST",
-        "rel": "setContent",
-        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
-        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
-        "type": "application/vnd.sas.decision.node.type.content",
-        "responseType": "application/vnd.sas.decision.node.type.content"
-      },
-      {
-        "method": "GET",
-        "rel": "content",
-        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
-        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/content",
-        "responseType": "application/vnd.sas.decision.node.type.content"
-      },
-      {
-        "method": "GET",
-        "rel": "decisionStepCode",
-        "href": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/decisionStepCode",
-        "uri": "/decisions/decisionNodeTypes/68d60767-a9ab-43ec-92f6-9bcedae9289d/decisionStepCode",
-        "responseType": "application/vnd.sas.decision.step.code"
-      }
-    ]
-  }
+              "creationTimeStamp": "2019-12-19T19:48:09.938Z",
+              "modifiedTimeStamp": "2019-12-19T19:48:09.938Z",
+              "createdBy": "sasdemo",
+              "modifiedBy": "sasdemo",
+              "id": "8df82895-5cc8-4929-b5e0-d5401277ee52",
+              "name": "DemoNodeType",
+              "displayName": "Demo Node Type",
+              "hasProperties": false,
+              "hasInputs": true,
+              "hasOutputs": true,
+              "inputDatagridMappable": false,
+              "outputDatagridMappable": false,
+              "inputDecisionTermMappable": true,
+              "outputDecisionTermMappable": true,
+              "independentMappings": false,
+              "style": {
+                "icon": {
+                    "id": "f0c6",
+                    "ref": "sas.icons.HC.BUSINESSRULES"
+                },
+                "color": 1
+              },
+              "type": "rest",
+              "links": [
+                  {
+                      "method": "GET",
+                      "rel": "self",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "responseType": "application/vnd.sas.decision.node.type"
+                  },
+                  {
+                      "method": "DELETE",
+                      "rel": "delete",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52"
+                  },
+                  {
+                      "method": "PUT",
+                      "rel": "update",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52",
+                      "type": "application/vnd.sas.decision.node.type",
+                      "responseType": "application/vnd.sas.decision.node.type"
+                  },
+                  {
+                      "method": "POST",
+                      "rel": "setContent",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "type": "application/vnd.sas.decision.node.type.content",
+                      "responseType": "application/vnd.sas.decision.node.type.content"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "content",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/content",
+                      "responseType": "application/vnd.sas.decision.node.type.content"
+                  },
+                  {
+                      "method": "GET",
+                      "rel": "decisionStepCode",
+                      "href": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/decisionStepCode",
+                      "uri": "/decisions/decisionNodeTypes/8df82895-5cc8-4929-b5e0-d5401277ee52/decisionStepCode",
+                      "responseType": "application/vnd.sas.decision.step.code"
+                  }
+              ]
+          }
 }
 ```
-
 <br>
 #### <a name='CreateDecisionWorkflow'>Create a Decision with the Workflow Configuration Enabled</a>
 
@@ -3254,7 +3414,7 @@ Here is an example of retrieving a list of all decision node types.
 ```
 <br>
 
-#### <a name='AddStaticDecisionNodeTypeContent'>Add Static Content to a Decision Node Type</a>
+#### <a name='AddDecisionNodeTypeContentStatic'>Add Content to a Static Decision Node Type</a>
 
 Here is an example of setting the content for a static decision node type.
 
@@ -3291,10 +3451,9 @@ Here is an example of setting the content for a static decision node type.
 }
 ```
 <br>
+#### <a name='AddDecisionNodeTypeContentRest'>Add Content to a REST Decision Node Type</a>
 
-#### <a name='AddRestDecisionNodeTypeContent'>Add Rest Content to a Decision Node Type</a>
-
-Here is an example of setting the content for a rest decision node type.
+Here is an example of setting the content for a decision node type.
 
 ```json
 {
@@ -3303,13 +3462,14 @@ Here is an example of setting the content for a rest decision node type.
     "Content-Type": "application/vnd.sas.decision.node.type.content+json",
     "Accept": "application/vnd.sas.decision.node.type.content+json"
   },
-  "body": 
+  "body":
     {
+      "contentType":"DS2",
       "restContent": {
-        "uri":"/businessRules/ruleSets",
-        "objectTypeName":"ruleSet",
-        "editorAppId":"decisionmanager",
-        "versioned":true
+        "uri": "/myCustomTypeService/myCustomTypes",
+        "objectTypeName": "myCustomType",
+        "editorAppId": "myCustomTypesApp",
+        "versioned": true
       }
     }
 }
@@ -3336,7 +3496,7 @@ Here is an example of retrieving decision step code for a specific decision node
 
 ```json
 {
-  "GET": "/decisions/decisionNodeTypes/{nodeTypeId}/decisionStepCode",
+  "GET": "/decisions/decisionNodeTypes/{nodeTypeId}/decisionStepCode?codeTarget=microAnalyticService&populateCode=true",
   "headers": {
     "Accept": "application/vnd.sas.decision.step.code+json"
   }
@@ -3344,11 +3504,53 @@ Here is an example of retrieving decision step code for a specific decision node
 ```
 <br>
 
+#### <a name='GetDecisionLegacyVariables'>Get a Collection of Decision Legacy Variables</a>
+
+Here is an example of retrieving a list of decision legacy variables.
+
+```json
+{
+  "GET": "/decisions/flows/8264f4ba-06bb-4e8a-8d9b-04b9013217e0/legacyVariables",
+  "headers": {
+    "Accept-item": "application/vnd.sas.decision.variable+json"
+  }
+}
+```
 <br>
 
+#### <a name='GetDecisionDirectDependentObjects'>Get the Direct Dependent Objects of a Decision</a>
+
+Here is an example of retrieving the direct dependent objects of a decision. The dependent objects include one business rule set, one revision comment, one custom context, one sub-decision and two treatment groups.
+
+```json
+{
+  "GET": "/decisions/flows/8264f4ba-06bb-4e8a-8d9b-04b9013217e0/dependencies",
+  "headers": {
+    "Accept": "application/vnd.sas.transfer.dependencies+json"
+  }
+}
+```
+
+`Response:`
+```json
+{
+   "uri": "/decisions/flows/feb85c01-9adf-4ffb-b824-391aba13a763",
+   "name": "Duo treatments",
+   "dependentUris" : [
+      "/businessRules/ruleSets/008ff5f2-a2ea-4747-9b1c-fd6a59a86956",
+      "/comments/comments/162fd209-43d8-4ace-9446-7d4a93414b4e",
+      "/decisions/codeFiles/7fcf16b5-35cf-4082-90bc-55ec2f225fcf",
+      "/decisions/flows/43a5e350-3be7-4236-91b3-967c14dd98dd",
+      "/treatmentDefinitions/definitionGroups/76d3d504-a837-4a34-bf79-41de4bd96c2b",
+      "/treatmentDefinitions/definitionGroups/5cc2ee2d-ac02-4ee5-85f7-1931c6c6b4c5"
+   ],
+   "version":2
+}
+```
+<br>
 #### <a name='GetCollectionDecisionTypes'>Get a Collection of Decision Types</a>
 
-Here is an example of getting a collection of decision types.
+Here is an example of retrieving a collection of decision types.
 
 ```json
 {
@@ -3377,7 +3579,7 @@ Here is an example of creating a decision type.
   "body":
     {
       "name": "Fraud",  
-      "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+      "l10nKey": "SASFraudManagement-SASDecisionManager-gui-icu.fraud.type.label",    
       "denyDecisionNodeTypes": [
         "ruleSet"
       ],
@@ -3400,7 +3602,7 @@ Here is an example of creating a decision type.
       "body" : {
             "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
             "name": "Fraud",
-            "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+            "l10nKey": "SASFraudManagement-SASDecisionManager-gui-icu.fraud.type.label",    
             "denyDecisionNodeTypes": [
                 "ruleSet"
             ],
@@ -3410,8 +3612,8 @@ Here is an example of creating a decision type.
             ],
             "creationTimeStamp": "2021-10-25T17:12:50.202Z",
             "modifiedTimeStamp": "2021-10-25T17:12:50.202Z",
-            "createdBy": "edmdev",
-            "modifiedBy": "edmdev",
+            "createdBy": "sasdemo",
+            "modifiedBy": "sasdemo",
             "version": 1
       }
 }
@@ -3422,13 +3624,13 @@ Here is an example of creating a decision type.
 
 #### <a name='GetDecisionType'>Get a Decision Type</a>
 
-Here is an example of gettting a decision type.
+Here is an example of retrieving a decision type.
 
 ```json
 {
   "GET": "/decisions/flowTypes/43f73aff-2040-4152-9923-9dbb37e73ba7",
   "headers": {
-    "Accept": "application/vnd.sas.decision.type+json",
+    "Accept": "application/vnd.sas.decision.type+json"
   }
 }
 ```
@@ -3443,7 +3645,7 @@ Here is an example of gettting a decision type.
       "body" : {
             "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
             "name": "Fraud",
-            "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+            "l10nKey": "SASFraudManagement-SASDecisionManager-gui-icu.fraud.type.label",    
             "denyDecisionNodeTypes": [
                 "ruleSet"
             ],
@@ -3453,8 +3655,8 @@ Here is an example of gettting a decision type.
             ],
             "creationTimeStamp": "2021-10-25T17:12:50.202Z",
             "modifiedTimeStamp": "2021-10-25T17:12:50.202Z",
-            "createdBy": "edmdev",
-            "modifiedBy": "edmdev",
+            "createdBy": "sasdemo",
+            "modifiedBy": "sasdemo",
             "version": 1
       }
 }
@@ -3478,7 +3680,7 @@ Here is an example of updating a decision type.
     {
       "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
       "name": "Fraud",
-      "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+      "l10nKey": "SASFraudManagement-SASDecisionManager-gui-icu.fraud.type.label",    
       "denyDecisionNodeTypes": [
         "ruleSet"
       ],
@@ -3500,7 +3702,7 @@ Here is an example of updating a decision type.
       "body" : {
             "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
             "name": "Fraud",
-            "i18nKey": "SASSolution-SASDecisionManager-gui-icu.fraud.type.label",    
+            "l10nKey": "SASFraudManagement-SASDecisionManager-gui-icu.fraud.type.label",    
             "denyDecisionNodeTypes": [
                 "ruleSet"
             ],
@@ -3510,8 +3712,8 @@ Here is an example of updating a decision type.
             ],
             "creationTimeStamp": "2021-10-25T17:12:50.202Z",
             "modifiedTimeStamp": "2021-10-25T17:12:50.202Z",
-            "createdBy": "edmdev",
-            "modifiedBy": "edmdev",
+            "createdBy": "sasdemo",
+            "modifiedBy": "sasdemo",
             "version": 1
       }
 }
@@ -3531,4 +3733,4 @@ Here is an example of deleting a decision type.
 ```
 <br>
 
-version 11, last updated 16 June, 2021
+version 18, last updated 21 February, 2022

@@ -69,7 +69,7 @@ Version 3.0 of the Reference Data API adds support for global variables.
 * [Get indexed data of reference data domains](#GetIndexedDataReferenceDataDomains)
 </details>
 
-#### Create a Reference Data Domain
+#### <a name='CreateReferenceDataDomain'>Create a Reference Data Domain</a>
 
 Here is an example of creating a reference data domain.
 
@@ -83,13 +83,14 @@ Here is an example of creating a reference data domain.
   "body": {
     "name": "serviceLevel",
     "description": "The service level designation.",
-    "domainType": "lookup"
+    "domainType": "lookup",
+    "checkout": false
   }
 }
 ```
 <br>
 
-#### Get a Reference Data Domain
+#### <a name='GetReferenceDataDomain'>Get a Reference Data Domain</a>
 
 Here is an example of retrieving a reference data domain.
 
@@ -103,7 +104,7 @@ Here is an example of retrieving a reference data domain.
 ```
 <br>
 
-#### Delete a Reference Data Domain
+#### <a name='DeleteReferenceDataDomain'>Delete a Reference Data Domain</a>
 
 Here is an example of deleting a reference data domain.
 
@@ -114,7 +115,7 @@ Here is an example of deleting a reference data domain.
 ```
 <br>
 
-#### Get a Collection of Reference Data Domains
+#### <a name='GetCollectionReferenceDataDomains'>Get a Collection of Reference Data Domains</a>
 
 Here is an example of retrieving a collection of reference data domains.
 
@@ -128,7 +129,7 @@ Here is an example of retrieving a collection of reference data domains.
 ```
 <br>
 
-#### Create a Reference Data Domain Content
+#### <a name='CreateReferenceDataDomainContent'>Create a Reference Data Domain Content</a>
 
 Here is an example of creating a reference data domain content.
 
@@ -149,7 +150,7 @@ Here is an example of creating a reference data domain content.
 ```
 <br>
 
-#### Create a Reference Data Domain Content with Entries
+#### <a name='CreateReferenceDataDomainContentWithEntries'>Create a Reference Data Domain Content with Entries</a>
 
 Here is an example of creating a reference data domain content with entries.
 
@@ -178,7 +179,7 @@ Here is an example of creating a reference data domain content with entries.
 ```
 <br>
 
-#### Update a Reference Data Domain Content
+#### <a name='UpdateReferenceDataDomainContent'>Update a Reference Data Domain Content</a>
 
 Here are examples of updating a reference data domain content.
 
@@ -215,7 +216,7 @@ Example 2: Change the status to production.
 ```
 <br>
 
-#### Get a Reference Data Domain Content
+#### <a name='GetReferenceDataDomainContent'>Get a Reference Data Domain Content</a>
 
 Here is an example of getting a reference data domain content.
 
@@ -229,7 +230,7 @@ Here is an example of getting a reference data domain content.
 ```
 <br>
 
-#### Delete a Reference Data Domain Content
+#### <a name='DeleteReferenceDataDomainContent'>Delete a Reference Data Domain Content</a>
 
 Here is an example of deleting a reference data domain content.
 
@@ -240,7 +241,7 @@ Here is an example of deleting a reference data domain content.
 ```
 <br>
 
-#### Get a Reference Data Domain Content Collection
+#### <a name='GetReferenceDataDomainContentCollection'>Get a Reference Data Domain Content Collection</a>
 
 Here is an example of getting a reference data domain content collection.
 
@@ -254,7 +255,7 @@ Here is an example of getting a reference data domain content collection.
 ```
 <br>
 
-#### Add or Replace Entries in a Reference Data Domain Content
+#### <a name='AddReplaceEntriesReferenceDataDomainContent'>Add or Replace Entries in a Reference Data Domain Content</a>
 
 Example 1: After adding or replacing entries, the first page of entries is displayed.
 
@@ -311,7 +312,7 @@ Example 3: Add or replace entries using a body of text/csv and all entries are r
 ```
 <br>
 
-#### Modify Reference Data Domain Content
+#### <a name='ModifyReferenceDataDomainContent'>Modify Reference Data Domain Content</a>
 
 Here is an example of replacing the value of an entry, deleting an entry, and adding an entry to a reference data domain.
 
@@ -340,7 +341,7 @@ Here is an example of replacing the value of an entry, deleting an entry, and ad
 ```
 <br>
 
-#### Get the Current Content Information of a Reference Data Domain
+#### <a name='GetCurrentContentInformationReferenceDataDomain'>Get the Current Content Information of a Reference Data Domain</a>
 
 Here is an example of getting the current content information of a reference data domain.
 
@@ -354,7 +355,7 @@ Here is an example of getting the current content information of a reference dat
 ```
 <br>
 
-#### Get All the Current Contents Information of a Reference Data Domain
+#### <a name='GetCurrentContentsInformationReferenceDataDomain'>Get All the Current Contents Information of a Reference Data Domain</a>
 
 Here is an example of getting all of the current contents information of a reference data domain.
 
@@ -368,7 +369,7 @@ Here is an example of getting all of the current contents information of a refer
 ```
 <br>
 
-#### Copy the Current Content of a Reference Data Domain
+#### <a name='CopyCurrentContentReferenceDataDomain'>Copy the Current Content of a Reference Data Domain</a>
 
 Here is an example of copying the current content of a reference data domain to an execution environment.
 
@@ -390,7 +391,7 @@ Here is an example of copying the current content of a reference data domain to 
 ```
 <br>
 
-#### Get All the Entries from the Latest Content of All Reference Data Domains
+#### <a name='GetEntriesLatestContentReferenceDataDomains'>Get All the Entries from the Latest Content of All Reference Data Domains</a>
 
 Here is an example of getting all the entries from the latest content of all reference data domains.
 
@@ -404,7 +405,7 @@ Here is an example of getting all the entries from the latest content of all ref
 ```
 <br>
 
-#### Add Entries to a New Content of One or More Reference Data Domains
+#### <a name='AddEntriesNewContentReferenceDataDomains'>Add Entries to a New Content of One or More Reference Data Domains</a>
 
 Here is an example of adding entries to a new content of one or more reference data domains and then creating all the necessary reference data domains. Optional, put those domains in folders.
 
@@ -420,7 +421,7 @@ Here is an example of adding entries to a new content of one or more reference d
 ```
 <br>
 
-#### Get an Indexed Data Collection of Reference Data Domains
+#### <a name='GetIndexedDataCollectionReferenceDataDomains'>Get an Indexed Data Collection of Reference Data Domains</a>
 
 Here is an example of getting an indexed data collection of reference data domains.
 
@@ -434,7 +435,7 @@ Here is an example of getting an indexed data collection of reference data domai
 ```
 <br>
 
-#### Get Indexed Data of Reference Data Domains
+#### <a name='GetIndexedDataReferenceDataDomains'>Get Indexed Data of Reference Data Domains</a>
 
 Here is an example of getting indexed data of reference data domains.
 
@@ -452,6 +453,6 @@ Here is an example of getting indexed data of reference data domains.
 
 
 
-version 6, last updated 19 March, 2021
+version 9, last updated 21 February, 2022
 
 
