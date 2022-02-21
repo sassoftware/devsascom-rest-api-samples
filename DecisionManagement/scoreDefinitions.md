@@ -20,10 +20,11 @@ A score definition contains the following details:
 
 * [Specifying the type of input data as a CAS table](#SpecifyingInputDataTypeCASTable)
 * [Specifying the type of input data as inline](#SpecifyingInputDataInline)
+* [Specifying the type of input data as scenario](#SpecifyingInputDataScenario)
 </details>
 
 <details>
-<summary>Update a Score Definitions</summary>
+<summary>Update Score Definitions</summary>
 
 * [Replacing all parts of the score definition with new data](#ReplacingScoreDefinitionNewData)
 </details>
@@ -187,6 +188,52 @@ body:
     mappingType: static
     mappingValue: 100000
 ```
+#### Example 3: <a name='SpecifyingInputDataScenario'>Specifying the Type of Input Data as Scenario</a>
+```json
+{
+  "POST": "/definitions",
+  "headers": {
+    "Content-Type": "application/vnd.sas.score.definition+json",
+    "Accept": "application/vnd.sas.score.definition+json"
+  },
+  "body": {
+    "name": "My Scenario Score Definition",
+    "objectDescriptor": {
+      "uri": "/decisions/flows/17ee66ee-63d6-11e6-8b77-86f30ca893d3"
+    },
+    "inputData": {
+      "type": "Scenario"
+    },
+    "mappings": [
+      {
+        "variableName": "Make",
+        "mappingType": "static",
+        "mappingValue": "HYUNDAI"
+      },
+      {
+        "variableName": "Model",
+        "mappingType": "static",
+        "mappingValue": "ELANTRA"
+      },
+      {
+        "variableName": "Odometer",
+        "mappingType": "static",
+        "mappingValue": 108811
+      },
+      {
+        "variableName": "Maximum_Mileage",
+        "mappingType": "static",
+        "mappingValue": 100000
+      },
+      {
+        "variableName": "RejectCar",
+        "mappingType": "expected",
+        "mappingValue": true
+      }
+    ]
+  }
+}
+```
 
 ### Updating a Score Definition
 Here is an example of <a name='ReplacingScoreDefinitionNewData'>replacing all parts of the score definition with new data</a>.
@@ -238,6 +285,7 @@ Here is an example of <a name='ReplacingScoreDefinitionNewData'>replacing all pa
 
 ### Searching a Score Definition
 Here are some examples of searching a score definition.
+Note: Accept-Item can be application/vnd.sas.summary+json, application/vnd.sas.score.definition+json or application/vnd.sas.score.definition.summary+json 
 <br/>
 #### Example 1: <a name='SearchByName'>Search by Name</a>
 ```json
@@ -298,4 +346,4 @@ Here is an example of <a name='DeleteScoreDefinition'>deleting a score definitio
 ```
 
 
-version 1, last updated 21 Nov, 2019
+version 3, last updated 21 February, 2022

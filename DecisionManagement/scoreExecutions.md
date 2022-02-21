@@ -173,7 +173,7 @@ NOTE: The Score Execution API creates a new score definition using the inline sc
 
 #### Example 3: <a name='CreateOverrideScoreDefinition'>Create an Override Score Definition</a>
 
-NOTE: A new score definition is created by merging the details of the persisted score definition and the override score definition. details.
+NOTE: A new score definition is created by merging the details of the persisted score definition, and the override score definition details.
 <br/> 
 NOTE: You can override any combinations of objectDescriptor, inputData, and mappings.
 
@@ -244,7 +244,7 @@ NOTE: You can override any combinations of objectDescriptor, inputData, and mapp
 }
 ```
 
-NOTE: For clarity, the example above is shown as YAML below.
+Note: For clarity, here is the previous JSON code example in the YAML code format.
 
 ```yaml
 POST: "/executions"
@@ -785,4 +785,4 @@ Here is an example of <a name='CreateScoreAnalysisType'>creating a score analysi
 }
 ```
 
-version 1, last updated 21 Nov, 2019
+version 2, last updated 21 February, 2022

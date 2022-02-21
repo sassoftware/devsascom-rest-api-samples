@@ -32,9 +32,11 @@ This API manages business rules and retrieves the code to be able to leverage th
 * [Get the collection of rule sets](#GetCollectionRuleSets)
 * [Add a rule to a rule set](#AddRuleToRuleSet)
 * [Add a rule referencing a lookup in a condition to a rule set](#AddRuleRefLookupConditionRuleSet)
+* [Add a rule to a rule set that references a common rule set](#AddRuleRefCommonRuleSet)
 * [Update the ordering of rules within a rule set](#UpdateOrderingRulesRuleSet)
 * [Delete a rule from a rule set](#DeleteRuleFromRuleSet)
 * [Create a minor revision of the rule set](#CreateRevisionRuleSet)
+* [Get the direct dependent objects of a rule set](#GetRuleSetDirectDependentObjects)
 * [Convert a rule action](#ConvertRuleAction)
 * [Convert a rule condition](#ConvertRuleCondition)
 
@@ -53,6 +55,7 @@ Here is an example of how to create a rule set.
   "name": "Cost Categorization",
   "ruleSetType": "assignment",
   "description": "Determine cost categorization for vehicle",
+  "testCustomContextUri": "/decisions/codeFiles/bf73b438-d426-49b8-9b75-7565b9a2073e/revisions/1b162c7e-f9c2-47d8-9321-141413fee25b",
   "signature": [
     {
       "name": "vehicleCost",
@@ -114,7 +117,7 @@ Here is an example of how to get a rule set.
 
 #### <a name='DeleteRuleSet'>Delete a Rule Set</a>
 
-Here is an example of how to get a rule set.
+Here is an example of how to delete a rule set.
 
 ```json 
 {
@@ -217,6 +220,37 @@ Here is an example of how to add a rule referencing a lookup in a condition to a
 ```
 <br>
 
+#### <a name='AddRuleRefCommonRuleSet'>Add a Rule to a Rule Set That References a Common Rule Set</a>
+
+Here is an example of how to add a rule to a rule set that references a common rule set.
+
+```json
+{
+  "name": "Reference Rule",
+  "description": "sample reference rule",
+  "ruleFiredTrackingEnabled": false,
+  "conditional": "ref",
+  "mappings":[
+    {
+      "rulesetTermName":"fop",
+      "mappedRulesetTermName":"foo",
+      "direction":"inOut"
+    },
+    {
+      "rulesetTermName":"bam",
+      "mappedRulesetTermName":"bar",
+      "direction":"inOut"
+    }
+
+  ],
+  "common_rule_set_id":"b02a362e-0745-4994-a708-90947b581791",
+  "common_rule_set_version_id":"3ac25217-6bba-472b-9de2-542e4e7fcd5b",
+  "status": "valid"
+}
+```
+<br>
+
+
 #### <a name='UpdateOrderingRulesRuleSet'>Update the Ordering of Rules within a Rule Set</a>
 
 Here is an example of how to update the ordering of rules within a rule set.
@@ -282,6 +316,36 @@ Here is an example of how to create a minor revision of the rule set.
     }
   ]
   }
+}
+```
+<br>
+
+#### <a name='GetRuleSetDirectDependentObjects'>Get the Direct Dependent Objects of a Rule Set</a>
+
+Here is an example of retrieving the direct dependent objects of a rule set. The dependent objects include one lookup, two revision comments and 
+one test custom context.
+
+```json
+{
+  "GET": "/businessRules/ruleSets/b7f5c6c4-60ef-43ee-af2b-84d470279286/dependencies",
+  "headers": {
+    "Accept": "application/vnd.sas.transfer.dependencies+json"
+  }
+}
+```
+
+`Response:`
+```json
+{
+   "uri": "/businessRules/ruleSets/b7f5c6c4-60ef-43ee-af2b-84d470279286",
+   "name": "Assign Value",
+   "dependentUris" : [
+      "/referenceData/domains/22b0ed51-9a5b-447f-bdc3-8ecac64c9463",
+      "/comments/comments/7c701ee9-ea45-469c-ab7c-f02c2f66aef9",
+      "/comments/comments/92c8b316-75c8-40eb-968b-84c2757f2570",
+      "/decisions/codeFiles/a23b84eb-251f-4103-abe6-3fd5446af90e"
+   ],
+   "version":2
 }
 ```
 <br>
@@ -354,4 +418,4 @@ Here is an example of how to convert a rule condition to a different target type
 ```
 <br>
 
-version 5, last updated 9 JAN, 2020
+version 18, last updated 21 Feb, 2021

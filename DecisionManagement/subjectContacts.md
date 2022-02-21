@@ -2076,7 +2076,7 @@ The contact channels used in this example are web and phone. All the response ch
 
 #### <a name='append-a-trace'>Append a Trace</a>
 
-Here is an example of appending text to the Traces collection that is produced by executing a decision.
+Here is an example of appending text to the Traces resource collection that is produced by executing a decision.
 
 The columns are separated by the tab character. Since there is no value in the `processornote` field, there are two tab characters (invisible) between the `objecturi` and text columns on the data line.
 The only restriction on the text column is that it must not contain the tab character. Other than that, it can be used to store any text.
@@ -2414,4 +2414,4 @@ The `reportUri` and `processedTimeStamp` content is stored in the `processorNote
 
 <br>
 
-version 4, last updated 19 March, 2021
+version 5, last updated 21 February, 2022

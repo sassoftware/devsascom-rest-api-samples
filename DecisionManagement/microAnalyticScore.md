@@ -72,7 +72,7 @@ These examples are written in [UnRAVL](https://github.com/sassoftware/unravl).
 
 #### <a name="create-module">Create a Module </a>
 
-Publish the DS2 source into memory so that it is available to be executed. This takes a module definition and returns the compiled and loaded module details. 
+Publish the DS2 source into memory so that it is available to be executed. This takes a module definition and returns the compiled and loaded module details.
 
 In the returned module, the list of steps are visible. These are needed for the subsequent examples.
 
@@ -505,7 +505,7 @@ Using the `waitTime` query parameter with an assigned value of 0 (zero), validat
 
 ##### <a name="execute-step-wait-completed">Execute the Module Step with Time-out (execution completed before time-out period)  </a>
 
-Validate the module step inputs and submit for execution. If the execution completes within specified `waitTime` parameter value, the `outputs` variable in the reply is populated with the output of the execution. The `executionState` variable in the reply has the value 'completed'. 
+Validate the module step inputs and submit for execution. If the execution completes within specified `waitTime` parameter value, the `outputs` variable in the reply is populated with the output of the execution. The `executionState` variable in the reply has the value 'completed'.
 
 ```json {
     "POST": "http://www.example.com/microanalyticScore/modules/36af8e3c-6a37-4494-a8e0-9cc96ad62232/steps/test_all_types?waitTime=200",
@@ -603,7 +603,7 @@ Validate the module step inputs and submit for execution. If the execution compl
 ```
 ##### <a name="execute-step-wait-timedOut">Execute the Module Step with Time-out (execution not completed before the time-out period)</a>
 
-Validate the module step inputs and submit for execution. If the execution does not complete within specified wait time, the `outputs` variable in the reply is empty and the `executionState` variable in the reply is assigned the value `timedOut`. 
+Validate the module step inputs and submit for execution. If the execution does not complete within specified wait time, the `outputs` variable in the reply is empty and the `executionState` variable in the reply is assigned the value `timedOut`.
 
 ```json {
     "POST": "http://www.example.com/microanalyticScore/modules/36af8e3c-6a37-4494-a8e0-9cc96ad62232/steps/test_all_types?waitTime=200",
@@ -890,4 +890,4 @@ Create a job to asynchronously publish DS2 source into memory. This takes a modu
 
 
 
-version 6, last updated 19 March, 2021
+version 6, last updated 21 February, 2022
