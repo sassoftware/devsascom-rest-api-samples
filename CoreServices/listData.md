@@ -25,16 +25,6 @@ This use case shows how to use the List Data API endpoints to create and manage 
 *  [Submitting a job to purge a list's contents](#submitting)
 *  [Getting the status of a purge job](#gettingPurge)
 *  [Delete the list definition](#deleting)
-*  [Creating a new list definition for employee data](#creating)
-*  [Retrieving all lists or a single list by listId](#retrieving)
-*  [Updating the list's description and label](#updating)
-*  [Importing data from a CSV file](#importing)
-*  [Getting the status of an import job](#gettingImport)
-*  [Changing the list's state.](#changing)
-*  [Adding, updating, or deleting list contents](#adding)
-*  [Submitting a job to purge a list's contents](#submitting)
-*  [Getting the status of a purge job](#gettingPurge)
-*  [Delete the list definition](#deleting)
 
 #### <a name="creating">Create a New List Definition for Employee Data</a>
 
