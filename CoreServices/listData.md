@@ -141,7 +141,7 @@ from requests.structures import CaseInsensitiveDict
 headers = CaseInsensitiveDict()
 headers["Accept"] = "application/vnd.sas.listdata.list+json"
 headers["Content-Type"] = "application/vnd.sas.listdata.list+json"
-headers["Authorization"] = f"Bearer {sasadm_token}"
+headers["Authorization"] = f"Bearer {sasdemo_token}"
 
 # Get the list definition from the JSON file.
 f = open("employeesListDefinition.json")
@@ -185,8 +185,8 @@ Notice that the JSON response body that is returned contains more information th
   "version": 1,
   "creationTimeStamp": "2022-12-11T12:40:06.794857653Z",
   "modifiedTimeStamp": "2022-12-11T12:40:06.794857653Z",
-  "createdBy": "sasadm",
-  "modifiedBy": "sasadm",
+  "createdBy": "sasdemo",
+  "modifiedBy": "sasdemo",
   "name": "ACME Corp Employees",
   "description": "",
   "state": "inactive",
@@ -392,13 +392,13 @@ Note: Links have been removed for brevity.
 
 ``` JSON
 {
-  "createdBy": "sasadm",
+  "createdBy": "sasdemo",
   "creationTimeStamp": "2022-12-12T16:39:42.818187Z",
   "description": "",
   "id": "b3c93e05-2f57-49a9-9780-df55ae0510f2",
   "isImmutable": false,
   "label": "",
-  "modifiedBy": "sasadm",
+  "modifiedBy": "sasdemo",
   "modifiedTimeStamp": "2022-12-12T17:49:29.562215Z",
   "name": "ACME Corp Employees",
   "state": "inactive",
@@ -568,7 +568,7 @@ print(f"RESPONSE:\n{json.dumps(response_body, indent=2)}")
   "version": 1,
   "creationTimeStamp": "2022-12-11T13:52:03.507741Z",
   "modifiedTimeStamp": "2022-12-11T15:10:26.528894209Z",
-  "createdBy": "sasadm",
+  "createdBy": "sasdemo",
   "modifiedBy": "sastest1",
   "name": "ACME Corp Employees",
   "description": "Employee Information",
@@ -610,7 +610,7 @@ if not exists(csvFile):
 # Set headers. The actual authorization token is not shown here.
 headers = CaseInsensitiveDict()
 headers["Accept"] = "application/json"
-headers["Authorization"] = f"Bearer {sasadm_token}"
+headers["Authorization"] = f"Bearer {sasdemo_token}"
 
 # Open the CSV file.
 try:
@@ -653,7 +653,7 @@ The job runs asynchronously, and the response returns immediately. If the import
   "fileName": "employees.csv",
   "sha256Sum": "e8ef753212e4ca360a99f68ff9f6335c72faf5fc7a174920d9e940880690e3d4",
   "creationTimeStamp": "2022-12-12T17:06:31.693948Z",
-  "createdBy": "sasadm",
+  "createdBy": "sasdemo",
   "listId": "b3c93e05-2f57-49a9-9780-df55ae0510f2",
   "results": {},
   "totalErrors": 0,
@@ -699,7 +699,7 @@ The following example response shows that the import job completed successfully 
   "sha256Sum":"e8ef753212e4ca360a99f68ff9f6335c72faf5fc7a174920d9e940880690e3d4",
   "creationTimeStamp":"2022-12-12T17:06:31.693948Z",
   "completedTimeStamp":"2022-12-12T17:06:31.757776Z",
-  "createdBy":"sasadm",
+  "createdBy":"sasdemo",
   "listId":"b3c93e05-2f57-49a9-9780-df55ae0510f2",
   "results":{
     "recordCount":50
@@ -765,7 +765,7 @@ listId = args.listId
 
 # Set headers. The actual authorization token is not shown here.
 headers = CaseInsensitiveDict()
-headers["Authorization"] = f"Bearer {sasadm_token}"
+headers["Authorization"] = f"Bearer {sasdemo_token}"
 
 # Set the state based on the '-i' or '-a' argument being present.
 if args.active:
@@ -800,8 +800,8 @@ The list is returned in the body of the response. Links and columns are removed 
   "version": 1,
   "creationTimeStamp": "2022-12-12T16:39:42.818187Z",
   "modifiedTimeStamp": "2022-12-12T20:18:39.487773Z",
-  "createdBy": "sasadm",
-  "modifiedBy": "sasadm",
+  "createdBy": "sasdemo",
+  "modifiedBy": "sasdemo",
   "name": "ACME Corp Employees",
   "description": "",
   "state": "inactive",
@@ -844,7 +844,7 @@ headers["Accept"] = "application/json"
 headers["Content-Type"] = "application/vnd.sas.collection+json"
 
 # The actual authorization token is not shown here.
-headers["Authorization"] = f"Bearer {sasadm_token}"
+headers["Authorization"] = f"Bearer {sasdemo_token}"
 
 # Specify the op(eration). You are doing an upsert operation.
 operation = "upsert"
@@ -913,8 +913,8 @@ The list is returned in the body of the response. Links and columns are removed 
   "version": 1,
   "creationTimeStamp": "2022-12-12T16:39:42.818187Z",
   "modifiedTimeStamp": "2022-12-13T16:04:02.135119Z",
-  "createdBy": "sasadm",
-  "modifiedBy": "sasadm",
+  "createdBy": "sasdemo",
+  "modifiedBy": "sasdemo",
   "name": "ACME Corp Employees",
   "description": "",
   "state": "inactive",
@@ -946,7 +946,7 @@ parser.add_argument("-v", "--verbose", action="store_true",
 args = parser.parse_args()
 
 listId = args.listId
-user = "sasadm"
+user = "sasdemo"
 
 webservice = "https://myserver:443"
 token = getToken(user)
@@ -987,7 +987,7 @@ Among other things, the response that is returned by the POST request contains t
   "version": 1,
   "state": "running",
   "creationTimeStamp": "2022-12-13T17:53:41.813024353Z",
-  "createdBy": "sasadm",
+  "createdBy": "sasdemo",
   "listId": "b3c93e05-2f57-49a9-9780-df55ae0510f2",
   "results": {},
   "errors": [],
@@ -1028,7 +1028,7 @@ Once completed, the response shows the state is completed and the timestamps and
   "state": "completed",
   "creationTimeStamp": "2022-12-13T17:53:41.813024Z",
   "completedTimeStamp": "2022-12-13T17:53:41.840122Z",
-  "createdBy": "sasadm",
+  "createdBy": "sasdemo",
   "listId": "b3c93e05-2f57-49a9-9780-df55ae0510f2",
   "results": {
     "recordCount": 51
@@ -1091,7 +1091,7 @@ listId = args.listId
 headers = CaseInsensitiveDict()
 
 # The actual authorization token is not shown here.
-headers["Authorization"] = f"Bearer {sasadm_token}"
+headers["Authorization"] = f"Bearer {sasdemo_token}"
 
 # Send a DELETE request to '/lists/{listId}'.
 webservice = "https://myserver:443"
