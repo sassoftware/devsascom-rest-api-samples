@@ -19,11 +19,11 @@ This use case shows how to use the List Data API endpoints to create and manage 
 *  [Retrieving all lists or a single list by listId](#retrieving)
 *  [Updating the list's description and label](#updating)
 *  [Importing data from a CSV file](#importing)
-*  [Getting the status of an import job](#gettingImport)
+*  [Getting the status of an import job](#getting-import)
 *  [Changing the list's state](#changing)
 *  [Adding, updating, or deleting list contents](#adding)
 *  [Submitting a job to purge a list's contents](#submitting)
-*  [Getting the status of a purge job](#gettingPurge)
+*  [Getting the status of a purge job](#getting-purge)
 *  [Delete the list definition](#deleting)
 
 #### <a name="creating">Create a New List Definition for Employee Data</a>
@@ -678,7 +678,7 @@ The job runs asynchronously, and the response returns immediately. If the import
 }
 
 ```
-#### <a name="gettingImport">Get the Status of an Import Job</a>
+#### <a name="getting-import">Get the Status of an Import Job</a>
 After you submit the import job, you can retrieve the job's status by sending a GET request to the "self" link that is returned when you submitted the import job. Here is example output:
 
 https://myserver:443/listData/lists/{listId}/importJobs/{importJobId}
@@ -1010,7 +1010,7 @@ Among other things, the response that is returned by the POST request contains t
   ]
 }
 ```
-#### <a name="gettingPurge">Getting the Status of a Purge Job</a>
+#### <a name="getting-purge">Getting the Status of a Purge Job</a>
 Once the purge job completes, you can retrieve the job's status by sending a GET request to the "self" link that is returned when you submitted the purge job. Here is example output:
 
 https://myserver:443/listData/lists/{listId}/purgeJobs/{purgeJobId}
