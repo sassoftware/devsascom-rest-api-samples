@@ -1,0 +1,653 @@
+{
+  "info": {
+    "_postman_id": "f6e59144-1fde-42c3-be92-4ae64c067a6c",
+    "name": "create-and-search-on-tags",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12160893"
+  },
+  "item": [
+    {
+      "name": "0. Get token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {",
+              "    console.log(\"0. Authenticated successfully\");",
+              "    var jsonData = JSON.parse(responseBody);",
+              "    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+              "} else {",
+              "    console.log(\"0. Failed with status: \" + pm.response.status);",
+              "}",
+              " ",
+              "",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic c2FzLmVjOg=="
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "default"
+            },
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "default"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "default"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{sasserver}}/SASLogon/oauth/token",
+          "host": ["{{sasserver}}"],
+          "path": ["SASLogon", "oauth", "token"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "1. Create instances",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    console.log(\"1. Instances created successfully\");\r",
+              "    var entities = JSON.parse(responseBody).entities;\r",
+              "    for(let i = 0; i < entities.length; i++){\r",
+              "        postman.setEnvironmentVariable(`sample_instance${i}_id`, entities[i].id);\r",
+              "    }\r",
+              "} else {\r",
+              "    console.log(\"1. Failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.archive+json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"entities\": [\r\n        {\r\n            \"instanceType\": \"entity\",\r\n            \"name\": \"Rent\",\r\n            \"label\": \"A log of rent expenses\",\r\n            \"definition\": \"casTable\",\r\n            \"resourceId\": \"/some~path/some~other~path/rent/apartment\"\r\n        },\r\n        {\r\n            \"instanceType\": \"entity\",\r\n            \"name\": \"Groceries\",\r\n            \"label\": \"A log of grocery expenses\",\r\n            \"definition\": \"casTable\",\r\n            \"resourceId\": \"/some~path/some~other~path/groceries\"\r\n        },\r\n        {\r\n            \"instanceType\": \"entity\",\r\n            \"name\": \"Going out\",\r\n            \"label\": \"A log of expenses when going out\",\r\n            \"definition\": \"casTable\",\r\n            \"resourceId\": \"/some~path/some~other~path/going~out/restaurants\"\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Create tag and apply to instances",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 201) {\r",
+              "    var tag_name = \"Expenses\";\r",
+              "    console.log(`2. Tag \\\"${tag_name}\\\" created and applied to instances`);\r",
+              "    var tag = JSON.parse(responseBody);\r",
+              "    console.log(\"Tag ID:\", tag.id);\r",
+              "    postman.setEnvironmentVariable(\"tag_id\", tag.id);\r",
+              "    postman.setEnvironmentVariable(\"tag_etag\", postman.getResponseHeader(\"ETag\"));\r",
+              "    postman.setEnvironmentVariable(\"tag_name\", tag.name);\r",
+              "\r",
+              "    // Set tag_last_modified to be used in the PATCH tag request\r",
+              "    postman.setEnvironmentVariable(\"tag_last_modified\", postman.getResponseHeader(\"Last-Modified\"));\r",
+              "} else {\r",
+              "    console.log(\"2. Failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.tag2+json",
+            "type": "default",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.tag+json",
+            "type": "default",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Expenses\",\r\n    \"members\": {\r\n        \"type\": \"id\",\r\n        \"template\": \"/catalog/instances/{id}\",\r\n        \"resources\": [\r\n            \"{{sample_instance0_id}}\",\r\n            \"{{sample_instance1_id}}\"\r\n        ]\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/tags",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "tags"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Search based on tag_name",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    console.log(\"3. Search based on tag_name succeeded\");\r",
+              "    var entities = JSON.parse(responseBody).items;\r",
+              "    var tag_name = pm.environment.get(\"tag_name\");\r",
+              "    var entity_names = [];\r",
+              "    entities.forEach((entity) => entity_names.push(entity.name));\r",
+              "    console.log(`The tag ${tag_name} has been applied to the following instances: ` + entity_names.join(\", \"));\r",
+              "} else {\r",
+              "    console.log(\"3. Failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{sasserver}}/catalog/search?q=Tags: \"{{tag_name}}\"",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "Tags: \"{{tag_name}}\""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Get created tag by id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    console.log(\"4. Get tag by id succeeded\");\r",
+              "    var tag = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"tag_id\", tag.id);\r",
+              "    postman.setEnvironmentVariable(\"tag_etag\", postman.getResponseHeader(\"ETag\"));\r",
+              "    postman.setEnvironmentVariable(\"tag_name\", tag.name);\r",
+              "} else {\r",
+              "    console.log(\"4. Failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {
+          "accept": true
+        }
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.tag+json",
+            "type": "default"
+          },
+          {
+            "key": "",
+            "value": "",
+            "type": "default",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/tags/{{tag_id}}",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "tags", "{{tag_id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get created tag by name",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    console.log(\"5. Get tag by filtering on name succeeded\");\r",
+              "    var tag = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"tag_id\", tag.items[0].id);\r",
+              "    postman.setEnvironmentVariable(\"tag_name\", tag.items[0].name);\r",
+              "} else {\r",
+              "    console.log(\"5. Get tag by filtering on name failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.collection+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.tag.summary+json",
+            "type": "default"
+          },
+          {
+            "key": "",
+            "value": "",
+            "type": "default",
+            "disabled": true
+          },
+          {
+            "key": "",
+            "value": "",
+            "type": "default",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/tags?filter=eq(name,\"{{tag_name}}\")",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "tags"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "eq(name,\"{{tag_name}}\")"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Update tag",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    console.log(\"6. Tag updated successfully\");\r",
+              "    var tag = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"tag_id\", tag.id);\r",
+              "    postman.setEnvironmentVariable(\"tag_name\", tag.name);\r",
+              "    postman.setEnvironmentVariable(\"tag_etag\", postman.getResponseHeader(\"ETag\"));\r",
+              "\r",
+              "    // Set tag_last_modified to be used in the PATCH tag request\r",
+              "    postman.setEnvironmentVariable(\"tag_last_modified\", postman.getResponseHeader(\"Last-Modified\"));\r",
+              "} else {\r",
+              "    console.log(\"6. Update tag failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.tag+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.tag+json",
+            "type": "default"
+          },
+          {
+            "key": "If-Match",
+            "value": "{{tag_etag}}",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": \"{{tag_id}}\",\r\n    \"name\": \"{{tag_name}}_updated\",\r\n    \"members\": {\r\n        \"type\": \"id\",\r\n        \"template\": \"/catalog/instances/{id}\",\r\n        \"resources\": [\r\n            \"{{sample_instance0_id}}\",\r\n            \"{{sample_instance1_id}}\",\r\n            \"{{sample_instance2_id}}\"\r\n        ]\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/tags/{{tag_id}}",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "tags", "{{tag_id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Remove Instance from a Tag",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    console.log(\"7. Instance untagged successfully\");\r",
+              "\r",
+              "    // Need to update the tag's etag since the tag was updated\r",
+              "    const update_etag_request = {\r",
+              "        url: `${pm.environment.get('sasserver')}/catalog/tags/${pm.environment.get(\"tag_id\")}`,\r",
+              "        method: 'GET',\r",
+              "        header: {\r",
+              "            'Accept': 'application/vnd.sas.metadata.tag+json',\r",
+              "            'Authorization': `Bearer ${pm.environment.get('access_token')}`\r",
+              "        },\r",
+              "    }\r",
+              "    pm.sendRequest(update_etag_request, (error, response) => {\r",
+              "        pm.environment.set(\"tag_etag\", response.headers.get(\"ETag\"));\r",
+              "    });\r",
+              "\r",
+              "    // Set tag_last_modified to be used in the PATCH tag request\r",
+              "    postman.setEnvironmentVariable(\"tag_last_modified\", postman.getResponseHeader(\"Last-Modified\"));\r",
+              "} else {\r",
+              "    console.log(\"7. Untag instance failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.patch.archive+json",
+            "type": "text"
+          },
+          {
+            "key": "If-Unmodified-Since",
+            "value": "{{tag_last_modified}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"tags\": {\r\n        \"{{tag_id}}\": [\r\n            {\r\n                \"op\": \"remove\",\r\n                \"path\": \"/members/resources\",\r\n                \"value\": \"{{sample_instance2_id}}\"\r\n            }\r\n        ]\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/tags?onConflict=update",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "tags"],
+          "query": [
+            {
+              "key": "onConflict",
+              "value": "update"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Delete tag",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 204) {\r",
+              "    console.log(\"8. Tag deleted successfully\");\r",
+              "    pm.environment.unset(\"tag_name\");\r",
+              "    pm.environment.unset(\"tag_id\");\r",
+              "    pm.environment.unset(\"tag_etag\");\r",
+              "    pm.environment.unset(\"tag_last_modified\");\r",
+              "} else {\r",
+              "    console.log(\"8. Delete tag failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.tag+json",
+            "type": "default",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/tags/{{tag_id}}",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "tags", "{{tag_id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Delete created instances",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    console.log(\"9. Entities deleted successfully\");\r",
+              "    pm.environment.unset(\"sample_instance1_id\");\r",
+              "    pm.environment.unset(\"sample_instance2_id\");\r",
+              "    pm.environment.unset(\"sample_instance3_id\");\r",
+              "} else {\r",
+              "    console.log(\"9. Delete entities failed with status: \" + pm.response.status);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"version\": 1,\r\n    \"resources\": [\r\n        \"/catalog/instances/{{sample_instance0_id}}\",\r\n        \"/catalog/instances/{{sample_instance1_id}}\",\r\n        \"/catalog/instances/{{sample_instance2_id}}\"\r\n    ]\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/deletions",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "deletions"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

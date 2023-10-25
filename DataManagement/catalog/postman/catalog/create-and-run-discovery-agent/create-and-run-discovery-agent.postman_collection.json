@@ -1,0 +1,547 @@
+{
+  "info": {
+    "_postman_id": "50b4fb54-1f77-407e-b526-01e359a7f2f1",
+    "name": "create-and-run-discovery-agent",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12160893"
+  },
+  "item": [
+    {
+      "name": "0. Get token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.to.have.status(200)){",
+              "    var jsonData = JSON.parse(responseBody);",
+              "    postman.setEnvironmentVariable(\"bearerToken\", jsonData.access_token);",
+              "    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+              "}",
+              " ",
+              "",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic c2FzLmVjOg=="
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "default"
+            },
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "default"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "default"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{sasserver}}/SASLogon/oauth/token",
+          "host": ["{{sasserver}}"],
+          "path": ["SASLogon", "oauth", "token"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "1. Create Discovery Agent",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.to.have.status(201)) {",
+              "    var jsonData = JSON.parse(responseBody);",
+              "    postman.setEnvironmentVariable(\"botId\", jsonData.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"provider\": \"TABLE-BOT\",\n    \"name\": \"Samples Discovery Agent\",\n    \"description\": \"Ingest, analyze, and store metadata from Samples caslib\",\n    \"parameters\": {\n    \t\"datasourceURI\": \n    \t\"/dataSources/providers/cas/sources/cas-shared-default~fs~Samples\",\n        \"region\": \"US NC\"\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Run Discovery Agent",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "type": "text",
+            "value": "text/plain"
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots/{{botId}}/state?value=running",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots", "{{botId}}", "state"],
+          "query": [
+            {
+              "key": "value",
+              "value": "running"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Discovery Agent state",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const maxRetries = 20; // max number of tries\r",
+              "const sleepBetweenTries = 5000; // interval between attempts\r",
+              "if (!pm.environment.get(\"tries\")) {\r",
+              "    pm.environment.set(\"tries\", 1);\r",
+              "}\r",
+              "const state = \"\"\r",
+              "pm.environment.set(\"state\",pm.response.text());\r",
+              "console.log (\"state = \" + pm.environment.get(\"state\"));\r",
+              "if ((pm.environment.get(\"state\") === \"running\") && (pm.environment.get(\"tries\") < maxRetries))\r",
+              "{\r",
+              "    var tries = parseInt(pm.environment.get(\"tries\"), 10);\r",
+              "    console.log(\"tries = \" + tries)\r",
+              "    pm.environment.set(\"tries\", tries + 1);\r",
+              "    setTimeout(function() {}, sleepBetweenTries);\r",
+              "    postman.setNextRequest(request.name); // retry the current request\r",
+              "}\r",
+              "else\r",
+              "{\r",
+              "    console.log (\"remove tries variable\")\r",
+              "    pm.environment.unset(\"tries\");\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "text/plain",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots/{{botId}}/state",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots", "{{botId}}", "state"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Discovery Agent",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.to.have.status(200)) {\r",
+              "    postman.setEnvironmentVariable(\"botEtag\", postman.getResponseHeader(\"ETag\"));\r",
+              "    var jsonData = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"botId\", jsonData.id);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.bot+json",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.bot.summary+json",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.scheduled.bot+json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.summary+json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots/{{botId}}",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots", "{{botId}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Query instances",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);\r",
+              "if (jsonData.count > 0) {\r",
+              "postman.setEnvironmentVariable(\"instId\", jsonData.items[0].id);\r",
+              "postman.setEnvironmentVariable(\"instUri\", jsonData.items[0].resourceId);\r",
+              "postman.setEnvironmentVariable(\"defnId\", jsonData.items[0].definitionId);\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.query+json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.instance.archive+json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"query\": \"match (l:casLibrary {name:\\\"Samples\\\"})-[r:dataStoreDataSets]->(t:casTable)-[rc:dataSetDataFields]->(c:casColumn) return t,rc,c\"\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "eq(definitionId,'3a0d5d7b-a1c5-44c6-bfad-0d2174236172')",
+              "description": "only cas tables. Check the Accept-Item header too.",
+              "disabled": true
+            },
+            {
+              "key": "filter",
+              "value": "eq(resourceId,'/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/DATATYPES?ext=sashdat')",
+              "description": "A particular table. Check the Accept-Item header too.",
+              "disabled": true
+            },
+            {
+              "key": "filter",
+              "value": "or(eq(definitionId,'4c52763b-9ca8-48e9-88f7-33bcca9edafa'),eq(definitionId,'da98b01e-bbaf-48ac-872e-4a676c8cf3cc'))",
+              "description": "Libraries",
+              "disabled": true
+            },
+            {
+              "key": "filter",
+              "value": "or(eq(definitionId,'3a0d5d7b-a1c5-44c6-bfad-0d2174236172'),eq(definitionId,'02b7102c-e997-465d-9f41-2491c3a4f05b'))",
+              "description": "Tables",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Discovery Agent history",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.collection+json",
+            "type": "text"
+          },
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.bot.history+json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots/{{botId}}/history",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots", "{{botId}}", "history"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Discovery Agents",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "if(pm.response.to.have.status(200)&&(jsonData.count>0)){",
+              "    console.log (\"set botId in env\")",
+              "    postman.setEnvironmentVariable(\"botId\", jsonData.items[0].id);",
+              "}",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.collection+json",
+            "type": "text"
+          },
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.bot.summary+json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots?filter=eq(provider,'TABLE-BOT')",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "eq(provider,'TABLE-BOT')"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Delete Discovery Agent",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots/{{botId}}",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots", "{{botId}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Discovery Agent",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "postman.setEnvironmentVariable(\"botEtag\", postman.getResponseHeader(\"ETag\"));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{access_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "If-Match",
+            "value": "{{botEtag}}",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.bot.summary+json",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.bot+json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.scheduled.bot+json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"provider\": \"TABLE-BOT\",\n    \"name\": \"Samples Discovery Agent\",\n    \"id\": \"{{botId}}\",\n    \"description\": \"Ingest, analyze, and store metadata from Samples caslib\",\n    \"parameters\": {\n    \t\"datasourceURI\": \n    \t\"/dataSources/providers/cas/sources/cas-shared-default~fs~Samples\",\n        \"region\": \"US NC\"\n    },\n    \"jobParameters\": {\n    \"getNLPSemanticID\": \"0\",\n    \"identifyLanguage\":\"0\",\n    \"mineForKeywords\":\"0\"\n    }\n}\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/bots/{{botId}}",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "bots", "{{botId}}"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

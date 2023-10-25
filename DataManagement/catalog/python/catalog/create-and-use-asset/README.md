@@ -1,0 +1,47 @@
+# Create and Use Asset
+
+## Overview
+
+This notebook leverages the Catalog API to create and use an asset.
+
+Before creating an asset, a schema must first be defined. Afterwards, assets can be created according to this defined schema.
+
+In the Catalog API, a schema for an asset is defined using a type definition. For this use case, we create a type definition for a new asset type named *publicDataSet*.
+
+With the schema defined, assets and relationships can be created using instances endpoints. In the Catalog AP, an instance of an asset type is known as an entity. The scenario shows both how to create a single asset and how to use an archive to create or update assets and relationships. The relationship in this scenario is adding a contact to an asset.
+
+The assets are queried using both a view and a filter on the instances endpoint.
+
+## Prerequisites
+
+#### Variables to assign
+
+- sasserver - the SAS Viya server URL
+- username
+- password
+
+### Packages and Python Version
+- python 3
+- requests, json,  format_date_time, datetime, mktime
+
+## Usage
+1. Download the Python program or the Jupyter Notebook file.
+2. Edit your variables to match your environment.
+3. Proceed to run the program or Notebook commands.
+
+## Endpoints Used
+
+- [/catalog/definitions](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createTypeDefinition) - Create Type Definition
+- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createInstance) - Create an Instance
+- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getInstances) - Get a list of Instances using a filter
+- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createOrUpdateInstanceArchive) - Create or update objects from an archive
+- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/queryArchive) - Get an archive of objects based on a view
+- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/deleteInstance) - Delete an Instance by its Instance ID
+- [/catalog/definitions](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/deleteTypeDefinition) - Delete a Type Definition by its ID
+
+## Supported Versions
+
+- Viya 4
+- 2023.10
+
+## Additional Resources

@@ -1,0 +1,467 @@
+{
+  "info": {
+    "_postman_id": "645060fa-8a6f-4d95-8982-087e3b66c509",
+    "name": "create-and-use-asset",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "0.  Get token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "postman.setEnvironmentVariable(\"access_token\", jsonData.access_token); ",
+              "",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic c2FzLmVjOg=="
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "default"
+            },
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "default"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "default"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{sasserver}}/SASLogon/oauth/token",
+          "host": ["{{sasserver}}"],
+          "path": ["SASLogon", "oauth", "token"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "1. Create type definition",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.to.have.status(201)) {\r",
+              "    var jsonData = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"typeDefinitionId\", jsonData.id);\r",
+              "    postman.setEnvironmentVariable(\"typeDefinitionName\", jsonData.name);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.definition.entity+json;version=2",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.definition.entity+json;version=2",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"definitionType\": \"entity\",\r\n    \"description\": \"Public Data Set\",\r\n    \"id\": \"3eb3719a-2c62-4889-b66e-abe6cb24c7a8\",\r\n    \"name\": \"publicDataSet\",\r\n    \"platformTypeName\": \"publicDataSet\",\r\n    \"label\": \"Public Data Set\",\r\n    \"version\": 2,\r\n    \"baseType\": \"asset\",\r\n    \"metaCategory\": \"PRIMARY\",\r\n    \"attributeDefinitions\": {\r\n        \"externalLink\": {\r\n            \"description\": \"External URL of the resource\",\r\n            \"name\": \"externalLink\",\r\n            \"label\": \"Resource Link\",\r\n            \"type\": \"string\"\r\n        },\r\n        \"usabilityRating\": {\r\n            \"name\": \"usabilityRating\",\r\n            \"label\": \"Usability Rating\",\r\n            \"type\": \"number\"\r\n        },\r\n        \"keywords\": {\r\n            \"name\": \"keywords\",\r\n            \"label\": \"Keywords\",\r\n            \"description\": \"Terms used to search and describe the data set.\",\r\n            \"type\": \"string\"\r\n        },\r\n        \"license\": {\r\n            \"name\": \"license\",\r\n            \"label\": \"license\",\r\n            \"type\": \"string\"\r\n        }\r\n    }\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/definitions",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "definitions"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Create entity instance",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.to.have.status(201)) {\r",
+              "    var jsonData = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"entityId\", jsonData.id);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.entity+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.instance.entity+json",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"version\": 1,\r\n  \"id\": \"97c78bcd-cd40-4f22-a1c6-dc3e49c5244a\",\r\n  \"instanceType\": \"entity\",\r\n  \"definition\": \"publicDataSet\",\r\n  \"name\": \"countries-of-the-world-2023\",\r\n  \"description\": \"A Comprehensive Dataset Empowering In-Depth Analysis and Cross-Country Insights\",\r\n  \"label\": \"Global Country Information Dataset 2023\",\r\n  \"attributes\": {\r\n     \"externalLink\": \"https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023\",\r\n     \"usabilityRating\": 1.0,\r\n     \"keywords\":\"education,social science,computer science,data visualization,data analytics,classification\",\r\n     \"license\": \"Attribution 4.0 International (CC BY 4.0)\"\r\n  },\r\n  \"resourceId\": \"/catalog/instances/97c78bcd-cd40-4f22-a1c6-dc3e49c5244a\"\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Create entity for principal to use for contact",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.entity+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.instance.entity+json",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n            \"id\": \"59842832-ce4e-47e1-b9d5-e97ca24a8b5e\",\r\n            \"version\": 1,\r\n            \"instanceType\": \"entity\",\r\n            \"definition\": \"principal\",\r\n            \"definitionId\": \"9438c63d-ac1d-4c96-a6f4-087463adef41\",\r\n            \"name\": \"{{username}}\",\r\n            \"type\": \"principal\",\r\n            \"attributes\": {\r\n                \"principalType\": \"user\"\r\n            },\r\n            \"resourceId\": \"/identities/users/{{username}}\"\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Get principal for contact",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.to.have.status(200)) {\r",
+              "    var jsonData = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"principalId\", jsonData.items[0].id);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.instance.entity+json",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances?filter=and(eq(type,'principal'),eq(name,'{{username}}'))",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "and(eq(type,'principal'),eq(name,'{{username}}'))"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Create/Update entity and relationship with instance archive",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.to.have.status(200)) {\r",
+              "    var jsonData = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"entity2Id\", jsonData.entities[0].id);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "var now = new Date();\r",
+              "var timestamp = now.toUTCString();\r",
+              "pm.environment.set(\"timestamp\", timestamp);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.archive+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.instance.archive+json",
+            "type": "default"
+          },
+          {
+            "key": "If-Unmodified-Since",
+            "value": "{{timestamp}}",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"entities\": [\r\n        {\r\n            \"version\": 1,\r\n            \"id\": \"749c06e2-3074-4a6b-a2de-7a42876f4db0\",\r\n            \"instanceType\": \"entity\",\r\n            \"definition\": \"publicDataSet\",\r\n            \"name\": \"global-data-on-sustainable-energy\",\r\n            \"description\": \"If you found this data helpful, a vote is appreciated u2764ufe0f.  Do share your feedback in the discussion section.nn# Key Features:n&gt;- **Entity**: The name of the country or region for which the data is reported.n- **Year**: The year for which the data is reported, ranging from 2000 to 2020.n- **Access to electricity (% of population)**: The percentage of population with access to electricity.n- **Access to clean fuels for cooking (% of population)**: The percentage of the population with primary reliance on clean fuels.n- **Renewable-electricity-generating-capacity-per-capita**: Installed Renewable energy capacity per personn- **Financial flows to developing countries (US $)**: Aid and assistance from developed countries for clean energy projects.n- **Renewable energy share in total final energy consumption (%)**: Percentage of renewable energy in final energy consumption.n- **Electricity from fossil fuels (TWh)**: Electricity generated from fossil fuels  ..(truncated)\",\r\n            \"attributes\": {\r\n                \"externalLink\": \"https://www.kaggle.com/datasets/anshtanwar/global-data-on-sustainable-energy\",\r\n                \"usabilityRating\": 1.0,\r\n                \"keywords\": \"education,energy,computer science,data visualization,classification\",\r\n                \"license\": \"Attribution 4.0 International (CC BY 4.0)\"\r\n            },\r\n            \"resourceId\": \"/catalog/instances/749c06e2-3074-4a6b-a2de-7a42876f4db0\"\r\n        }\r\n    ],\r\n    \"relationships\": [\r\n        {\r\n            \"id\": \"f09b2631-665f-4f16-905d-a172b7b45085\",\r\n            \"creationTimeStamp\": \"0001-01-01T00:00:00Z\",\r\n            \"modifiedTimeStamp\": \"0001-01-01T00:00:00Z\",\r\n            \"instanceType\": \"relationship\",\r\n            \"definition\": \"assetContacts\",\r\n            \"endpoint1Id\": \"749c06e2-3074-4a6b-a2de-7a42876f4db0\",\r\n            \"endpoint2Id\": \"{{principalId}}\"\r\n        }\r\n    ]\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances?onConflict=update",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"],
+          "query": [
+            {
+              "key": "onConflict",
+              "value": "update"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Get an archive of entities and relationship using a view",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.query+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.instance.archive+json",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"query\": \"match (t)-[r]-(c) return t, r, c\",\r\n    \"parameters\": {\r\n        \"t\": {\r\n            \"id\": \"{{entity2Id}}\"\r\n        }\r\n    }\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Get an archive of entities related to principal contact",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.query+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.instance.archive+json",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"query\": \"match (t)-[r]-(c) return c\",\r\n    \"parameters\": {\r\n        \"t\": {\r\n            \"id\": \"{{principalId}}\"\r\n        }\r\n    }\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Find entity with filter using type and name",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances?filter=and(eq(type,'publicDataSet'),contains(name, 'global'))",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "and(eq(type,'publicDataSet'),contains(name, 'global'))"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Delete entities using archive",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/vnd.sas.metadata.instance.archive+json",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"deletions\": [\r\n      \"{{entityId}}\",\r\n      \"{{entity2Id}}\"\r\n     ]\r\n}"
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/instances",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "instances"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Delete a type definition",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{sasserver}}/catalog/definitions/{{typeDefinitionId}}",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "definitions", "{{typeDefinitionId}}"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
+}

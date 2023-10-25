@@ -1,0 +1,520 @@
+{
+  "info": {
+    "_postman_id": "3172500d-4525-4fdd-9d23-f7c8e5a75469",
+    "name": "Search-and-find-assets",
+    "description": "- As a consumer of the catalog API looking for specific resources by utilizing indices & facets.\n    \n- Not knowing where the data sets are located, using an intelligent search to discovery datasets using a free text search for resources.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "24746036"
+  },
+  "item": [
+    {
+      "name": "0. Get token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "postman.setEnvironmentVariable(\"access_token\", jsonData.access_token); ",
+              "",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic c2FzLmVjOg=="
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "default"
+            },
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "default"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "default"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{sasserver}}/SASLogon/oauth/token",
+          "host": ["{{sasserver}}"],
+          "path": ["SASLogon", "oauth", "token"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "1. Get facets related to Library",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.definition.search.facet+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.collection+json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search/facets?q=Library",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search", "facets"],
+          "query": [
+            {
+              "key": "q",
+              "value": "Library"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Get data sets with Library.name facet",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.to.have.status(200)) {\r",
+              "    var jsonData = JSON.parse(responseBody);\r",
+              "    postman.setEnvironmentVariable(\"casTableName\", jsonData.items[0].name);\r",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.search.result+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.search.collection+json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search?q=Library.name:\"Samples\"&indices=datasets",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "Library.name:\"Samples\""
+            },
+            {
+              "key": "indices",
+              "value": "datasets"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Get data sets with free text query",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.search.result+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.search.collection+json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search?q={{casTableName}}&indices=datasets",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "{{casTableName}}"
+            },
+            {
+              "key": "indices",
+              "value": "datasets"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Get the 'datesets' search indices",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.search.result+json",
+            "type": "default",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.search.collection+json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search/indices?filter=eq(name,'datasets')",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search", "indices"],
+          "query": [
+            {
+              "key": "filter",
+              "value": "eq(name,'datasets')"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get list of suggestions for 'Name' facet within the datasets index",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.search.result+json",
+            "type": "default",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.search.collection+json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search/suggestions?facet=Name&indices=datasets&q=&limit=20",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search", "suggestions"],
+          "query": [
+            {
+              "key": "facet",
+              "value": "Name"
+            },
+            {
+              "key": "indices",
+              "value": "datasets"
+            },
+            {
+              "key": "q",
+              "value": ""
+            },
+            {
+              "key": "limit",
+              "value": "20"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Search for tables whose names contain 'WARRANTY' and were updated on the previous day",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "var today = new Date();",
+              "const year = today.getFullYear();",
+              "const month = String(today.getMonth() + 1).padStart(2, '0');",
+              "const day = String(today.getDate()).padStart(2, '0');",
+              "",
+              "pm.environment.set(\"yesterday\", `${year}-${month}-${day-1}`);",
+              "pm.environment.set(\"today\", `${year}-${month}-${day}`);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.search.result+json",
+            "type": "default",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.search.collection+json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search?indices=datasets&q=DateModified:[{{yesterday}} TO {{today}}]+Name:WARRANTY",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search"],
+          "query": [
+            {
+              "key": "indices",
+              "value": "datasets"
+            },
+            {
+              "key": "q",
+              "value": "DateModified:[{{yesterday}} TO {{today}}]+Name:WARRANTY"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Find all crawled tables that contain columns classified as Date",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.search.result+json",
+            "type": "default",
+            "disabled": true
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.search.collection+json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search?indices=datasets&q=Column.semanticType: \"date\"",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search"],
+          "query": [
+            {
+              "key": "indices",
+              "value": "datasets"
+            },
+            {
+              "key": "q",
+              "value": "Column.semanticType: \"date\""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Search for reports related to \"inventory\"",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept-Item",
+            "value": "application/vnd.sas.metadata.search.result+json",
+            "type": "default"
+          },
+          {
+            "key": "Accept",
+            "value": "application/vnd.sas.metadata.search.collection+json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{sasserver}}/catalog/search?q=inventory&indices=reports",
+          "host": ["{{sasserver}}"],
+          "path": ["catalog", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "inventory"
+            },
+            {
+              "key": "indices",
+              "value": "reports"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
+}
