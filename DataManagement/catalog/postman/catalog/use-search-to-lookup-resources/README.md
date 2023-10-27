@@ -32,9 +32,9 @@ Other variables are assigned programmatically during the REST calls using code i
 
 ## Endpoints Used
 
-- [/catalog/search](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getSearchResults) - Get Search Results
-- [/catalog/search/facets](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getSearchFacets) - Get Search Facets
-- [/catalog/search/suggestions](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getSearchSuggestions) - Retrieve suggested values for searches on a given field
+- [/catalog/search](https://developer.sas.com/apis/rest/DataManagement/#get-search-results) - Get Search Results
+- [/catalog/search/facets](https://developer.sas.com/apis/rest/DataManagement/#get-search-facets) - Get Search Facets
+- [/catalog/search/suggestions](https://developer.sas.com/apis/rest/DataManagement/#retrieve-suggested-values-for-searches-on-a-given-field) - Retrieve suggested values for searches on a given field
 
 ## Supported Versions
 

@@ -17,13 +17,13 @@ Other variables are assigned programmatically during the REST calls using code i
 4. You can run one request at a time. You can also run the collection, but uncheck DELETE Discovery Agent, GET Discovery Agents, and PUT Update Discovery Agent if you do so.  The GET Discovery Agent State request has code in the Tests tab that will execute the request until the "running" state is ended.
 
  ## Endpoints Used
-- [/catalog/bots](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createAgent) - Create an Agent
+- [/catalog/bots](https://developer.sas.com/apis/rest/DataManagement/#create-an-agent) - Create an Agent
 - [/catalog/bots/{agentId}/state](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/updateAgentRunState) - Update Agents run state
-- [/catalog/bots/{agentId}/state](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getAgentRunState) - Get an Agent's execution state
-- [/catalog/bots/{agentId}](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getAgent) - Get an Agent by its ID
-- [catalog/bots/{agentId}](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/deleteAgent) - Delete an Agent by its ID
-- [/catalog/bots](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getAgents) -Get a list of Agents
-- [/catalog/bots](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/updateAgent) - Update an Agent by its ID
+- [/catalog/bots/{agentId}/state](https://developer.sas.com/apis/rest/DataManagement/#get-an-agent-39-s-execution-status) - Get an Agent's execution state
+- [/catalog/bots/{agentId}](https://developer.sas.com/apis/rest/DataManagement/#get-an-agent-by-its-id) - Get an Agent by its ID
+- [catalog/bots/{agentId}](https://developer.sas.com/apis/rest/DataManagement/#delete-an-agent-by-its-id) - Delete an Agent by its ID
+- [/catalog/bots](https://developer.sas.com/apis/rest/DataManagement/#get-agents) -Get a list of Agents
+- [/catalog/bots](https://developer.sas.com/apis/rest/DataManagement/#update-an-agent-by-its-id) - Update an Agent by its ID
 
 ## Supported Versions
 - Viya 4

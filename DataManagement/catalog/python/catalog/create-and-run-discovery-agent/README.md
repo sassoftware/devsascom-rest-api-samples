@@ -13,13 +13,13 @@ This program leverages the Catalog API to create and run a Discovery Agent.
 2. Edit your variables to match your environment.
 3. Proceed to run the program or Notebook commands.
 ## Endpoints Used
-- [/catalog/bots](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createAgent) - Create an Agent
-- [/catalog/bots/{agentId}/state](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/updateAgentRunState) - Update Agents run state
-- [/catalog/bots/{agentId}/state](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getAgentRunState) - Get an Agent's execution state
-- [/catalog/bots/{agentId}](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getAgent) - Get an Agent by its ID
-- [catalog/bots/{agentId}](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/deleteAgent) - Delete an Agent by its ID
-- [/catalog/bots](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getAgents) -Get a list of Agents
-- [/catalog/bots](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/updateAgent) - Update an Agent by its ID
+- [/catalog/bots](https://developer.sas.com/apis/rest/DataManagement/#create-an-agent) - Create an Agent
+- [/catalog/bots/{agentId}/state](https://developer.sas.com/apis/rest/DataManagement/#update-an-agent-39-s-run-state) - Update Agents run state
+- [/catalog/bots/{agentId}/state](https://developer.sas.com/apis/rest/DataManagement/#get-an-agent-39-s-execution-status) - Get an Agent's execution state
+- [/catalog/bots/{agentId}](https://developer.sas.com/apis/rest/DataManagement/#get-an-agent-by-its-id) - Get an Agent by its ID
+- [catalog/bots/{agentId}](https://developer.sas.com/apis/rest/DataManagement/#delete-an-agent-by-its-id) - Delete an Agent by its ID
+- [/catalog/bots](https://developer.sas.com/apis/rest/DataManagement/#get-agents) -Get a list of Agents
+- [/catalog/bots](https://developer.sas.com/apis/rest/DataManagement/#update-an-agent-by-its-id) - Update an Agent by its ID
 
 ## Supported Versions
 

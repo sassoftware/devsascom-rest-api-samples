@@ -41,11 +41,11 @@ Other variables are assigned programmatically during the REST calls using code i
 
 ## Endpoints Used
 Create and execute Agent
-- [/catalog/bots](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createAgent) - Create an Agent
-- [/catalog/bots/{agentId}/state](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/updateAgentRunState) - Update an Agent's run state
-- [/catalog/bots/{agentId}/state](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getAgentRunState) - Get an Agent's execution status
-- [/catalog/instances/](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/instances/downloadInstances) - Download instances
-- [/catalog/instances/](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/instances/uploadInstances) - Upload instances metadata to CAS
+- [/catalog/bots](https://developer.sas.com/apis/rest/DataManagement/#create-an-agent) - Create an Agent
+- [/catalog/bots/{agentId}/state](https://developer.sas.com/apis/rest/DataManagement/#update-an-agent-39-s-run-state) - Update an Agent's run state
+- [/catalog/bots/{agentId}/state](https://developer.sas.com/apis/rest/DataManagement/#get-an-agent-39-s-execution-status) - Get an Agent's execution status
+- [/catalog/instances/](https://developer.sas.com/apis/rest/DataManagement/#download-instances) - Download instances
+- [/catalog/instances/](https://developer.sas.com/apis/rest/DataManagement/#upload-instances-metadata-to-cas) - Upload instances metadata to CAS
 
 ## Supported Versions
 - Viya 4

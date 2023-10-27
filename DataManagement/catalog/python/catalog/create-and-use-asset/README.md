@@ -31,13 +31,13 @@ The assets are queried using both a view and a filter on the instances endpoint.
 
 ## Endpoints Used
 
-- [/catalog/definitions](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createTypeDefinition) - Create Type Definition
-- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createInstance) - Create an Instance
-- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/getInstances) - Get a list of Instances using a filter
-- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/createOrUpdateInstanceArchive) - Create or update objects from an archive
-- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/queryArchive) - Get an archive of objects based on a view
-- [/catalog/instances](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/deleteInstance) - Delete an Instance by its Instance ID
-- [/catalog/definitions](https://sas-devportal-prod.azurewebsites.net/restApis/internal/catalog-v1/deleteTypeDefinition) - Delete a Type Definition by its ID
+- [/catalog/definitions](https://developer.sas.com/apis/rest/DataManagement/#create-a-type-definition) - Create Type Definition
+- [/catalog/instances](https://developer.sas.com/apis/rest/DataManagement/#create-an-instance) - Create an Instance
+- [/catalog/instances](https://developer.sas.com/apis/rest/DataManagement/#get-a-list-of-instances) - Get a list of Instances using a filter
+- [/catalog/instances](https://developer.sas.com/apis/rest/DataManagement/#create-or-update-objects-from-an-archive) - Create or update objects from an archive
+- [/catalog/instances](https://developer.sas.com/apis/rest/DataManagement/#get-an-archive-of-objects-based-on-a-view) - Get an archive of objects based on a view
+- [/catalog/instances](https://developer.sas.com/apis/rest/DataManagement/#delete-an-instance-by-its-instance-id) - Delete an Instance by its Instance ID
+- [/catalog/definitions](https://developer.sas.com/apis/rest/DataManagement/#delete-a-type-definition-by-its-id) - Delete a Type Definition by its ID
 
 ## Supported Versions
 
