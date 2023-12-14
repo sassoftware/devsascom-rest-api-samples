@@ -131,7 +131,8 @@ Here is an example of retrieving a collection of reference data domains.
 
 #### <a name='CreateReferenceDataDomainContent'>Create a Reference Data Domain Content</a>
 
-Here is an example of creating a reference data domain content.
+Here is an example of creating a reference data domain content, where 
+labels are assigned to the key and value in the domain entry.
 
 ```json
 {
@@ -144,7 +145,9 @@ Here is an example of creating a reference data domain content.
     "label": "initiated",
     "majorVersion": 1,
     "minorVersion": 0,
-    "status": "developing"
+    "status": "developing",
+    "keyLabel" : "incident severity",
+    "valueLabel" : "SLA"
   }
 }
 ```
@@ -152,7 +155,9 @@ Here is an example of creating a reference data domain content.
 
 #### <a name='CreateReferenceDataDomainContentWithEntries'>Create a Reference Data Domain Content with Entries</a>
 
-Here is an example of creating a reference data domain content with entries.
+Here is an example of creating a reference data domain content with entries, where 
+labels are assigned to the key and value in the domain entry.
+
 
 ```json
 {
@@ -166,6 +171,8 @@ Here is an example of creating a reference data domain content with entries.
     "majorVersion": 1,
     "minorVersion": 0,
     "status": "developing",
+    "keyLabel" : "incident severity",
+    "valueLabel" : "SLA",
     "entries": [
          { "key": "severe",
            "value": "1 hour"
@@ -182,6 +189,8 @@ Here is an example of creating a reference data domain content with entries.
 #### <a name='UpdateReferenceDataDomainContent'>Update a Reference Data Domain Content</a>
 
 Here are examples of updating a reference data domain content.
+In Example 1, the value label is cleared by omitting it from within the request body. This is allowed because the content
+does not have a production status.
 
 Example 1: Change the label.
 ```json
@@ -193,7 +202,8 @@ Example 1: Change the label.
     "Accept": "application/vnd.sas.data.reference.domain.content+json"
   },
   "body": {
-    "label": "update-needed"
+    "label": "update-needed",
+    "keyLabel": "incident severity"
   }
 }
 ```
@@ -453,6 +463,6 @@ Here is an example of getting indexed data of reference data domains.
 
 
 
-version 9, last updated 21 February, 2022
+version 13, last updated 14 December 2023
 
 
