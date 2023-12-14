@@ -184,7 +184,7 @@ The property `credDomainId` is created by the SAS Credentials service. These cre
 
 #### <a name='CreateGitDestination'>Create a Git Repository Destination</a>
 Here is an example of creating a definition for a Git repository publishing destination.
-The property `credDomainID` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
+The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
 
 ```json
 {
@@ -196,7 +196,7 @@ The property `credDomainID` is created by the SAS Credentials service. These cre
   "body": {
 	"name":"myGit",
     "destinationType":"git",
-    "properties": [{"name": "credDomainID",                
+    "properties": [{"name": "credDomainId",                
                  "value": "<myDomainId>"},
                  {"name": "remoteRepositoryURL",                
                  "value": "<remoteRepositoryURL>"},
@@ -509,4 +509,4 @@ Here is an example of retrieving a Git destination folder.
 }
 ```
 
-version 12, last updated on 21 February, 2022
+version 12, last updated on 14 December 2023

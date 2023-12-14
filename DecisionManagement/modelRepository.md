@@ -83,6 +83,7 @@ For more information, see the <a href="https://support.sas.com/en/software/model
 * [Create a model version](#create-model-version)
 * [Get a model version](#get-model-version)
 * [Get the collection of model versions](#get-model-version-list)
+* [Get a model with a list of versions](#get-model-with-version-list)
 </details>
 
 <details>
@@ -523,6 +524,19 @@ Here is an example of retrieving a list of versions for a specific model.
 ```
 <br>
 
+##### <a name='get-model-with-version-list'>Get a Model with a List of Versions</a>
+Here is an example of retrieving a list of model versions for a specific model, including the model itself.
+
+```json
+{
+  "GET": "/modelRepository/models/{modelId}/versions",
+  "headers": {
+    "Accept": "application/vnd.sas.collection+json"
+  }
+}
+```
+<br>
+
 #### Model Contents
 ##### <a name='add-model-file'>Add a Model File</a>
 Here is a Python code example for adding a model file.
@@ -731,4 +745,4 @@ The response code is 202.
 
 <br>
 
-version 3, last updated 21 Nov, 2019
+version 8, last updated 14 December 2023

@@ -51,7 +51,7 @@ This API enables users to build and retrieve decision making processes that can 
 * [Get the last modified date and time for a decision version](#GettheLastModifiedDateTimeDecisionVersion)
 * [Get the generated code for a specific version of a decision](#GetGeneratedCodeSpecificVersionDecision)
 * [Get the decision node reference objects for a specific version of a decision](#GetDecisionNodeReferenceObjects)
-* [Get all checkouts of a specific version of a decision](#GetALlCheckoutsDecision)
+* [Get all checkouts of a specific version of a decision](#GetAllCheckoutsDecision)
 * [Get a collection of decision legacy variables](#GetDecisionLegacyVariables)
 * [Get the direct dependent objects of a decision](#GetDecisionDirectDependentObjects)
 </details>
@@ -206,7 +206,7 @@ Here is an example of creating a decision.
 	         "name": "origin",
 	         "direction": "input",
 	         "dataType": "string",
-	         "defaultValue" : "WEB"
+	         "defaultValue" : "'WEB'"
 	      },
 	      {
 	         "name": "CreditAmount",
@@ -547,7 +547,7 @@ Here is an example of creating a decision with treatments.
 	         "name": "origin",
 	         "direction": "input",
 	         "dataType": "string",
-	         "defaultValue" : "WEB"
+	         "defaultValue" : "'WEB'"
 	      },
 	      {
 	         "name": "customerId",
@@ -2051,7 +2051,7 @@ Here is an example of updating the content of a decision.
 	         "name": "origin",
 	         "direction": "input",
 	         "dataType": "string",
-	         "defaultValue" : "WEB"
+	         "defaultValue" : "'WEB'"
 	      },
 	      {
 	         "name": "CreditAmount",
@@ -2063,7 +2063,7 @@ Here is an example of updating the content of a decision.
 	         "name": "customerId",
 	         "direction": "output",
 	         "dataType": "string",
-	         "defaultValue" : "-"
+	         "defaultValue" : "'-'"
 	      },
 	      {
 	         "name": "hasBadTransactionFlag",
@@ -2999,7 +2999,7 @@ Note: The API request is identical to a create request when the workflow configu
 	         "name": "origin",
 	         "direction": "input",
 	         "dataType": "string",
-	         "defaultValue" : "WEB"
+	         "defaultValue" : "'WEB'"
 	      },
 	      {
 	         "name": "CreditAmount",
@@ -3733,4 +3733,4 @@ Here is an example of deleting a decision type.
 ```
 <br>
 
-version 18, last updated 21 February, 2022
+version 23, last updated 14 December 2023

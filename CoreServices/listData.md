@@ -13,7 +13,7 @@ For information about configuring the List Data service for Redis, see [sas.list
 
 ## API Request Examples
 
-This use case shows how to use the List Data API endpoints to create and manage a list for employee information and it covers the following scenarios:
+This use case shows how to use the List Data API endpoints to create and manage a list for employee information, and it covers the following scenarios:
 
 *  [Creating a new list definition for employee data](#creating)
 *  [Retrieving all lists or a single list by listId](#retrieving)
@@ -32,7 +32,7 @@ This example shows how to send a POST request to the `/lists` endpoint.
 
 In this example, you specify the following metadata for the new list:
 - 'name' (must be unique across all list definitions)
-- 'state' (must be 'active' or 'inactive')
+- 'state' (must be 'deployed' or 'developing')
 - 'description' (optional)
 - 'isImmutable' ('true' or 'false' to indicate whether the contents can be modified after you create the list. The default is 'false'.)
 - 'label' (optional)
@@ -42,7 +42,7 @@ You initially create the list definition by specifying values for the minimally 
 ``` JSON
 {
   "name": "ACME Corp Employees",
-  "state": "inactive",
+  "state": "developing",
 }
 ```
 
@@ -66,7 +66,7 @@ Your list definition looks like this after you have added the 'ColumnInfo' objec
 ``` JSON
 {
   "name": "ACME Corp Employees",
-  "state": "inactive",
+  "state": "developing",
   "columns": [
     {
       "name": "employeeId",
@@ -189,7 +189,7 @@ Notice that the JSON response body that is returned contains more information th
   "modifiedBy": "sasdemo",
   "name": "ACME Corp Employees",
   "description": "",
-  "state": "inactive",
+  "state": "developing",
   "isImmutable": false,
   "label": "",
   "columns": [
@@ -401,7 +401,7 @@ Note: Links have been removed for brevity.
   "modifiedBy": "sasdemo",
   "modifiedTimeStamp": "2022-12-12T17:49:29.562215Z",
   "name": "ACME Corp Employees",
-  "state": "inactive",
+  "state": "developing",
   "version": 1,
   "columns": [
     {
@@ -487,7 +487,7 @@ Note: Links have been removed for brevity.
 
 
 #### <a name="updating">Update the List's Description and Label</a>
-In this example, use a PUT request to update the properties of a list by sending a JSON object in the body of the request to the `/lists/{listId}` endpoint. 
+In this example, use a PUT request to update the properties of a list by sending a JSON object in the body of the request to the `/lists/{listId}` endpoint.
 _You cannot modify the following properties if the list definition has contents:_
 - 'name'
 - 'isImmutable'
@@ -499,7 +499,7 @@ You *can* update these properties:
 - 'description'
 - 'label'
 - 'state'
-    - The value can be either 'active' or 'inactive'.
+    - The value can be either 'deployed' or 'developing'.
     - You can also use the `/lists/{listId}/state` endpoint.
 
 When you update a list's properties, you need to send only the properties that you are changing in your request body. All other properties, except for the life cycle metadata ('createdBy' and 'modifiedBy'), do not change. In this example, you change the label and add a description to the existing list definition.
@@ -572,7 +572,7 @@ print(f"RESPONSE:\n{json.dumps(response_body, indent=2)}")
   "modifiedBy": "sastest1",
   "name": "ACME Corp Employees",
   "description": "Employee Information",
-  "state": "inactive",
+  "state": "developing",
   "isImmutable": false,
   "label": "Internal Use Only"
 }
@@ -729,17 +729,17 @@ The following example response shows that the import job completed successfully 
 
 
 #### <a name="changing">Change the List's State</a>
-You set the state for a list by sending a PUT request to the `/lists/{listId}/state` endpoint and specifying either 'active' or 'inactive' for the value parameter. Here is an example using the 'listId' value from the previous examples:
+You set the state for a list by sending a PUT request to the `/lists/{listId}/state` endpoint and specifying either 'deployed' or 'developing' for the value parameter. Here is an example using the 'listId' value from the previous examples:
 
 ``` TEXT
-PUT https://myserver:443/listData/lists/b3c93e05-2f57-49a9-9780-df55ae0510f2/state?value="active"
+PUT https://myserver:443/listData/lists/b3c93e05-2f57-49a9-9780-df55ae0510f2/state?value="deployed"
 
 or
 
-PUT https://myserver:443/listData/lists/b3c93e05-2f57-49a9-9780-df55ae0510f2/state?value="inactive"
+PUT https://myserver:443/listData/lists/b3c93e05-2f57-49a9-9780-df55ae0510f2/state?value="developing"
 ```
 
-The following example shows how to do this in Python. This program takes a 'listId' and uses either '-i' or '-a' as arguments to set the state to either "inactive" or "active", respectively.
+The following example shows how to do this in Python. This program takes a 'listId' and uses either '-i' or '-a' as arguments to set the state to either "developing" or "deployed", respectively.
 
 ##### Example Python Code
 ``` PYTHON
@@ -755,10 +755,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "listId", help="The listId of the list to be retrieved.")
 argGroup2 = parser.add_mutually_exclusive_group(required=True)
-argGroup2.add_argument("-a", "--active", action="store_true",
-                       help="Set state to active")
-argGroup2.add_argument("-i", "--inactive",
-                       action="store_true", help="Set state to inactive")
+argGroup2.add_argument("-a", "--deployed", action="store_true",
+                       help="Set state to deployed")
+argGroup2.add_argument("-i", "--developing",
+                       action="store_true", help="Set state to developing")
 
 args = parser.parse_args()
 listId = args.listId
@@ -768,10 +768,10 @@ headers = CaseInsensitiveDict()
 headers["Authorization"] = f"Bearer {sasdemo_token}"
 
 # Set the state based on the '-i' or '-a' argument being present.
-if args.active:
-    state = "active"
-elif args.inactive:
-    state = "inactive"
+if args.deployed:
+    state = "deployed"
+elif args.developing:
+    state = "developing"
 
 webservice = "http://myserver"
 url = f"{webservice}/listData/lists/{listId}/state?value={state}"
@@ -804,7 +804,7 @@ The list is returned in the body of the response. Links and columns are removed 
   "modifiedBy": "sasdemo",
   "name": "ACME Corp Employees",
   "description": "",
-  "state": "inactive",
+  "state": "developing",
   "isImmutable": false,
   "label": ""
 }
@@ -917,7 +917,7 @@ The list is returned in the body of the response. Links and columns are removed 
   "modifiedBy": "sasdemo",
   "name": "ACME Corp Employees",
   "description": "",
-  "state": "inactive",
+  "state": "developing",
   "isImmutable": false,
   "label": ""
 }
@@ -1055,13 +1055,13 @@ Once completed, the response shows the state is completed and the timestamps and
 ```
 
 #### <a name="deleting">Delete the List Definition</a>
-To delete a list, you submit a DELETE request to the `/lists/{listId}` endpoint. There are no additional parameters required; however, the list state must not be 'active'. Attempting to delete an active list results in a 409 HTTP Status (Conflict) and returns the following response body:
+To delete a list, you submit a DELETE request to the `/lists/{listId}` endpoint. There are no additional parameters required; however, the list state must not be 'deployed'. Attempting to delete a deployed list results in a 409 HTTP Status (Conflict) and returns the following response body:
 
 ``` JSON
 {
   "httpStatusCode": 409,
   "errorCode": 124775,
-  "message": "The list is active.",
+  "message": "The list is deployed.",
   "details": [
     "path: /listData/lists/b3c93e05-2f57-49a9-9780-df55ae0510f2",
     "correlator: c1d96cf0-dda5-4618-a15f-66f7ea11dd30"
@@ -1107,4 +1107,4 @@ print(f"Return Status: {response.reason} ({response.status_code})\n")
 ```
 
 
-version 2, last updated on 15 August, 2023
+version 4, last updated on 14 December 2023

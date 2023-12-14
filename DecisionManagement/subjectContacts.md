@@ -494,7 +494,7 @@ Here is an example of creating a contact record asynchronously. The request para
  * Location = /subjectContacts/contacts/39657793-736b-462f-8d37-31c04b680657
  Body:
   {
-    "id": "39657793-736b-462f-8d37-31c04b680657"
+    "id": "39657793-736b-462f-8d37-31c04b680657",
     "objectUri": "/decisions/flows/525b199b-9073-4359-a521-ff1bc8a59145",
     "objectRevisionId": "e4728fe2-35ce-4ac6-84e0-fd0cad3f0e80",
     "objectType": "decision",
@@ -1696,379 +1696,379 @@ The contact channels used in this example are web and phone. All the response ch
  Headers:
  * Content-Type = application/vnd.sas.decision.subject.contact.aggregation.treatment+json
  Body:
-  {
-      "subjectId": "Francis.Albert.Bacon.19195313421", 
-      "subjectLevel": "household", 
-      "beginTimeStamp": "2018-05-13T14:47:40.719Z", 
+{
+  "subjectId": "Francis.Albert.Bacon.19195313421",
+  "subjectLevel": "household",
+  "beginTimeStamp": "2018-05-13T14:47:40.719Z",
+  "endTimeStamp": "2018-05-13T18:47:40.719Z",
+  "contactChannelAggregation": [
+    {
+      "name": "web",
+      "channelType": "contact",
       "endTimeStamp": "2018-05-13T18:47:40.719Z",
-      "contactChannelAggregation": [
-          {
-              "name": "web", 
-              "channelType": "contact", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-              "beginTimeStamp": "2018-05-13T14:47:40.719Z"
-          }, 
-          {
-              "name": "phone", 
-              "channelType": "contact", 
-              "contactedTreatments": [
-                  {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                  {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
-                  {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-              ], 
-              "presentedTreatments": [
-                  {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                  {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
-              ], 
-              "periods": [
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 1, 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "timeStampType": "contacted", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T18:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 2, 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "timeStampType": "contacted", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T17:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 3, 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "timeStampType": "contacted", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T16:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 4, 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "timeStampType": "contacted", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T15:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 5, 
-                      "contactedTreatments": [
-                          {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                          {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "presentedTreatments": [
-                          {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                          {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
-                      ], 
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "timeStampType": "contacted", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T14:47:40.719Z"
-                  }
-              ], 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-              "beginTimeStamp": "2018-05-13T14:47:40.719Z"
-          }
-      ], 
-      "responseChannelAggregation": [
-          {
-              "name": "phone", 
-              "channelType": "response", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-              "beginTimeStamp": "2018-05-13T14:47:40.719Z"
-          },
-          {
-              "name": "web", 
-              "channelType": "response", 
-              "respondedTreatments": [
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-              ], 
-              "periods": [
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 1, 
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "timeStampType": "responded", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T18:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 2, 
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "timeStampType": "responded", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T17:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 3, 
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "timeStampType": "responded", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T16:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 4, 
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "timeStampType": "responded", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T15:00:00.000Z"
-                  }, 
-                  {
-                      "periodUnit": "hour", 
-                      "periodLength": 5, 
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "timeStampType": "responded", 
-                      "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-                      "beginTimeStamp": "2018-05-13T14:47:40.719Z"
-                  }
-              ], 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z", 
-              "beginTimeStamp": "2018-05-13T14:47:40.719Z"
-          } 
-      ], 
-      "contactedTimeStampAggregation": [
-          {
-              "periodUnit": "hour", 
-              "periodLength": 1,
-              "contactedTreatments": [
-                  {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "channelType": "contact", 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "name": "phone"
-                  }
-              ], 
-              "timeStampType": "contacted", 
-              "beginTimeStamp": "2018-05-13T18:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 2
-              "contactedTreatments": [
-                  {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "channelType": "contact", 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "name": "phone"
-                  }
-              ], 
-              "timeStampType": "contacted", 
-              "beginTimeStamp": "2018-05-13T17:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 3,
-              "contactedTreatments": [
-                  {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "channelType": "contact", 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "name": "phone"
-                  }
-              ], 
-              "timeStampType": "contacted", 
-              "beginTimeStamp": "2018-05-13T16:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 4,
-              "contactedTreatments": [
-                  {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "channelType": "contact", 
-                      "contactedTreatments": [
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "name": "phone"
-                  }
-              ], 
-              "timeStampType": "contacted", 
-              "beginTimeStamp": "2018-05-13T15:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 5,
-              "contactedTreatments": [
-                  {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                  {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
-                  {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-              ], 
-              "presentedTreatments": [
-                  {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                  {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "name": "phone"
-                      "channelType": "contact", 
-                      "contactedTreatments": [
-                          {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                          {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
-                          {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
-                      ], 
-                      "presentedTreatments": [
-                          {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
-                          {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
-                      ], 
-                  }
-              ], 
-              "timeStampType": "contacted", 
-              "beginTimeStamp": "2018-05-13T14:47:40.719Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }
-      ], 
-      "respondedTimeStampAggregation": [
-          {
-              "periodUnit": "hour", 
-              "periodLength": 1,
-              "respondedTreatments": [
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "channelType": "response", 
-                      "name": "web"
-                  }
-              ], 
-              "timeStampType": "responded", 
-              "beginTimeStamp": "2018-05-13T18:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 2,
-              "respondedTreatments": [
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "channelType": "response", 
-                      "name": "web"
-                  }
-              ], 
-              "timeStampType": "responded", 
-              "beginTimeStamp": "2018-05-13T17:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 3,
-              "respondedTreatments": [
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "channelType": "response", 
-                      "name": "web"
-                  }
-              ], 
-              "timeStampType": "responded", 
-              "beginTimeStamp": "2018-05-13T16:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 4,
-              "respondedTreatments": [
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "channelType": "response", 
-                      "name": "web"
-                  }
-              ], 
-              "timeStampType": "responded", 
-              "beginTimeStamp": "2018-05-13T15:00:00.000Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }, 
-          {
-              "periodUnit": "hour", 
-              "periodLength": 5,
-              "respondedTreatments": [
-                  {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-              ], 
-              "channels": [
-                  {
-                      "respondedTreatments": [
-                          {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
-                      ], 
-                      "channelType": "response", 
-                      "name": "web"
-                  }
-              ], 
-              "timeStampType": "responded", 
-              "beginTimeStamp": "2018-05-13T14:47:40.719Z", 
-              "endTimeStamp": "2018-05-13T18:47:40.719Z"
-          }
-      ]
-  }
+      "beginTimeStamp": "2018-05-13T14:47:40.719Z"
+    },
+    {
+      "name": "phone",
+      "channelType": "contact",
+      "contactedTreatments": [
+        {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+        {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
+        {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+      ],
+      "presentedTreatments": [
+        {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+        {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
+      ],
+      "periods": [
+        {
+          "periodUnit": "hour",
+          "periodLength": 1,
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "timeStampType": "contacted",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T18:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 2,
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "timeStampType": "contacted",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T17:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 3,
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "timeStampType": "contacted",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T16:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 4,
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "timeStampType": "contacted",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T15:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 5,
+          "contactedTreatments": [
+            {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+            {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "presentedTreatments": [
+            {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+            {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
+          ],
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "timeStampType": "contacted",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T14:47:40.719Z"
+        }
+      ],
+      "endTimeStamp": "2018-05-13T18:47:40.719Z",
+      "beginTimeStamp": "2018-05-13T14:47:40.719Z"
+    }
+  ],
+  "responseChannelAggregation": [
+    {
+      "name": "phone",
+      "channelType": "response",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z",
+      "beginTimeStamp": "2018-05-13T14:47:40.719Z"
+    },
+    {
+      "name": "web",
+      "channelType": "response",
+      "respondedTreatments": [
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+      ],
+      "periods": [
+        {
+          "periodUnit": "hour",
+          "periodLength": 1,
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "timeStampType": "responded",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T18:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 2,
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "timeStampType": "responded",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T17:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 3,
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "timeStampType": "responded",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T16:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 4,
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "timeStampType": "responded",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T15:00:00.000Z"
+        },
+        {
+          "periodUnit": "hour",
+          "periodLength": 5,
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "timeStampType": "responded",
+          "endTimeStamp": "2018-05-13T18:47:40.719Z",
+          "beginTimeStamp": "2018-05-13T14:47:40.719Z"
+        }
+      ],
+      "endTimeStamp": "2018-05-13T18:47:40.719Z",
+      "beginTimeStamp": "2018-05-13T14:47:40.719Z"
+    }
+  ],
+  "contactedTimeStampAggregation": [
+    {
+      "periodUnit": "hour",
+      "periodLength": 1,
+      "contactedTreatments": [
+        {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+      ],
+      "channels": [
+        {
+          "channelType": "contact",
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "name": "phone"
+        }
+      ],
+      "timeStampType": "contacted",
+      "beginTimeStamp": "2018-05-13T18:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 2,
+      "contactedTreatments": [
+        {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+      ],
+      "channels": [
+        {
+          "channelType": "contact",
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "name": "phone"
+        }
+      ],
+      "timeStampType": "contacted",
+      "beginTimeStamp": "2018-05-13T17:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 3,
+      "contactedTreatments": [
+        {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+      ],
+      "channels": [
+        {
+          "channelType": "contact",
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "name": "phone"
+        }
+      ],
+      "timeStampType": "contacted",
+      "beginTimeStamp": "2018-05-13T16:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 4,
+      "contactedTreatments": [
+        {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+      ],
+      "channels": [
+        {
+          "channelType": "contact",
+          "contactedTreatments": [
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "name": "phone"
+        }
+      ],
+      "timeStampType": "contacted",
+      "beginTimeStamp": "2018-05-13T15:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 5,
+      "contactedTreatments": [
+        {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+        {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
+        {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+      ],
+      "presentedTreatments": [
+        {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+        {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
+      ],
+      "channels": [
+        {
+          "name": "phone",
+          "channelType": "contact",
+          "contactedTreatments": [
+            {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+            {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1},
+            {"treatmentId": "29ed1a67-e3be-412c-ae2f-567edd38e086", "count": 1}
+          ],
+          "presentedTreatments": [
+            {"treatmentId": "4f3f14cf-69ed-4d59-9ea2-ecfb525cfa83", "count": 1},
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1},
+            {"treatmentId": "2826de5a-d0d6-4bd1-8a80-08c12ba2ad81", "count": 1}
+          ]
+        }
+      ],
+      "timeStampType": "contacted",
+      "beginTimeStamp": "2018-05-13T14:47:40.719Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    }
+  ],
+  "respondedTimeStampAggregation": [
+    {
+      "periodUnit": "hour",
+      "periodLength": 1,
+      "respondedTreatments": [
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+      ],
+      "channels": [
+        {
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "channelType": "response",
+          "name": "web"
+        }
+      ],
+      "timeStampType": "responded",
+      "beginTimeStamp": "2018-05-13T18:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 2,
+      "respondedTreatments": [
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+      ],
+      "channels": [
+        {
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "channelType": "response",
+          "name": "web"
+        }
+      ],
+      "timeStampType": "responded",
+      "beginTimeStamp": "2018-05-13T17:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 3,
+      "respondedTreatments": [
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+      ],
+      "channels": [
+        {
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "channelType": "response",
+          "name": "web"
+        }
+      ],
+      "timeStampType": "responded",
+      "beginTimeStamp": "2018-05-13T16:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 4,
+      "respondedTreatments": [
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+      ],
+      "channels": [
+        {
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "channelType": "response",
+          "name": "web"
+        }
+      ],
+      "timeStampType": "responded",
+      "beginTimeStamp": "2018-05-13T15:00:00.000Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    },
+    {
+      "periodUnit": "hour",
+      "periodLength": 5,
+      "respondedTreatments": [
+        {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+      ],
+      "channels": [
+        {
+          "respondedTreatments": [
+            {"treatmentId": "826c9635-809a-44cf-a982-63e374846087", "count": 1}
+          ],
+          "channelType": "response",
+          "name": "web"
+        }
+      ],
+      "timeStampType": "responded",
+      "beginTimeStamp": "2018-05-13T14:47:40.719Z",
+      "endTimeStamp": "2018-05-13T18:47:40.719Z"
+    }
+  ]
+}
 
 ```
 
@@ -2414,4 +2414,4 @@ The `reportUri` and `processedTimeStamp` content is stored in the `processorNote
 
 <br>
 
-version 5, last updated 21 February, 2022
+version 5, last updated 14 December 2023
