@@ -40,63 +40,63 @@ This API enables users to build and retrieve decision making processes that can 
 * [Create a decision using workflow](#create-decision-workflow)
 * [Update a decision](#update-decision)
 * [Get a decision](#get-decision)
-* [Get a decision summary](#GetDecisionSummary)
-* [Delete a decision](#DeleteDecision)
-* [Get a collection of decisions](#GetCollectionDecisions)
-* [Get the generated code for the current editable version of a decision](#GetGeneratedCodeCurrentEditableVersionDecision)
-* [Create a decision version](#CreateDecisionVersion)
-* [Get a specific version of a decision](#GetSpecificVersionDecision)
-* [Delete a decision revision](#DeleteDecisionRevision)
-* [Get all versions for a decision](#GetAllVersionsDecision)
-* [Get the last modified date and time for a decision version](#GettheLastModifiedDateTimeDecisionVersion)
-* [Get the generated code for a specific version of a decision](#GetGeneratedCodeSpecificVersionDecision)
-* [Get the decision node reference objects for a specific version of a decision](#GetDecisionNodeReferenceObjects)
-* [Get all checkouts of a specific version of a decision](#GetAllCheckoutsDecision)
-* [Get a collection of decision legacy variables](#GetDecisionLegacyVariables)
-* [Get the direct dependent objects of a decision](#GetDecisionDirectDependentObjects)
+* [Get a decision summary](#get-decision-summary)
+* [Delete a decision](#delete-decision)
+* [Get a collection of decisions](#get-collection-decisions)
+* [Get the generated code for the current editable version of a decision](#get-gnerated-code-current-editable-version-decision)
+* [Create a decision version](#create-decision-version)
+* [Get a specific version of a decision](#get-specific-version-decision)
+* [Delete a decision revision](#delete-decision-revision)
+* [Get all versions for a decision](#get-all-versions-decision)
+* [Get the last modified date and time for a decision version](#get-the-last-modified-datetime-decision-version)
+* [Get the generated code for a specific version of a decision](#get-generated-code-specific-version-decision)
+* [Get the decision node reference objects for a specific version of a decision](#get=decision-node-reference-objects)
+* [Get all checkouts of a specific version of a decision](#get-all-checkouts-decision)
+* [Get a collection of decision legacy variables](#get-decision-legacy-variables)
+* [Get the direct dependent objects of a decision](#get-decision-direct-dependent-objects)
 </details>
 
 <details>
 <summary>Code Files</summary>
 
-* [Create a DS2 code file](#CreateCodeFile)
-* [Create a custom context DS2 code file](#CreateCustomContextDS2CodeFile)
-* [Get a code file](#GetCodeFile)
-* [Get a code file summary](#GetCodeFileSummary)
-* [Get the direct dependent objects of a code file](#GetCodeFileDirectDependentObjects)
-* [Delete a code file](#DeleteCodeFile)
-* [Get the collection of code files](#GetCollectionCodeFiles)
-* [Create a code file revision](#CreateCodeFileRevision)
-* [Get a code file revision](#GetCodeFileRevision)
-* [Get a code file revision summary](#GetCodeFileRevisionSummary)
-* [Delete a code file revision](#DeleteCodeFileRevision)
-* [Get a collection of code file revisions](#GetCollectionCodeFileRevisions)
+* [Create a DS2 code file](#create-code-file)
+* [Create a custom context DS2 code file](#create-custom-context-ds2-code-file)
+* [Get a code file](#get-code-file)
+* [Get a code file summary](#get-code-file-summary)
+* [Get the direct dependent objects of a code file](#get-code-file-direct-dependent-objects)
+* [Delete a code file](#delete-code-file)
+* [Get the collection of code files](#get-collection-code-files)
+* [Create a code file revision](#create-code-file-revision)
+* [Get a code file revision](#get-code-file-revision)
+* [Get a code file revision summary](#get-code-file-revision-summary)
+* [Delete a code file revision](#delete-code-file-revision)
+* [Get a collection of code file revisions](#get-collection-code-file-revisions)
 </details>
 
 <details>
 <summary>Decision Node Types</summary>
 
-* [Create a static decision node type](#CreateDecisionNodeTypeStatic)
-* [Create a localized static decision node type](#CreateLocalizedDecisionNodeTypeStatic)
-* [Create a REST decision node type](#CreateDecisionNodeTypeRest)
-* [Get a decision node type](#GetDecisionNodeType)
-* [Get a decision node type summary](#GetDecisionNodeTypeSummary)
-* [Delete a decision node type](#DeleteDecisionNodeType)
-* [Get the collection of decision node types](#GetCollectionDecisionNodeTypes)
-* [Add content to a static decision node type](#AddDecisionNodeTypeContentStatic)
-* [Add content to a REST decision node type](#AddDecisionNodeTypeContentRest)
-* [Get the content for a decision node type](#GetDecisionNodeTypeContent)
-* [Get decision step code for a decision node type](#GetDecisionNodeTypeDecisionStepCode)
+* [Create a static decision node type](#create-decision-node-type-static)
+* [Create a localized static decision node type](#create-localized-decision-node-type-static)
+* [Create a REST decision node type](#create-decision-node-type-rest)
+* [Get a decision node type](#get-decision-mode-type)
+* [Get a decision node type summary](#get-decision-node-type-summary)
+* [Delete a decision node type](#delete-decision-node-type)
+* [Get the collection of decision node types](#get-collection-decision-node-types)
+* [Add content to a static decision node type](#add-decision-node-type-content-static)
+* [Add content to a REST decision node type](#add-decision-node-type-content-rest)
+* [Get the content for a decision node type](#get-decision-node-type-content)
+* [Get decision step code for a decision node type](#get-decision-node-type-decision-step-code)
 </details>
 
 <details>
 <summary>Decision Types</summary>
 
-* [Get a collection of decision types](#GetCollectionDecisionTypes)
-* [Create a decision type](#CreateDecsionType)
-* [Get a decision type](#GetDecisionType)
-* [Update a decision type](#UpdateDecisionType)
-* [Delete a decision type](#DeleteDecisionType)
+* [Get a collection of decision types](#get-collection-decision-types)
+* [Create a decision type](#create-decsion-type)
+* [Get a decision type](#get-decision-type)
+* [Update a decision type](#update-decision-type)
+* [Delete a decision type](#delete-decision-type)
 </details>
 
 <details>
@@ -2735,6 +2735,7 @@ Here is an example of creating a static decision node type.
 }
 ```
 <br>
+
 #### <a name='create-localized-decision-node-type-static'>Create a Localized Static Decision Node Type</a>
 
 Here is an example of creating a localized static decision node type.
@@ -2840,6 +2841,7 @@ Here is an example of creating a localized static decision node type.
 }
 ```
 <br>
+
 #### <a name='create-decision-node-type-rest'>Create a REST Decision Node Type</a>
 
 Here is an example of creating a REST decision node type.
@@ -2954,6 +2956,7 @@ Here is an example of creating a REST decision node type.
 }
 ```
 <br>
+
 #### <a name='create-decision-workflow'>Create a Decision with the Workflow Configuration Enabled</a>
 
 Here is an example of creating a decision where the workflow configuration is enabled.  
@@ -3451,6 +3454,7 @@ Here is an example of setting the content for a static decision node type.
 }
 ```
 <br>
+
 #### <a name='add-decision-node-type-content-rest'>Add Content to a REST Decision Node Type</a>
 
 Here is an example of setting the content for a decision node type.
@@ -3548,6 +3552,7 @@ Here is an example of retrieving the direct dependent objects of a decision. The
 }
 ```
 <br>
+
 #### <a name='get-collection-decision-types'>Get a Collection of Decision Types</a>
 
 Here is an example of retrieving a collection of decision types.
