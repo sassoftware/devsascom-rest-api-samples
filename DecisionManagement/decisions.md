@@ -4,7 +4,7 @@ The Decisions API enables users to build and retrieve a decision flow by linking
 This API provides the following features:
 
 * Offer integration to occur by adding treatments within the decision flow, which enables users to return a collection of best offers to callers. 
-* Ability for users to build a sequential set of models accessed from Model Repository API, rule sets from the Business Rules API, treatment groups from the Treatment Definition API, and conditioning logic. 
+* Ability for users to build a sequential set of models accessed from the Model Repository API, rule sets from the Business Rules API, treatment groups from the Treatment Definition API, and conditioning logic. 
 
 The models, rules sets, treatment groups, branches, and conditions are linked together via a common term list. After a decision flow is constructed, the Model Publish API can be used to publish the decision flows code to the SAS Micro Analytic Service for transactional web service execution, or to CAS destinations for batch processes.
 
@@ -20,12 +20,12 @@ Here is an example of a Credit Approval Decision for a small regional bank:
   * Rule set - Credit Approval Rules
 * else
   * Rule set - Auto Decline
-  * Treatment group - Counter offers
+  * Treatment group - Counteroffers
 
 
 #### Why Use this API?
 
-This API enables users to build and retrieve decision making processes that can be published to transactional or batch targets.
+This API enables users to build and retrieve decision-making processes that can be published to transactional or batch targets.
 
 ## API Request Examples Grouped by Object Type
 
@@ -43,14 +43,14 @@ This API enables users to build and retrieve decision making processes that can 
 * [Get a decision summary](#get-decision-summary)
 * [Delete a decision](#delete-decision)
 * [Get a collection of decisions](#get-collection-decisions)
-* [Get the generated code for the current editable version of a decision](#get-gnerated-code-current-editable-version-decision)
+* [Get the generated code for the current editable version of a decision](#get-generated-code-current-editable-version-decision)
 * [Create a decision version](#create-decision-version)
 * [Get a specific version of a decision](#get-specific-version-decision)
 * [Delete a decision revision](#delete-decision-revision)
 * [Get all versions for a decision](#get-all-versions-decision)
 * [Get the last modified date and time for a decision version](#get-the-last-modified-datetime-decision-version)
 * [Get the generated code for a specific version of a decision](#get-generated-code-specific-version-decision)
-* [Get the decision node reference objects for a specific version of a decision](#get=decision-node-reference-objects)
+* [Get the decision node reference objects for a specific version of a decision](#get-decision-node-reference-objects)
 * [Get all checkouts of a specific version of a decision](#get-all-checkouts-decision)
 * [Get a collection of decision legacy variables](#get-decision-legacy-variables)
 * [Get the direct dependent objects of a decision](#get-decision-direct-dependent-objects)
@@ -86,7 +86,7 @@ This API enables users to build and retrieve decision making processes that can 
 * [Add content to a static decision node type](#add-decision-node-type-content-static)
 * [Add content to a REST decision node type](#add-decision-node-type-content-rest)
 * [Get the content for a decision node type](#get-decision-node-type-content)
-* [Get decision step code for a decision node type](#get-decision-node-type-decision-step-code)
+* [Get the decision step code for a decision node type](#get-decision-node-type-decision-step-code)
 </details>
 
 <details>
@@ -442,8 +442,8 @@ Here is an example of creating a decision.
 	   "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
            "modifiedTimeStamp": "2018-04-11T01:39:02.912Z", 
            "creationTimeStamp": "2018-04-11T01:39:02.912Z", 
-           "createdBy": "userdoe", 
-           "modifiedBy": "userdoe", 
+           "createdBy": "sasdemo", 
+           "modifiedBy": "sasdemo", 
            "majorRevision": 1,
            "minorRevision": 0,
            "links": [
@@ -689,8 +689,8 @@ Here is an example of creating a decision with treatments.
 	       "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
            "modifiedTimeStamp": "2018-04-11T01:39:02.912Z", 
            "creationTimeStamp": "2018-04-11T01:39:02.912Z", 
-           "createdBy": "userdoe", 
-           "modifiedBy": "userdoe", 
+           "createdBy": "sasdemo", 
+           "modifiedBy": "sasdemo", 
            "majorRevision": 1,
            "minorRevision": 0,
            "links": [
@@ -3236,13 +3236,13 @@ Note: The API request is identical to a create request when the workflow configu
            "id": "43f73aff-2040-4152-9923-9dbb37e73ba7",
            "modifiedTimeStamp": "2018-04-11T01:39:02.912Z", 
            "creationTimeStamp": "2018-04-11T01:39:02.912Z", 
-           "createdBy": "userdoe", 
-           "modifiedBy": "userdoe", 
+           "createdBy": "sasdemo", 
+           "modifiedBy": "sasdemo", 
            "majorRevision": 1,
            "minorRevision": 0,
            "properties" : 
               {
-                  "workflowModifiedBy": "userdoe",
+                  "workflowModifiedBy": "sasdemo",
                   "workflowModifiedTimeStamp": "2021-04-22T17:05:54.451Z",
                   "workflowProcessId": "WFee71056c-e563-2112-af3b-d9799de39de5",
                   "workflowState": "Developing"
@@ -3494,7 +3494,7 @@ Here is an example of retrieving a list of all decision node types.
 ```
 <br>
 
-#### <a name='get-decision-node-type-decision-step-Code'>Get the Decision Step Code for a Decision Node Type</a>
+#### <a name='get-decision-node-type-decision-step-code'>Get the Decision Step Code for a Decision Node Type</a>
 
 Here is an example of retrieving decision step code for a specific decision node type.
 
@@ -3524,7 +3524,7 @@ Here is an example of retrieving a list of decision legacy variables.
 
 #### <a name='get-decision-direct-dependent-objects'>Get the Direct Dependent Objects of a Decision</a>
 
-Here is an example of retrieving the direct dependent objects of a decision. The dependent objects include one business rule set, one revision comment, one custom context, one sub-decision and two treatment groups.
+Here is an example of retrieving the direct dependent objects of a decision. The dependent objects include one business rule set, one revision comment, one custom context, one subdecision and two treatment groups.
 
 ```json
 {
@@ -3738,4 +3738,4 @@ Here is an example of deleting a decision type.
 ```
 <br>
 
-version 23, last updated 14 December 2023
+version 23, last updated 20 March 2024
