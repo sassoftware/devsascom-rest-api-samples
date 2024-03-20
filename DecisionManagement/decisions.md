@@ -33,13 +33,13 @@ This API enables users to build and retrieve decision making processes that can 
 <summary>Decisions</summary>
 
 * [Get API resource links](#top-level-api)
-* [Create a decision](#CreateDecision)
-* [Create a decision with treatments](#CreateDecisionTreatments)
-* [Create a decision with branches](#CreateDecisionBranches)
-* [Create a decision with links](#CreateDecisionLinks)
-* [Create a decision using workflow](#CreateDecisionWorkflow)
-* [Update a decision](#UpdateDecision)
-* [Get a decision](#GetDecision)
+* [Create a decision](#create-decision)
+* [Create a decision with treatments](#create-decision-treatments)
+* [Create a decision with branches](#create-decision-branches)
+* [Create a decision with links](#create-decision-links)
+* [Create a decision using workflow](#create-decision-workflow)
+* [Update a decision](#update-decision)
+* [Get a decision](#get-decision)
 * [Get a decision summary](#GetDecisionSummary)
 * [Delete a decision](#DeleteDecision)
 * [Get a collection of decisions](#GetCollectionDecisions)
@@ -163,7 +163,7 @@ Here is an example of a request that returns a list of the top-level resource li
 <br>
 
 
-#### <a name='CreateDecision'>Create a Decision</a>
+#### <a name='create-decision'>Create a Decision</a>
 
 Here is an example of creating a decision.
 
@@ -514,7 +514,7 @@ Here is an example of creating a decision.
 ```
 <br>
 
-#### <a name='CreateDecisionTreatments'>Create a Decision with Treatments</a>
+#### <a name='create-decision-treatments'>Create a Decision with Treatments</a>
 
 Here is an example of creating a decision with treatments.
 
@@ -761,7 +761,7 @@ Here is an example of creating a decision with treatments.
 ```
 <br>
 
-#### <a name='CreateDecisionBranches'>Create a Decision with Branches</a>
+#### <a name='create-decision-branches'>Create a Decision with Branches</a>
 
 Here is an example of creating a decision with branches.
 
@@ -1615,7 +1615,7 @@ Here is an example of creating a decision with branches.
 <br>
 
 
-#### <a name='CreateDecisionLinks'>Create a Decision with Links</a>
+#### <a name='create-decision-links'>Create a Decision with Links</a>
 
 Here is an example of creating a decision with links.
 
@@ -2006,7 +2006,7 @@ Here is an example of creating a decision with links.
 ```
 
 
-#### <a name='UpdateDecision'>Update a Decision</a>
+#### <a name='update-decision'>Update a Decision</a>
 
 Here is an example of updating the content of a decision.
 
@@ -2245,7 +2245,7 @@ Here is an example of updating the content of a decision.
 ```
 <br>
 
-#### <a name='GetDecision'>Get a Decision</a>
+#### <a name='get-decision'>Get a Decision</a>
 
 Here is an example of retrieving the contents of a decision.
 
@@ -2259,7 +2259,7 @@ Here is an example of retrieving the contents of a decision.
 ```
 <br>
 
-#### <a name='GetDecisionSummary'>Get a Decision Summary</a>
+#### <a name='get-decision-summary'>Get a Decision Summary</a>
 
 Here is an example of retrieving the summary of a decision.
 
@@ -2273,7 +2273,7 @@ Here is an example of retrieving the summary of a decision.
 ```
 <br>
 
-#### <a name='DeleteDecision'>Delete a Decision</a>
+#### <a name='delete-decision'>Delete a Decision</a>
 
 Here is an example of deleting a decision.
 
@@ -2284,7 +2284,7 @@ Here is an example of deleting a decision.
 ```
 <br>
 
-#### <a name='GetCollectionDecisions'>Get a Collection of Decisions</a>
+#### <a name='get-collection-decisions'>Get a Collection of Decisions</a>
 
 Here is an example of retrieving a list of all decisions.
 
@@ -2298,7 +2298,7 @@ Here is an example of retrieving a list of all decisions.
 ```
 <br>
 
-#### <a name='GetGeneratedCodeCurrentEditableVersionDecision'>Get the Generated Code for the Current Editable Version of a Decision</a>
+#### <a name='get-generated-code-current-editable-version-decision'>Get the Generated Code for the Current Editable Version of a Decision</a>
 
 Here is an example of retrieving the DS2 package code for the current editable version of a decision. The code can then be used to execute the decision.
 
@@ -2312,7 +2312,7 @@ Here is an example of retrieving the DS2 package code for the current editable v
 ```
 <br>
 
-### <a name='CreateDecisionVersion'>Create a Decision Version</a>
+### <a name='create-decision-version'>Create a Decision Version</a>
 
 Here is an example of creating a new version of a decision.
 
@@ -2387,7 +2387,7 @@ Here is an example of creating a new version of a decision.
 <br>
 
 
-#### <a name='GetSpecificVersionDecision'>Get a Specific Version of a Decision</a>
+#### <a name='get-specific-version-decision'>Get a Specific Version of a Decision</a>
 
 Here is an example of retrieving a specific version of a decision.
 
@@ -2401,7 +2401,7 @@ Here is an example of retrieving a specific version of a decision.
 ```
 <br>
 
-#### <a name='DeleteDecisionRevision'>Delete a Decision Version</a>
+#### <a name='delete-decision-revision'>Delete a Decision Version</a>
 
 Here is an example of deleting a version of a decision.
 
@@ -2412,7 +2412,7 @@ Here is an example of deleting a version of a decision.
 ```
 <br>
 
-#### <a name='GetAllVersionsDecision'>Get All Versions for a Decision</a>
+#### <a name='get-all-versions-decision'>Get All Versions for a Decision</a>
 
 Here is an example of retrieving a list of all versions that exist for a decision.
 
@@ -2426,7 +2426,7 @@ Here is an example of retrieving a list of all versions that exist for a decisio
 ```
 <br>
 
-#### <a name='GettheLastModifiedDateTimeDecisionVersion'>Get the Last Modified Date and Time for a Decision Version</a>
+#### <a name='get-the-last-modified-datetime-decision-version'>Get the Last Modified Date and Time for a Decision Version</a>
 
 Here is an example of retrieving the header information for a decision revision. The header information contains the last modified date and time.
 
@@ -2437,7 +2437,7 @@ Here is an example of retrieving the header information for a decision revision.
 ```
 <br>
 
-#### <a name='GetGeneratedCodeSpecificVersionDecision'>Get the Generated Code for a Specific Version of a Decision</a>
+#### <a name='get-generated-code-specific-version-decision'>Get the Generated Code for a Specific Version of a Decision</a>
 
 Here is an example of retrieving the DS2 package code for a specific version of a decision. The code can then be used to execute the decision version.
 
@@ -2451,7 +2451,7 @@ Here is an example of retrieving the DS2 package code for a specific version of 
 ```
 <br>
 
-#### <a name='GetDecisionNodeReferenceObjects'>Get the Decision Node Reference Objects for a Decision Version</a>
+#### <a name='get-decision-node-reference-objects'>Get the Decision Node Reference Objects for a Decision Version</a>
 
 Here is an example of retrieving the decision node reference objects of a decision version.
 
@@ -2465,7 +2465,7 @@ Here is an example of retrieving the decision node reference objects of a decisi
 ```
 <br>
 
-#### <a name='GetAllCheckoutsDecision'>Get All the Checkouts for a Decision Version</a>
+#### <a name='get-all-checkouts-decision'>Get All the Checkouts for a Decision Version</a>
 
 Here is an example of retrieving all the checkouts for a decision version.
 
@@ -2480,7 +2480,7 @@ Here is an example of retrieving all the checkouts for a decision version.
 <br>
 
 
-#### <a name='CreateCodeFile'>Create a DS2 Code File</a>
+#### <a name='create-code-file'>Create a DS2 Code File</a>
 
 Here is an example of creating a DS2 code file.
 
@@ -2500,7 +2500,7 @@ Here is an example of creating a DS2 code file.
 ```
 <br>
 
-#### <a name='CreateCustomContextDS2CodeFile'>Create a Custom Context DS2 Code File</a>
+#### <a name='create-custom-context-ds2-code-file'>Create a Custom Context DS2 Code File</a>
 
 Here is an example of creating a custom context DS2 code file.
 
@@ -2519,7 +2519,7 @@ Here is an example of creating a custom context DS2 code file.
 ```
 <br>
 
-#### <a name='GetCodeFile'>Get a Code File</a>
+#### <a name='get-code-file'>Get a Code File</a>
 
 Here is an example of retrieving a specific code file.
 
@@ -2533,7 +2533,7 @@ Here is an example of retrieving a specific code file.
 ```
 <br>
 
-#### <a name='GetCodeFileSummary'>Get a Code File Summary</a>
+#### <a name='get-code-file-summary'>Get a Code File Summary</a>
 
 Here is an example of retrieving the summary of the specific code file.
 
@@ -2547,7 +2547,7 @@ Here is an example of retrieving the summary of the specific code file.
 ```
 <br>
 
-#### <a name='GetCodeFileDirectDependentObjects'>Get the Direct Dependent Objects of a Code File</a>
+#### <a name='get-code-file-direct-dependent-objects'>Get the Direct Dependent Objects of a Code File</a>
 
 Here is an example of retrieving the direct dependent objects of a code file. The dependent objects include two revision comments and one test custom context.
 
@@ -2575,7 +2575,7 @@ Here is an example of retrieving the direct dependent objects of a code file. Th
 ```
 <br>
 
-#### <a name='DeleteCodeFile'>Delete a Code File</a>
+#### <a name='delete-code-file'>Delete a Code File</a>
 
 Here is an example of deleting a specific code file.
 
@@ -2586,7 +2586,7 @@ Here is an example of deleting a specific code file.
 ```
 <br>
 
-#### <a name='GetCollectionCodeFiles'>Get the Collection of Code Files</a>
+#### <a name='get-collection-code-files'>Get the Collection of Code Files</a>
 
 Here is an example of retrieving a list of code files.
 
@@ -2600,7 +2600,7 @@ Here is an example of retrieving a list of code files.
 ```
 <br>
 
-#### <a name='CreateCodeFileRevision'>Create a Code File Revision</a>
+#### <a name='create-code-file-revision'>Create a Code File Revision</a>
 
 Here is an example of creating a code file revision.
 
@@ -2618,7 +2618,7 @@ Here is an example of creating a code file revision.
 ```
 <br>
 
-#### <a name='GetCodeFileRevision'>Get a Code File Revision</a>
+#### <a name='get-code-file-revision'>Get a Code File Revision</a>
 
 Here is an example of retrieving a specific code file revision.
 
@@ -2632,7 +2632,7 @@ Here is an example of retrieving a specific code file revision.
 ```
 <br>
 
-#### <a name='CreateDecisionNodeTypeStatic'>Create a Static Decision Node Type</a>
+#### <a name='create-decision-node-type-static'>Create a Static Decision Node Type</a>
 
 Here is an example of creating a static decision node type.
 
@@ -2735,7 +2735,7 @@ Here is an example of creating a static decision node type.
 }
 ```
 <br>
-#### <a name='CreateLocalizedDecisionNodeTypeStatic'>Create a Localized Static Decision Node Type</a>
+#### <a name='create-localized-decision-node-type-static'>Create a Localized Static Decision Node Type</a>
 
 Here is an example of creating a localized static decision node type.
 
@@ -2840,7 +2840,7 @@ Here is an example of creating a localized static decision node type.
 }
 ```
 <br>
-#### <a name='CreateDecisionNodeTypeRest'>Create a REST Decision Node Type</a>
+#### <a name='create-decision-node-type-rest'>Create a REST Decision Node Type</a>
 
 Here is an example of creating a REST decision node type.
 
@@ -2954,7 +2954,7 @@ Here is an example of creating a REST decision node type.
 }
 ```
 <br>
-#### <a name='CreateDecisionWorkflow'>Create a Decision with the Workflow Configuration Enabled</a>
+#### <a name='create-decision-workflow'>Create a Decision with the Workflow Configuration Enabled</a>
 
 Here is an example of creating a decision where the workflow configuration is enabled.  
 <br>
@@ -3321,7 +3321,7 @@ Note: The API request is identical to a create request when the workflow configu
 
 <br>
 
-#### <a name='GetCodeFileRevisionSummary'>Get a Code File Revision Summary</a>
+#### <a name='get-code-file-revision-summary'>Get a Code File Revision Summary</a>
 
 Here is an example of retrieving the summary of the specific code file revision.
 
@@ -3335,7 +3335,7 @@ Here is an example of retrieving the summary of the specific code file revision.
 ```
 <br>
 
-#### <a name='DeleteCodeFileRevision'>Delete a Code File Revision</a>
+#### <a name='delete-code-file-revision'>Delete a Code File Revision</a>
 
 Here is an example of deleting a specific code file revision.
 
@@ -3346,7 +3346,7 @@ Here is an example of deleting a specific code file revision.
 ```
 <br>
 
-#### <a name='GetCollectionCodeFileRevisions'>Get the Collection of Code File Revisions</a>
+#### <a name='get-collection-code-file-revisions'>Get the Collection of Code File Revisions</a>
 
 Here is an example of retrieving a list of code file revisions.
 
@@ -3360,7 +3360,7 @@ Here is an example of retrieving a list of code file revisions.
 ```
 <br>
 
-#### <a name='GetDecisionNodeType'>Get a Decision Node Type</a>
+#### <a name='get-decision-node-type'>Get a Decision Node Type</a>
 
 Here is an example of retrieving a specific decision node type.
 
@@ -3374,7 +3374,7 @@ Here is an example of retrieving a specific decision node type.
 ```
 <br>
 
-#### <a name='GetDecisionNodeTypeSummary'>Get a Decision Node Type Summary</a>
+#### <a name='get-decision-node-type-summary'>Get a Decision Node Type Summary</a>
 
 Here is an example of retrieving the summary of a specific decision node type.
 
@@ -3388,7 +3388,7 @@ Here is an example of retrieving the summary of a specific decision node type.
 ```
 <br>
 
-#### <a name='DeleteDecisionNodeType'>Delete a Decision Node Type</a>
+#### <a name='delete-decision-node-type'>Delete a Decision Node Type</a>
 
 Here is an example of deleting a decision node type.
 
@@ -3399,7 +3399,7 @@ Here is an example of deleting a decision node type.
 ```
 <br>
 
-#### <a name='GetCollectionDecisionNodeTypes'>Get a Collection of Decision Node Types</a>
+#### <a name='get-collection-decision-node-types'>Get a Collection of Decision Node Types</a>
 
 Here is an example of retrieving a list of all decision node types.
 
@@ -3414,7 +3414,7 @@ Here is an example of retrieving a list of all decision node types.
 ```
 <br>
 
-#### <a name='AddDecisionNodeTypeContentStatic'>Add Content to a Static Decision Node Type</a>
+#### <a name='add-decision-node-type-content-static'>Add Content to a Static Decision Node Type</a>
 
 Here is an example of setting the content for a static decision node type.
 
@@ -3451,7 +3451,7 @@ Here is an example of setting the content for a static decision node type.
 }
 ```
 <br>
-#### <a name='AddDecisionNodeTypeContentRest'>Add Content to a REST Decision Node Type</a>
+#### <a name='add-decision-node-type-content-rest'>Add Content to a REST Decision Node Type</a>
 
 Here is an example of setting the content for a decision node type.
 
@@ -3476,7 +3476,7 @@ Here is an example of setting the content for a decision node type.
 ```
 <br>
 
-#### <a name='GetDecisionNodeTypeContent'>Get the Content for a Decision Node Type</a>
+#### <a name='get-decision-node-type-content'>Get the Content for a Decision Node Type</a>
 
 Here is an example of retrieving a list of all decision node types.
 
@@ -3490,7 +3490,7 @@ Here is an example of retrieving a list of all decision node types.
 ```
 <br>
 
-#### <a name='GetDecisionNodeTypeDecisionStepCode'>Get the Decision Step Code for a Decision Node Type</a>
+#### <a name='get-decision-node-type-decision-step-Code'>Get the Decision Step Code for a Decision Node Type</a>
 
 Here is an example of retrieving decision step code for a specific decision node type.
 
@@ -3504,7 +3504,7 @@ Here is an example of retrieving decision step code for a specific decision node
 ```
 <br>
 
-#### <a name='GetDecisionLegacyVariables'>Get a Collection of Decision Legacy Variables</a>
+#### <a name='get-decision-legacy-variables'>Get a Collection of Decision Legacy Variables</a>
 
 Here is an example of retrieving a list of decision legacy variables.
 
@@ -3518,7 +3518,7 @@ Here is an example of retrieving a list of decision legacy variables.
 ```
 <br>
 
-#### <a name='GetDecisionDirectDependentObjects'>Get the Direct Dependent Objects of a Decision</a>
+#### <a name='get-decision-direct-dependent-objects'>Get the Direct Dependent Objects of a Decision</a>
 
 Here is an example of retrieving the direct dependent objects of a decision. The dependent objects include one business rule set, one revision comment, one custom context, one sub-decision and two treatment groups.
 
@@ -3548,7 +3548,7 @@ Here is an example of retrieving the direct dependent objects of a decision. The
 }
 ```
 <br>
-#### <a name='GetCollectionDecisionTypes'>Get a Collection of Decision Types</a>
+#### <a name='get-collection-decision-types'>Get a Collection of Decision Types</a>
 
 Here is an example of retrieving a collection of decision types.
 
@@ -3565,7 +3565,7 @@ Here is an example of retrieving a collection of decision types.
 <br>
 
 
-#### <a name='CreateDecisionType'>Create a Decision Type</a>
+#### <a name='create-decision-type'>Create a Decision Type</a>
 
 Here is an example of creating a decision type.
 
@@ -3622,7 +3622,7 @@ Here is an example of creating a decision type.
 <br>
 
 
-#### <a name='GetDecisionType'>Get a Decision Type</a>
+#### <a name='get-decision-type'>Get a Decision Type</a>
 
 Here is an example of retrieving a decision type.
 
@@ -3665,7 +3665,7 @@ Here is an example of retrieving a decision type.
 <br>
 
 
-#### <a name='UpdateDecisionType'>Update a Decision Type</a>
+#### <a name='update-decision-type'>Update a Decision Type</a>
 
 Here is an example of updating a decision type.
 
@@ -3722,7 +3722,7 @@ Here is an example of updating a decision type.
 <br>
 
 
-#### <a name='DeleteDecisionType'>Delete a Decision Type</a>
+#### <a name='delete-decision-type'>Delete a Decision Type</a>
 
 Here is an example of deleting a decision type.
 
