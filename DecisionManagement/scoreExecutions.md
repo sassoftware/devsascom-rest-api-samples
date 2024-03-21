@@ -80,28 +80,28 @@ The score object returns the analysisCode, the outputTableName, and the outputLi
 <details>
 <summary>Create a Score Execution</summary>
 
-* [Create a persisted score definition](#CreatePersistedScoreDefinition)
-* [Create an inline score definition](#CreateInlineScoreDefinition)
-* [Create an override score definition](#CreateOverrideScoreDefinition)
-* [Create a score execution using inline mapped code](#CreateInlineMappedCode)
-* [Create a score execution using a mapped code URI](#CreateMappedCodeURI)
-* [Create a score execution using a persisted job definition](#CreatePersistedJobDefinition)
-* [Create a score execution using an inline job definition](#CreateInlineJobDefinition)
+* [Create a persisted score definition](#create-persisted-score-definition)
+* [Create an inline score definition](#create-inline-score-definition)
+* [Create an override score definition](#create-override-score-definition)
+* [Create a score execution using inline mapped code](#create-inline-mapped-code)
+* [Create a score execution using a mapped code URI](#create-mapped-code-uri)
+* [Create a score execution using a persisted job definition](#create-execution-persisted-job-definition)
+* [Create a score execution using an inline job definition](#create-execution-inline-job-definition)
 </details>
 
 <details>
 <summary>Get a Score Execution</summary>
 
-* [Get score executions using a score definition](#GetScoreExecutionScoreDefinition)
-* [Get score executions using a job definition](#GetScoreExecutionJobDefinition)
-* [Get score executions using the default job definition](#GetScoreExectionDefaultJobDefinition)
+* [Get score executions using a score definition](#get-execution-score-definition)
+* [Get score executions using a job definition](#get-score-executions-job-definition)
+* [Get score executions using the default job definition](#get-score-execution-default-job-definition)
 </details>
 
 <details>
 <summary>Creating a Score Analysis</summary>
 
-* [Create a score analysis using the persisted job definition](#CreatePersistedJobDefinition)
-* [Create a score analysis using the inline job definition](#CreateInlineJobDefinition)
+* [Create a score analysis using the persisted job definition](#create-inline-job-definition)
+* [Create a score analysis using the inline job definition](#create-persisted-job-definition)
 * [Create a score analysis of a particular analysis type](#CreateScoreAnalysisType)
 </details>
 
@@ -109,7 +109,7 @@ The score object returns the analysisCode, the outputTableName, and the outputLi
 
 Here are some examples of creating a score execution.
 
-#### Example 1: <a name='CreatePersistedScoreDefinition'>Create a Persisted Score Definition</a>
+#### Example 1: <a name='create-persisted-score-definition'>Create a Persisted Score Definition</a>
 ```json
 {
   "POST": "/executions",
@@ -127,7 +127,7 @@ Here are some examples of creating a score execution.
 }
 ```
 
-#### Example 2: <a name='CreateInlineScoreDefinition'>Create an Inline Score Definition</a>
+#### Example 2: <a name='create-inline-score-definition'>Create an Inline Score Definition</a>
 
 NOTE: The Score Execution API creates a new score definition using the inline score definition.
 
@@ -171,7 +171,7 @@ NOTE: The Score Execution API creates a new score definition using the inline sc
 }
 ```
 
-#### Example 3: <a name='CreateOverrideScoreDefinition'>Create an Override Score Definition</a>
+#### Example 3: <a name='create-override-score-definition'>Create an Override Score Definition</a>
 
 NOTE: A new score definition is created by merging the details of the persisted score definition, and the override score definition details.
 <br/> 
@@ -223,7 +223,7 @@ NOTE: You can override any combinations of objectDescriptor, inputData, and mapp
 }
 ```
 
-#### Example 4: <a name='CreateInlineMappedCode'>Create a Score Execution Using Inline Mapped Code</a>
+#### Example 4: <a name='create-inline-mapped-code'>Create a Score Execution Using Inline Mapped Code</a>
 ```json
 {
   "POST": "/executions",
@@ -296,7 +296,7 @@ body:
     serverName: edmcas
 ```
 
-#### Example 5: <a name='CreateMappedCodeURI'>Create a Score Execution Using the Mapped Code URI</a>
+#### Example 5: <a name='create-mapped-code-uri'>Create a Score Execution Using the Mapped Code URI</a>
 
 NOTE: mappedCodeUri can be any URI that returns the mapped code.
 
@@ -320,7 +320,7 @@ NOTE: mappedCodeUri can be any URI that returns the mapped code.
 }
 ```
 
-#### Example 6: <a name='CreatePersistedJobDefinition'>Create a Score Execution Using a Persisted Job Definition</a>
+#### Example 6: <a name='create-execution-persisted-job-definition'>Create a Score Execution Using a Persisted Job Definition</a>
 
 NOTE: If no jobDefinitionId is provided, then the [`Default Score Job Definition`](#default-score-jobdefinition) is used.
 
@@ -339,7 +339,7 @@ NOTE: If no jobDefinitionId is provided, then the [`Default Score Job Definition
 }
 ```
 
-#### Example 7: <a name='CreateInlineJobDefinition'>Create a Score Execution Using an Inline Job Definition</a>
+#### Example 7: <a name='create-execution-inline-job-definition'>Create a Score Execution Using an Inline Job Definition</a>
 
 NOTE: If a value for `jobDefinitionId` is not provided, then the [`Default Score Job Definition`](#default-score-jobdefinition) is used.
 <br/>
@@ -566,7 +566,7 @@ NOTE: A new job definition is created using the inline job definition content.
 ### Getting Score Executions
 Here are some examples of getting score executions.
 
-#### Example 1: <a name='GetScoreExecutionScoreDefinition'>Get Score Executions Using a Score Definition</a>
+#### Example 1: <a name='get-execution-score-definition'>Get Score Executions Using a Score Definition</a>
 ```json
 {
   "GET": "/executions?filter=eq(scoreExecutionRequest.scoreDefinitionId,'<Score Definition id>')",
@@ -577,7 +577,7 @@ Here are some examples of getting score executions.
 }
 ```
 
-#### Example 2: <a name='GetScoreExecutionJobDefinition'>Get Score Executions Using a Job Definition</a>
+#### Example 2: <a name='get-score-executions-job-definition'>Get Score Executions Using a Job Definition</a>
 ```json
 {
   "GET": "/definitions?filter=eq(scoreExecutionRequest.jobDefinitionId,'<Job Definition Id>')",
@@ -588,7 +588,7 @@ Here are some examples of getting score executions.
 }
 ```
 
-#### Example 3: <a name='GetScoreExectionDefaultJobDefinition'>Get Score Executions Using the Default Job Definition</a>
+#### Example 3: <a name='get-score-execution-default-job-definition'>Get Score Executions Using the Default Job Definition</a>
 ```json
 {
   "GET": "/definitions?filter=isNull(scoreExecutionRequest.jobDefinitionId)')",
@@ -602,7 +602,7 @@ Here are some examples of getting score executions.
 ### Creating a Score Analysis
 Here are some examples of creating a score analysis.
 
-#### Example 1: <a name='CreatePersistedJobDefinition'>Create Using the Persisted Job Definition</a>
+#### Example 1: <a name='create-persisted-job-definition'>Create Using the Persisted Job Definition</a>
 
 NOTE: If no jobDefinitionId is provided, then the above default job definition is used.
 
@@ -621,7 +621,7 @@ NOTE: If no jobDefinitionId is provided, then the above default job definition i
 }
 ```
 
-#### Example 2: <a name='CreateInlineJobDefinition'>Create Using the Inline Job Definition</a>
+#### Example 2: <a name='create-inline-job-definition'>Create Using the Inline Job Definition</a>
 
 NOTE: If no jobDefinitionId is provided, then the [`Default Analysis Job Definition`](#default-analysis-jobdefinition) is used.
 
@@ -785,4 +785,4 @@ Here is an example of <a name='CreateScoreAnalysisType'>creating a score analysi
 }
 ```
 
-version 2, last updated 21 February, 2022
+version 2, last updated 21 March, 2024

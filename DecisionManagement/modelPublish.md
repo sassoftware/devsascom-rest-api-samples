@@ -7,49 +7,49 @@ Here are the functions that this API provides:
 * Publish models, decisions, or rule sets to a predefined destination
 * Retrieve a list of published objects (such as models, decisions, and rule sets)
 
-<b>Note:</b> By default only SAS Administrators can define, update, and delete publishing destinations. Authenticated users can perform all of the other functions.
+<b>Note:</b> By default, only SAS Administrators can define, update, and delete publishing destinations. Authenticated users can perform all of the other functions.
 
 ## API Request Examples Grouped by Object Type
 
 <details>
 <summary>Destinations</summary>
 
-* [Create a CAS destination](#CreateCASDestination)
-* [Create an Amazon Web Services destination](#CreateAWSDestination)
-* [Create a Private Docker destination](#CreateDockerDestination)
-* [Create an Azure destination](#CreateAzureDestination)
-* [Create an Azure Machine Learning destination](#CreateAMLDestination)
-* [Create a Git repository destination](#CreateGitDestination)
-* [Create a Teradata destination](#CreateTeradataDestination)
-* [Create a Hadoop destination](#CreateHadoopDestination)
-* [Update a CAS destination](#UpdateCASDestination)
-* [Update a Teradata destination](#UpdateTeradataDestination)
-* [Update a Hadoop destination](#UpdateHadoopDestination)
-* [Get a destination](#GetDestination)
-* [Delete a destination](#DeleteDestination)
-* [Get the collection of destinations](#GetCollectionDestinations)
-* [Get the collection of Git folders](#GetGitFolders)
-* [Get a Git folder](#GetGitFolder)
+* [Create a CAS destination](#create-cas-destination)
+* [Create an Amazon Web Services destination](#create-aws-destination)
+* [Create a Private Docker destination](#create-docker-destination)
+* [Create an Azure destination](#create-azure-destination)
+* [Create an Azure Machine Learning destination](#create-aml-destination)
+* [Create a Git repository destination](#create-git-destination)
+* [Create a Teradata destination](#create-teradata-destination)
+* [Create a Hadoop destination](#create-hadoop-destination)
+* [Update a CAS destination](#update-cas-destination)
+* [Update a Teradata destination](#update-teradata-destination)
+* [Update a Hadoop destination](#update-hadoop-destination)
+* [Get a destination](#get-destination)
+* [Delete a destination](#delete-destination)
+* [Get the collection of destinations](#get-collection-destinations)
+* [Get the collection of Git folders](#get-git-folders)
+* [Get a Git folder](#get-git-folder)
 </details>
 
 <details>
 <summary>Publish Models</summary>
 
-* [Publish a model to a destination](#PublishModelDestination)
-* [Publish a model with an analytic store to a destination](#PublishModelAnalyticStoreDestination)
-* [Get the collection of published models](#GetCollectionPublishedModels)
-* [Get the published model](#GetPublishedModel)
+* [Publish a model to a destination](#publish-model-destination)
+* [Publish a model with an analytic store to a destination](#publish-model-analytic-store-destination)
+* [Get the collection of published models](#get-collection-published-models)
+* [Get the published model](#get-published-model)
 </details>
 
 <details>
 <summary>See Also</summary>
 
 * [Model Publish API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#model-publish)
-* [Publish a decision to the maslocal destination API tutorial](https://documentation.sas.com/?docsetId=edmresttut&docsetTarget=p0scry8g4y8v6gn13esxsf9jg9xp.htm&docsetVersion=v_001&locale=en)
+* [Publish a decision to the maslocal destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=default&docsetId=edmresttut&docsetTarget=p0scry8g4y8v6gn13esxsf9jg9xp.htm)
 </details>
 
 
-#### <a name='CreateCASDestination'>Create a CAS Destination</a>
+#### <a name='create-cas-destination'>Create a CAS Destination</a>
 Here is an example of creating a definition for a CAS (SAS Cloud Analytic Services) publishing destination.
 
 ```json
@@ -70,7 +70,7 @@ Here is an example of creating a definition for a CAS (SAS Cloud Analytic Servic
 ```
 <br>
 
-#### <a name='CreateAWSDestination'>Create an Amazon Web Services Destination</a>
+#### <a name='create-aws-destination'>Create an Amazon Web Services Destination</a>
 Here is an example of creating a definition for an Amazon Web Services (AWS) publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: userId`, `secrets : password`)
 If the property 'region' is not specified, the `us-east-1` property value is used by default.
@@ -97,7 +97,7 @@ If the property 'region' is not specified, the `us-east-1` property value is use
 ```
 <br>
 
-#### <a name='CreateDockerDestination'>Create a Private Docker Destination</a>
+#### <a name='create-docker-destination'>Create a Private Docker Destination</a>
 Here is an example of creating a definition for a private Docker publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId`, `secrets : dockerRegistryPasswd`)
 The property `baseRepoUrl` is required.
@@ -122,7 +122,7 @@ The property `baseRepoUrl` is required.
 ```
 <br>
 
-#### <a name='CreateAzureDestination'>Create an Azure Destination</a>
+#### <a name='create-azure-destination'>Create an Azure Destination</a>
 Here is an example of creating a definition for an Azure publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId, azureAppId`, `secrets : dockerRegistryPasswd, azureAppPasswd`)
 
@@ -156,7 +156,7 @@ The property `credDomainId` is created by the SAS Credentials service. These cre
 ```
 <br>
 
-#### <a name='CreateAMLDestination'>Create an Azure Machine Learning Destination</a>
+#### <a name='create-aml-destination'>Create an Azure Machine Learning Destination</a>
 Here is an example of creating a definition for an Azure Machine Learning publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: dockerRegistryUserId, amlAppId`, `secrets : dockerRegistryPasswd, amlAppPasswd`)
 
@@ -182,7 +182,7 @@ The property `credDomainId` is created by the SAS Credentials service. These cre
 ```
 <br>
 
-#### <a name='CreateGitDestination'>Create a Git Repository Destination</a>
+#### <a name='create-git-destination'>Create a Git Repository Destination</a>
 Here is an example of creating a definition for a Git repository publishing destination.
 The property `credDomainId` is created by the SAS Credentials service. These credential attributes are used to create credential domain ID (`domainId`, `identityType`, `identityId`, `domainType`, `properties: gitUserId`, `secrets : gitAccessToken`)
 
@@ -210,7 +210,7 @@ The property `credDomainId` is created by the SAS Credentials service. These cre
 ```
 <br>
 
-#### <a name='CreateTeradataDestination'>Create a Teradata Destination</a>
+#### <a name='create-teradata-destination'>Create a Teradata Destination</a>
 Here is an example of creating a definition for a Teradata publishing destination.
 
 ```json
@@ -232,7 +232,7 @@ Here is an example of creating a definition for a Teradata publishing destinatio
 ```
 <br>
 
-#### <a name='CreateHadoopDestination'>Create a Hadoop Destination</a>
+#### <a name='create-hadoop-destination'>Create a Hadoop Destination</a>
 Here is an example of creating a definition for a Hadoop publishing destination.
 
 ```json
@@ -254,7 +254,7 @@ Here is an example of creating a definition for a Hadoop publishing destination.
 ```
 <br>
 
-#### <a name='UpdateCASDestination'>Update a CAS Destination</a>
+#### <a name='update-cas-destination'>Update a CAS Destination</a>
 Here is an example of updating the description for a CAS publishing destination.
 
 ```json
@@ -277,7 +277,7 @@ Here is an example of updating the description for a CAS publishing destination.
 ```
 <br>
 
-#### <a name='UpdateTeradataDestination'>Update a Teradata Destination</a>
+#### <a name='update-teradata-destination'>Update a Teradata Destination</a>
 Here is an example of updating the description for a Teradata publishing destination.
 
 ```json
@@ -301,7 +301,7 @@ Here is an example of updating the description for a Teradata publishing destina
 ```
 <br>
 
-#### <a name='UpdateHadoopDestination'>Update a Hadoop Destination</a>
+#### <a name='update-hadoop-destination'>Update a Hadoop Destination</a>
 Here is an example of updating the description for a Hadoop publishing destination.
 
 ```json
@@ -325,7 +325,7 @@ Here is an example of updating the description for a Hadoop publishing destinati
 ```
 <br>
 
-#### <a name='GetDestination'>Get a Destination</a>
+#### <a name='get-destination'>Get a Destination</a>
 Here is an example of retrieving the definition for a specified destination name.
 
 ```json
@@ -338,7 +338,7 @@ Here is an example of retrieving the definition for a specified destination name
 ```
 <br>
 
-#### <a name='DeleteDestination'>Delete a Destination</a>
+#### <a name='delete-destination'>Delete a Destination</a>
 Here is an example of deleting the publishing destination for a specified destination name.
 
 ```json
@@ -348,7 +348,7 @@ Here is an example of deleting the publishing destination for a specified destin
 ```
 <br>
 
-#### <a name='GetCollectionDestinations'>Get the Collection of Destinations</a>
+#### <a name='get-collection-destinations'>Get the Collection of Destinations</a>
 Here is an example of retrieving a list of the publishing destinations.
 
 ```json
@@ -361,7 +361,7 @@ Here is an example of retrieving a list of the publishing destinations.
 ```
 <br>
 
-#### <a name='PublishModelDestination'>Publish a Model to a Destination</a>
+#### <a name='publish-model-destination'>Publish a Model to a Destination</a>
 Here is an example of publishing a model to a specified publishing destination.
 
 ```json
@@ -390,7 +390,7 @@ Here is an example of publishing a model to a specified publishing destination.
 ```
 <br>
 
-#### <a name='PublishModelAnalyticStoreDestination'>Publish a Model with an Analytic Store to a Destination</a>
+#### <a name='publish-model-analytic-store-destination'>Publish a Model with an Analytic Store to a Destination</a>
 Here is an example of publishing a model that contains an analytic store CAS table to a specified destination.
 
 ```json
@@ -419,7 +419,7 @@ Here is an example of publishing a model that contains an analytic store CAS tab
 ```
 <br>
 
-#### <a name='GetCollectionPublishedModels'>Get the Collection of Published Models</a>
+#### <a name='get-collection-published-models'>Get the Collection of Published Models</a>
 Here is an example of retrieving a list of published models.
 
 ```json
@@ -432,7 +432,7 @@ Here is an example of retrieving a list of published models.
 ```
 <br>
 
-#### <a name='GetPublishedModel'>Get the Published Model</a>
+#### <a name='get-published-model'>Get the Published Model</a>
 Here is an example of retrieving a published model.
 
 ```json
@@ -467,7 +467,7 @@ Here is an example of retrieving the Dockerfile content for a published model.
 
 <br>
 
-#### <a name='GetGitFolders'>Get the Collection of Git Folders</a>
+#### <a name='get-git-folders'>Get the Collection of Git Folders</a>
 Here is an example of retrieving a list of the Git destination folders.
 
 ```json
@@ -489,7 +489,7 @@ Here is an example of retrieving a list of the Git destination folders.
 
 <br>
 
-#### <a name='GetGitFolder'>Get a Git Folder</a>
+#### <a name='get-git-folder'>Get a Git Folder</a>
 Here is an example of retrieving a Git destination folder.
 
 ```json
@@ -509,4 +509,4 @@ Here is an example of retrieving a Git destination folder.
 }
 ```
 
-version 12, last updated on 14 December 2023
+version 12, last updated on 21 March 2024

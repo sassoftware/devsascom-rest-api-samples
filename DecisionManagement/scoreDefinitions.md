@@ -18,42 +18,42 @@ A score definition contains the following details:
 <details>
 <summary>Create a Score Definition</summary>
 
-* [Specifying the type of input data as a CAS table](#SpecifyingInputDataTypeCASTable)
-* [Specifying the type of input data as inline](#SpecifyingInputDataInline)
-* [Specifying the type of input data as scenario](#SpecifyingInputDataScenario)
+* [Specifying the type of input data as a CAS table](#specifying-input-data-type-cas-table)
+* [Specifying the type of input data as inline](#specifying-input-data-inline)
+* [Specifying the type of input data as scenario](#specifying-input-data-scenario)
 </details>
 
 <details>
 <summary>Update Score Definitions</summary>
 
-* [Replacing all parts of the score definition with new data](#ReplacingScoreDefinitionNewData)
+* [Replacing all parts of the score definition with new data](#replacing-score-definition-new-data)
 </details>
 
 <details>
 <summary>Searching a Score Definition</summary>
 
-* [Search by name](#SearchByName)
-* [Search by the score object URI](#SearchByURI)
-* [Search by the score object type](#SearchByType)
+* [Search by name](#search-by-name)
+* [Search by the score object URI](#search-by-uri)
+* [Search by the score object type](#search-by-type)
 </details>
 
 <details>
 <summary>Getting the Mapped Code for Score Objects</summary>
 
-* [Get the mapped code for score objects](#GetMappedcodeScoreObjects)
+* [Get the mapped code for score objects](#get-mapped-code-score-objects)
 </details>
 
 <details>
 <summary>Delete a Score Definition</summary>
 
-* [Delete a score definition](#DeleteScoreDefinition)
+* [Delete a score definition](#delete-score-definition)
 </details>
 
 ### Creating a Score Definition
 Here are some examples of creating a score definition.
 </br>
 
-#### Example 1: <a name='SpecifyingInputDataTypeCASTable'>Specifying the Type of Input Data as a CAS Table</a>
+#### Example 1: <a name='specifying-input-data-type-cas-table'>Specifying the Type of Input Data as a CAS Table</a>
 ```json
 {
   "POST": "/definitions",
@@ -98,7 +98,7 @@ Here are some examples of creating a score definition.
 }
 ```
 
-#### Example 2: <a name='SpecifyingInputDataInline'>Specifying the Type of Input Data as Inline</a>
+#### Example 2: <a name='specifying-input-data-inline'>Specifying the Type of Input Data as Inline</a>
 ```json
 {
   "POST": "/definitions",
@@ -188,7 +188,7 @@ body:
     mappingType: static
     mappingValue: 100000
 ```
-#### Example 3: <a name='SpecifyingInputDataScenario'>Specifying the Type of Input Data as Scenario</a>
+#### Example 3: <a name='specifying-input-data-scenario'>Specifying the Type of Input Data as Scenario</a>
 ```json
 {
   "POST": "/definitions",
@@ -236,7 +236,7 @@ body:
 ```
 
 ### Updating a Score Definition
-Here is an example of <a name='ReplacingScoreDefinitionNewData'>replacing all parts of the score definition with new data</a>.
+Here is an example of <a name='replacing-score-definition-new-data'>replacing all parts of the score definition with new data</a>.
 
 ```json
 {
@@ -287,7 +287,7 @@ Here is an example of <a name='ReplacingScoreDefinitionNewData'>replacing all pa
 Here are some examples of searching a score definition.
 Note: Accept-Item can be application/vnd.sas.summary+json, application/vnd.sas.score.definition+json or application/vnd.sas.score.definition.summary+json 
 <br/>
-#### Example 1: <a name='SearchByName'>Search by Name</a>
+#### Example 1: <a name='search-by-name'>Search by Name</a>
 ```json
 {
   "GET": "/definitions?filter=eq(name,'<name to match>')",
@@ -298,7 +298,7 @@ Note: Accept-Item can be application/vnd.sas.summary+json, application/vnd.sas.s
 }
 ```
 
-#### Example 2: <a name='SearchByURI'>Search by the Score Object URI</a>
+#### Example 2: <a name='search-by-uri'>Search by the Score Object URI</a>
 ```json
 {
   "GET": "/definitions?filter=eq(objectDescriptor.uri,'<uri of the Score Object>')",
@@ -309,7 +309,7 @@ Note: Accept-Item can be application/vnd.sas.summary+json, application/vnd.sas.s
 }
 ```
 
-#### Example 3: <a name='SearchByType'>Search by the Score Object Type</a>
+#### Example 3: <a name='search-by-type'>Search by the Score Object Type</a>
 ```json
 {
   "GET": "/definitions?filter=eq(objectDescriptor.type,'<type of the Score Object>')",
@@ -321,7 +321,7 @@ Note: Accept-Item can be application/vnd.sas.summary+json, application/vnd.sas.s
 ```
 
 ### Getting the Mapped Code for Score Objects
-Here is an example of <a name='GetMappedcodeScoreObjects'>getting the mapped code for score objects</a>.
+Here is an example of <a name='get-mapped-code-score-objects'>getting the mapped code for score objects</a>.
 ```json
 {
   "POST": "/definitions/{definitionId}/mappedCode",
@@ -338,7 +338,7 @@ Here is an example of <a name='GetMappedcodeScoreObjects'>getting the mapped cod
 ```
 
 ### Deleting a Score Definition
-Here is an example of <a name='DeleteScoreDefinition'>deleting a score definition</a>/
+Here is an example of <a name='delete-score-definition'>deleting a score definition</a>/
 ```json
 {
   "DELETE": "/definitions/{definitionId}"
@@ -346,4 +346,4 @@ Here is an example of <a name='DeleteScoreDefinition'>deleting a score definitio
 ```
 
 
-version 3, last updated 21 February, 2022
+version 3, last updated 21 March 2024
