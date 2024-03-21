@@ -15,9 +15,9 @@ An example of a rule set and its contained rules is a loan approval where multip
 * creditScore - if creditScore < 300 then approved = false
 
 #### Revisions
-This API enables you to not only do basic create, update, delete, and read capabilities with rule sets, but also gives users the ability to create revisions of rule sets. Users also have capability to delete locked revisions. However, the current unlocked version cannot be deleted.
+This API enables you to not only do basic create, update, delete, and read capabilities with rule sets, but also allows users to create revisions of rule sets. Users also have the capability to delete locked revisions. However, the current unlocked version cannot be deleted.
 
- Revisions are versions of the rule set and contained rules that are associated with a major and minor number and can be locked. Once they are locked, you cannot unlock a revision for auditing purposes. The API controls the major and minor numbering of the revisions and locking. Users have control to request a major or minor revision to be created and a new number is assigned for them based on the current revisions available.
+ Revisions are versions of the rule set and contained rules that are associated with a major and minor number and can be locked. Once they are locked, you cannot unlock a revision for auditing purposes. The API controls the major and minor numbering of the revisions and locking. Users have control to request a major or minor revision to be created, and a new number is assigned for them based on the current revisions available.
 
  After a new version is created, any existing revision is locked to prevent multiple revisions being edited at once. The `ruleSetName` and `description` are not tracked within the revision but all other fields are tracked.
 
@@ -26,19 +26,19 @@ This API manages business rules and retrieves the code to be able to leverage th
 
 ## API Request Examples
 
-* [Create a rule set](#CreateRuleSet)
-* [Get a rule set](#GetRuleSet)
-* [Delete a rule set](#DeleteRuleSet)
-* [Get the collection of rule sets](#GetCollectionRuleSets)
-* [Add a rule to a rule set](#AddRuleToRuleSet)
-* [Add a rule referencing a lookup in a condition to a rule set](#AddRuleRefLookupConditionRuleSet)
-* [Update the ordering of rules within a rule set](#UpdateOrderingRulesRuleSet)
-* [Delete a rule from a rule set](#DeleteRuleFromRuleSet)
-* [Create a minor revision of the rule set](#CreateRevisionRuleSet)
-* [Convert a rule action](#ConvertRuleAction)
-* [Convert a rule condition](#ConvertRuleCondition)
+* [Create a rule set](#create-rule-set)
+* [Get a rule set](#get-rule-set)
+* [Delete a rule set](#delete-rule-set)
+* [Get the collection of rule sets](#get-collection-rule-sets)
+* [Add a rule to a rule set](#add-rule-to-rule-set)
+* [Add a rule referencing a lookup in a condition to a rule set](#add-rule-ref-lookup-condition-rule-set)
+* [Update the ordering of rules within a rule set](#update-ordering-rules-rule-set)
+* [Delete a rule from a rule set](#delete-rule-from-rule-set)
+* [Create a minor revision of the rule set](#create-revision-rule-set)
+* [Convert a rule action](#convert-rule-action)
+* [Convert a rule condition](#convert-rule-condition)
 
-#### <a name='CreateRuleSet'>Create a Rule Set</a>
+#### <a name='create-rule-set'>Create a Rule Set</a>
 
 Here is an example of how to create a rule set.
 
@@ -98,7 +98,7 @@ Here is an example of how to create a rule set.
 ```
 <br>
 
-#### <a name='GetRuleSet'>Get a Rule Set</a>
+#### <a name='get-rule-set'>Get a Rule Set</a>
 
 Here is an example of how to get a rule set.
 
@@ -112,9 +112,9 @@ Here is an example of how to get a rule set.
 ```
 <br>
 
-#### <a name='DeleteRuleSet'>Delete a Rule Set</a>
+#### <a name='delete-rule-set'>Delete a Rule Set</a>
 
-Here is an example of how to get a rule set.
+Here is an example of how to delete a rule set.
 
 ```json 
 {
@@ -123,7 +123,7 @@ Here is an example of how to get a rule set.
 ```
 <br>
 
-#### <a name='GetCollectionRuleSets'>Get the Collection of Rule Sets</a>
+#### <a name='get-collection-rule-sets'>Get the Collection of Rule Sets</a>
 
 Here is an example of how to get the collection of rule sets.
 
@@ -137,7 +137,7 @@ Here is an example of how to get the collection of rule sets.
 ```
 <br>
 
-#### <a name='AddRuleToRuleSet'>Add a Rule to a Rule Set</a>
+#### <a name='add-rule-to-rule-set'>Add a Rule to a Rule Set</a>
 
 Here is an example of how to add a rule to a rule set.
 
@@ -176,7 +176,7 @@ Here is an example of how to add a rule to a rule set.
 ```
 <br>
 
-#### <a name='AddRuleRefLookupConditionRuleSet'>Add a Rule Referencing a Lookup in a Condition to a Rule Set</a>
+#### <a name='add-rule-ref-lookup-condition-rule-set'>Add a Rule Referencing a Lookup in a Condition to a Rule Set</a>
 
 Here is an example of how to add a rule referencing a lookup in a condition to a rule set.
 
@@ -217,7 +217,7 @@ Here is an example of how to add a rule referencing a lookup in a condition to a
 ```
 <br>
 
-#### <a name='UpdateOrderingRulesRuleSet'>Update the Ordering of Rules within a Rule Set</a>
+#### <a name='update-ordering-rules-rule-set'>Update the Ordering of Rules within a Rule Set</a>
 
 Here is an example of how to update the ordering of rules within a rule set.
 
@@ -244,7 +244,7 @@ Here is an example of how to update the ordering of rules within a rule set.
 ```
 <br>
 
-#### <a name='DeleteRuleFromRuleSet'>Delete a Rule from a Rule Set</a>
+#### <a name='delete-rule-from-rule-set'>Delete a Rule from a Rule Set</a>
 
 Here is an example of how to delete a rule from a rule set.
 
@@ -255,7 +255,7 @@ Here is an example of how to delete a rule from a rule set.
 ```
 <br>
 
-#### <a name='CreateRevisionRuleSet'>Create a Minor Revision of the Rule Set</a>
+#### <a name='create-revision-rule-set'>Create a Minor Revision of the Rule Set</a>
 
 Here is an example of how to create a minor revision of the rule set.
 
@@ -286,7 +286,7 @@ Here is an example of how to create a minor revision of the rule set.
 ```
 <br>
 
-#### <a name='ConvertRuleAction'>Convert a Rule Action</a>
+#### <a name='convert-rule-action'>Convert a Rule Action</a>
 
 Here is an example of how to convert a rule action to a different target type.
 
@@ -320,7 +320,7 @@ Here is an example of how to convert a rule action to a different target type.
 ```
 <br>
 
-#### <a name='ConvertRuleCondition'>Convert a Rule Condition</a>
+#### <a name='convert-rule-condition'>Convert a Rule Condition</a>
 
 Here is an example of how to convert a rule condition to a different target type.
 

@@ -14,43 +14,43 @@ Here are the functions that this API provides:
 <details>
 <summary>Performance Tasks</summary>
 
-* [Create a performance task](#CreatePerformanceTask)
-* [Execute a performance task](#ExecutePerformanceTask)
-* [Create a performance job](#CreatePerformanceJob)
+* [Create a performance task](#create-performance-task)
+* [Execute a performance task](#execute-performance-task)
+* [Create a performance job](#create-performance-job)
 </details>
 
 <details>
 <summary>Publish Models</summary>
 
-* [Publish a model](#PublishModel)
+* [Publish a model](#publish-model)
 </details>
 
 <details>
 <summary>Model Comparison Reports</summary>
 
-* [Create a model comparison report](#CreateModelComparisonReport)
+* [Create a model comparison report](#create-model-comparison-report)
 </details>
 
 <details>
 <summary>Workflow Associations</summary>
 
-* [Create a workflow association](#CreateWorkflowAssociation)
-* [Retrieve workflow associations](#RetrieveWorkflowAssociations)
-* [Retrieve status Information for a workflow association](#RetrieveStatusInfoWorkflowAssociation)
+* [Create a workflow association](#create-workflow-association)
+* [Retrieve workflow associations](#retrieve-workflow-associations)
+* [Retrieve status Information for a workflow association](#retrieve-status-info-workflow-association)
 </details>
 
 
 <details>
 <summary>Workflow Tasks</summary>
 
-* [Retrieve a set of workflow tasks](#RetrieveSetWorkflowTasks)
+* [Retrieve a set of workflow tasks](#retrieve-workflow-tasks)
 * [Retrieve a workflow prompt](#RetrieveWorkflowPrompt)
 </details>
 
 <details>
 <summary>SAS Model Manager News</summary>
 
-* [Retrieve SAS Model Manager RSS feed](#RetrieveModelManagerRSS)
+* [Retrieve SAS Model Manager RSS feed](#retrieve-model-manager-rss)
 </details>
 
 <details>
@@ -59,7 +59,7 @@ Here are the functions that this API provides:
 * [Model Management API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#model-management)
 </details>
 
-#### <a name='CreatePerformanceTask'>Create a Performance Task</a>
+#### <a name='create-performance-task'>Create a Performance Task</a>
 Here is an example of defining a performance task for a model. After submitting the request, a performance task definition is created and a task ID is returned. The task ID can be used later to execute a performance task.
 
 ```
@@ -116,7 +116,7 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='ExecutePerformanceTask'>Execute a Performance Task</a>
+#### <a name='execute-performance-task'>Execute a Performance Task</a>
 Here is an example of executing a performance task. The performance task SAS code is submitted, and performance output tables are generated. A performance job ID is also returned. Based on the tables that are generated, users can create charts for model performance.
 
 ```
@@ -147,7 +147,7 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='CreatePerformanceJob'>Create a Performance Job</a>
+#### <a name='create-performance-job'>Create a Performance Job</a>
 Here is an example of defining a performance job for a model. After submitting the request, a performance job is created and a job ID is returned. The job ID can be used later to get a performance job.
 
 ```
@@ -179,7 +179,7 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='PublishModel'>Publish a Model</a>
+#### <a name='publish-model'>Publish a Model</a>
 Here is an example of publishing a model to a publishing destination.
 
 * The `force` request parameter indicates to publish models and replace previously published models with the same name.
@@ -188,11 +188,11 @@ Here is an example of publishing a model to a publishing destination.
 
 * The `sourceUri` argument is the URI of the model that is to be published.
 
-* The `publishLevel` argument indicates the publish level from where the model is being published. Valid values are "`model`" or "`project`".
+* The `publishLevel` argument indicates the publishing level from where the model is being published. Valid values are "`model`" or "`project`".
 
   Here are some examples:
-  - If you publish models from a project version within the SAS Model Manager web application, the publish level is "`model`".
-  - If you publish models of a project from the Projects category list within the SAS Model Manager web application, the publish level is "`project`".
+  - If you publish models from a project version within the SAS Model Manager web application, the publishing level is "`model`".
+  - If you publish models of a project from the Projects category list within the SAS Model Manager web application, the publishing level is "`project`".
 
 ```
 POST /publish?force=true
@@ -270,7 +270,7 @@ Here is an example of the response:
 
 ```
 
-#### <a name='CreateModelComparisonReport'>Create a Model Comparison Report</a>
+#### <a name='create-model-comparison-report'>Create a Model Comparison Report</a>
 Here is an example of generating model comparison report data. It is typically consumed by SAS Model Manager web application.
 
 ```
@@ -289,7 +289,7 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='CreateWorkflowAssociation'>Create a Workflow Association</a>
+#### <a name='create-workflow-association'>Create a Workflow Association</a>
 Here is an example of creating an association between a workflow process and a SAS Model Manager project. Creating the association allows automation of tasks that are related to SAS Model Manager projects.
 
 The key data in this example are the following:
@@ -317,7 +317,7 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='RetrieveWorkflowAssociations'>Retrieve Workflow Associations</a>
+#### <a name='retrieve-workflow-associations'>Retrieve Workflow Associations</a>
 Here is an example of retrieving an association with a SAS Model Manager project URI that has already been created.
 
 ```
@@ -380,7 +380,7 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='RetrieveStatusInfoWorkflowAssociation'>Retrieve Status Information for a Workflow Association</a>
+#### <a name='retrieve-status-info-workflow-association'>Retrieve Status Information for a Workflow Association</a>
 Here is an example for retrieving status information about a specific workflow process that is associated with a SAS Model Manager project. The purpose of this request call is to find out the status of the workflow process: In progress, Completed, Terminated, or Suspended.
 
 ```
@@ -418,8 +418,8 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='RetrieveSetWorkflowTasks'>Retrieve a Set of Workflow Tasks</a>
-Here is an example of retrieving a list of workflow tasks (steps from workflow processes) that are assigned to the current user. These tasks are for the authenticated user and are only for tasks within workflow processes that associated with projects. This reflects a task list of work assigned to SAS Model Manager users.
+#### <a name='retrieve-workflow-tasks'>Retrieve a Set of Workflow Tasks</a>
+Here is an example of retrieving a list of workflow tasks (steps from workflow processes) that are assigned to the current user. These tasks are for the authenticated user and are only for tasks within workflow processes that are associated with projects. This reflects a task list of work assigned to SAS Model Manager users.
 
 ```
 GET /workflowTasks
@@ -565,7 +565,7 @@ Here is an example of the response:
 }
 ```
 
-#### <a name='RetrieveModelManagerRSS'>Retrieve SAS Model Manager RSS Feed</a>
+#### <a name='retrieve-model-manager-rss'>Retrieve SAS Model Manager RSS Feed</a>
 Here is an example of retrieving the RSS feed from SAS Communities for SAS Model Manager.
 
 ```
@@ -582,4 +582,4 @@ The key data in this example are the following:
 
 These parameters are used in the bootstrap configuration for the Model Management API service. The result is an RSS feed https://communities.sas.com/plugins/custom/sasinstitute/sasinstitute/featured-rss
 
-version 5, last updated on 18 February, 2021
+version 11, last updated on 21 March 2024

@@ -11,39 +11,39 @@ Treatment definition groups can be added to decisions. When decisions with treat
 <details>
 <summary>Treatment Definitions</summary>
 
-* [Creating a treatment definition](#CreatingTreatmentDefinition)
-* [Updating a treatment definition](#UpdatingTreatmentDefinition)
-* [Searching a treatment definition](#SearchingTreatmentDefinition)
-* [Deleting a treatment definition](#DeletingTreatmentDefinition)
-* [Deleting a treatment definition version](#DeletingTreatmentDefinitionVersion)
+* [Creating a treatment definition](#creating-treatment-definition)
+* [Updating a treatment definition](#updating-treatment-definition)
+* [Searching a treatment definition](#searching-treatment-definition)
+* [Deleting a treatment definition](#deleting-treatment-definition)
+* [Deleting a treatment definition version](#deleting-treatment-definition-version)
 </details>
 
 <details>
 <summary>Treatment Definition Revisions</summary>
 
 * [Locking the current revision and creating a new revision of a treatment definition](#example-treatment-definition-lock)
-* [Searching a treatment definition revision](#SearchingTreatmentDefinitionRevision)
-* [Getting details of list of treatment definition revisions with selection](#GettingDetailsTreatmentDefinitionRevisionsWithselection)
-* [Getting all checkouts for a specific version of a treatment definition](#GetALlCheckoutsTreatmentDefinition)
+* [Searching a treatment definition revision](#searching-treatment-definition-revision)
+* [Getting details of list of treatment definition revisions with selection](#getting-details-treatment-definition-revisions-with-selection)
+* [Getting all checkouts for a specific version of a treatment definition](#get-all-checkouts-treatment-definition)
 </details>
 
 <details>
 <summary>Treatment Definition Groups</summary>
 
-* [Creating a treatment definition group](#CreatingTreatmentDefinitionGroup)
-* [Updating a treatment definition group](#UpdatingTreatmentDefinitionGroup)
-* [Searching a treatment definition group](#SearchingTreatmentDefinitionGroup)
-* [Deleting a treatment definition group](#DeletingTreatmentDefinitionGroup)
-* [Deleting a treatment definition group version](#DeletingTreatmentDefinitionGroupVersion)
+* [Creating a treatment definition group](#creating-treatment-definition-group)
+* [Updating a treatment definition group](#updating-treatment-definition-group)
+* [Searching a treatment definition group](#searching-treatment-definition-group)
+* [Deleting a treatment definition group](#deleting-treatment-definition-group)
+* [Deleting a treatment definition group version](#deleting-treatment-definition-group-version)
 </details>
 
 <details>
 <summary>Treatment Definition Group Revisions</summary>
 
 * [Locking the current revision and creating a new revision of a treatment definition group](#example-treatment-definition-group-lock)
-* [Searching a treatment definition group revision](#SearchingTreatmentDefinitionGroupRevision)
-* [Getting details of a list of treatment definition group revisions with selection](#GettingDetailsTreatmentDefinitionGroupRevisionsWithSelection)
-* [Getting all checkouts for a specific version of a treatment definition group](#GetALlCheckoutsTreatmentDefinitionGroup)
+* [Searching a treatment definition group revision](#searching-treatment-definition-group-revision)
+* [Getting details of a list of treatment definition group revisions with selection](#getting-details-treatment-definition-group-revisions-with-selection)
+* [Getting all checkouts for a specific version of a treatment definition group](#get-all-checkouts-treatment-definition-group)
 * [Activating a treatment definition group revision](#example-treatment-definition-group-activate)
 </details>
 
@@ -54,7 +54,7 @@ Treatment definition groups can be added to decisions. When decisions with treat
 * [Decision Management REST API Examples](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=v_014&docsetId=edmresttut&docsetTarget=titlepage.htm)
 </details>
 
-### <a name='CreatingTreatmentDefinition'>Creating a Treatment Definition</a>
+### <a name='creating-treatment-definition'>Creating a Treatment Definition</a>
 Here is an example of how to create a treatment definition.
 </br>
 
@@ -150,7 +150,7 @@ Here is an example of how to create a treatment definition.
 | datetime array range | string   | datetime | true     | true  | [{"from": "2018-07-13 11:11:111", "to": "2020-07-13 11:11:111"}, {"from": "2022-07-13 11:11:111", "to": "2024-07-13 11:11:111"}]|
 
 
-### <a name='UpdatingTreatmentDefinition'>Updating a Treatment Definition</a>
+### <a name='updating-treatment-definition'>Updating a Treatment Definition</a>
 Here is an example of how to replace all parts of a treatment with new content.
 
 ```json
@@ -225,7 +225,7 @@ Here is an example of how to replace all parts of a treatment with new content.
 }
 ```
 
-### <a name='SearchingTreatmentDefinition'>Searching a Treatment Definition</a>
+### <a name='searching-treatment-definition'>Searching a Treatment Definition</a>
 Here are examples of how to search a treatment definition.
 <br/>
  Example 1: Search by name.
@@ -321,7 +321,7 @@ Here is an example of how to lock a current revision and create a new revision w
 }
 ```
 
-### <a name='SearchingTreatmentDefinitionRevision'>Searching a Treatment Definition Revision</a>
+### <a name='searching-treatment-definition-revision'>Searching a Treatment Definition Revision</a>
 Here is an example of how to search a treatment definition revision by attribute name.
 
  
@@ -335,7 +335,7 @@ Here is an example of how to search a treatment definition revision by attribute
 }
 ```
 
-### <a name='GettingDetailsTreatmentDefinitionRevisionsWithselection'>Getting Details of a List of Treatment Definition Revisions with Selection</a>
+### <a name='getting-details-treatment-definition-revisions-with-selection'>Getting Details of a List of Treatment Definition Revisions with Selection</a>
 Here is an example of how to get a list of treatment definition revisions with selection.
 ```json
 {
@@ -355,7 +355,7 @@ Here is an example of how to get a list of treatment definition revisions with s
 }
 ```
 
-#### <a name='GetALlCheckoutsTreatmentDefinition'>Getting All the Checkouts for a Treatment Definition Version</a>
+#### <a name='get-all-checkouts-treatment-definition'>Getting All the Checkouts for a Treatment Definition Version</a>
 
 Here is an example of how to retrieve all the checkouts for a specific version of a treatment definition.
 
@@ -368,7 +368,7 @@ Here is an example of how to retrieve all the checkouts for a specific version o
 }
 ```
 
-### <a name='DeletingTreatmentDefinition'>Deleting a Treatment Definition</a>
+### <a name='deleting-treatment-definition'>Deleting a Treatment Definition</a>
 Here is an example of how to delete a treatment definition.
 
 ```json
@@ -377,7 +377,7 @@ Here is an example of how to delete a treatment definition.
 }
 ```
 
-### <a name='DeletingTreatmentDefinitionVersion'>Deleting a Treatment Definition Version</a>
+### <a name='deleting-treatment-definition-version'>Deleting a Treatment Definition Version</a>
 Here is an example of how to delete a treatment definition version.
 
 ```json
@@ -386,7 +386,7 @@ Here is an example of how to delete a treatment definition version.
 }
 ```
 
-### <a name='CreatingTreatmentDefinitionGroup'>Creating a Treatment Definition Group</a>
+### <a name='creating-treatment-definition-group'>Creating a Treatment Definition Group</a>
 Here is an example of how to create a treatment definition group.
 </br>
 
@@ -435,7 +435,7 @@ Here is an example of how to create a treatment definition group.
 }
 ```
 
-### <a name='UpdatingTreatmentDefinitionGroup'>Updating a Treatment Definition Group</a>
+### <a name='updating-treatment-definition-group'>Updating a Treatment Definition Group</a>
 Here is an example of how to replace all parts of the treatment definition group with new data.
 
 ```json
@@ -484,7 +484,7 @@ Here is an example of how to replace all parts of the treatment definition group
 }
 ```
 
-### <a name='SearchingTreatmentDefinitionGroup'>Searching a Treatment Definition Group</a>
+### <a name='searching-treatment-definition-group'>Searching a Treatment Definition Group</a>
 Here are examples of how to search a treatment definition group.
 <br/>
  Example 1: Search by name.
@@ -561,7 +561,7 @@ Here is an example of how to lock a current revision and create a new revision w
 }
 ```
 
-### <a name='SearchingTreatmentDefinitionGroupRevision'>Searching a Treatment Definition Group Revision</a>
+### <a name='searching-treatment-definition-group-revision'>Searching a Treatment Definition Group Revision</a>
 Here is an example of how to search a treatment definition group by treatment definition name.
 
  
@@ -575,7 +575,7 @@ Here is an example of how to search a treatment definition group by treatment de
 }
 ```
 
-### <a name='GettingDetailsTreatmentDefinitionGroupRevisionsWithSelection'>Getting Details of a List of Treatment Definition Group Revisions with Selection</a>
+### <a name='getting-details-treatment-definition-group-revisions-with-selection'>Getting Details of a List of Treatment Definition Group Revisions with Selection</a>
 Here is an example of how to get a list of revisions for a treatment definition group with selection.
 ```json
 {
@@ -594,7 +594,7 @@ Here is an example of how to get a list of revisions for a treatment definition 
   }
 }
 ```
-#### <a name='GetALlCheckoutsTreatmentDefinitionGroup'>Getting All the Checkouts for a Treatment Definition Group Version</a>
+#### <a name='get-all-checkouts-treatment-definition-group'>Getting All the Checkouts for a Treatment Definition Group Version</a>
 
 Here is an example of how to retrieve all the checkouts for a specific version of a treatment definition group.
 
@@ -622,7 +622,7 @@ Here is an example of how to activate a treatment definition group revision.
 }
 ```
 
-### <a name='DeletingTreatmentDefinitionGroup'>Deleting a Treatment Definition Group</a>
+### <a name='deleting-treatment-definition-group'>Deleting a Treatment Definition Group</a>
 Here is an example of how to delete a treatment definition group.
 
 ```json
@@ -631,7 +631,7 @@ Here is an example of how to delete a treatment definition group.
 }
 ```
 
-### <a name='DeletingTreatmentDefinitionGroupVersion'>Deleting a Treatment Definition Group Version</a>
+### <a name='deleting-treatment-definition-group-version'>Deleting a Treatment Definition Group Version</a>
 Here is an example of how to delete a treatment definition group version.
 
 ```json
@@ -640,4 +640,4 @@ Here is an example of how to delete a treatment definition group version.
 }
 ```
 
-version 9, last updated 14 December 2023
+version 9, last updated 21 March 2024
