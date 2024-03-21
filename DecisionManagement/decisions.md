@@ -79,7 +79,7 @@ This API enables users to build and retrieve decision-making processes that can 
 * [Create a static decision node type](#create-decision-node-type-static)
 * [Create a localized static decision node type](#create-localized-decision-node-type-static)
 * [Create a REST decision node type](#create-decision-node-type-rest)
-* [Get a decision node type](#get-decision-mode-type)
+* [Get a decision node type](#get-decision-node-type)
 * [Get a decision node type summary](#get-decision-node-type-summary)
 * [Delete a decision node type](#delete-decision-node-type)
 * [Get the collection of decision node types](#get-collection-decision-node-types)
