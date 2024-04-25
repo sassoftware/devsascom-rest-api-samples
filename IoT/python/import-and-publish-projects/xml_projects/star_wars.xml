@@ -1,0 +1,77 @@
+<project name="star_wars" threads="1" pubsub="auto" heartbeat-interval="1">
+  <metadata>
+    <meta id="layout">{"cq1":{"Source":{"x":-435,"y":-400}}}</meta>
+    <meta id="studioUploadedBy">appadmin</meta>
+    <meta id="studioUploaded">1700211019156</meta>
+    <meta id="studioModifiedBy">appadmin</meta>
+    <meta id="studioModified">1700216552811</meta>
+  </metadata>
+  <contqueries>
+    <contquery name="cq1">
+      <windows>
+        <window-source index="pi_HASH" name="Source">
+          <schema>
+            <fields>
+              <field name="name" key="true" type="string"/>
+              <field name="model" type="string"/>
+              <field name="manufacturer" type="string"/>
+              <field name="cost_in_credits" type="int64"/>
+              <field name="length" type="double"/>
+              <field name="max_atmosphering_speed" type="int32"/>
+              <field name="crew" type="int32"/>
+              <field name="passengers" type="int32"/>
+              <field name="cargo_capacity" type="int64"/>
+              <field name="consumables" type="string"/>
+              <field name="hyperdrive_rating" type="double"/>
+              <field name="MGLT" type="int32"/>
+              <field name="starship_class" type="string"/>
+            </fields>
+          </schema>
+          <connectors>
+            <connector class="python" name="pub">
+              <properties>
+                <property name="type"><![CDATA[pub]]></property>
+                <property name="interval"><![CDATA[5 seconds]]></property>
+                <property name="code"><![CDATA[
+import esp
+import json
+import urllib.request
+STARSHIPS_URL = 'https://swapi.dev/api/starships/'  # Star Wars Starships
+next_page = f"{STARSHIPS_URL}?page=1"
+
+def publish():
+    global next_page
+    esp.logMessage(logcontext="my_connector",
+                        message=f'Making API call to {next_page}',
+                        level="info")
+    response = urllib.request.urlopen(next_page)
+    response = response.read().decode('utf-8')
+    response = json.loads(response)
+    
+    events = []
+    for result in response['results']:
+        keep_keys = ['name', 'model', 'manufacturer', 'cost_in_credits', 'length', 'max_atmosphering_speed', 'crew', 'passengers', 'cargo_capacity', 'consumables', 'hyperdrive_rating', 'MGLT', 'starship_class']
+        event = dict((k, result[k]) for k in keep_keys if k in result)
+        events.append(event)
+    
+    done = False
+    next_page = response['next']
+    if next_page is None:
+        done = True
+        esp.logMessage(logcontext="my_connector",
+                        message=f'Connector finished',
+                        level="info")
+
+    return {
+        "events": events,
+        "done": done
+    }
+    ]]></property>
+              </properties>
+            </connector>
+          </connectors>
+        </window-source>
+      </windows>
+    </contquery>
+  </contqueries>
+</project>
