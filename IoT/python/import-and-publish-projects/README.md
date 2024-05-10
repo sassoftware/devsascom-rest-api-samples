@@ -1,33 +1,23 @@
-# Create and Use Asset
+# Import, Publish, and Run Projects in a Kubernetes Cluster
 
 ## Overview
 
-This notebook leverages the IOT ESP API to import, publish and run projects on K8s clusters.
+This Jupyter Notebook uses the SAS Event Stream Processing Studio REST API and the SAS Event Stream Manager REST API to import, publish, and run projects in a Kubernetes cluster.
 
-In this notebook we will loop through all XML projects in xml_projects folder and do the following:
-1. Check if projects have already been imported
-2. If yes, import it using next version number. Otherwise import it normally with version 1
-3. Make project public so all users can see it
-4. Publish project
-5. Synchronize projects from Studio to ESM
-6. Create ESM Deployment Cluster on which to run the projects
-7. Start projects on K8s cluster on ESM
+Use this example when SAS Event Stream Processing is deployed with other SAS Viya platform products and you are using SAS Event Stream Processing 2023.08 or later. 
 
-## Prerequisites
+This Jupyter Notebook uses the project XML files in the `xml_projects` folder and performs the following tasks:
+1. Check whether the projects have already been imported to SAS Event Stream Processing Studio.
+2. If a project has been previously imported, then import it using the next version number. Otherwise, import the project as version 1.
+3. Make the projects public so that they are visible to all users.
+4. Publish the projects from SAS Event Stream Processing Studio to SAS Event Stream Manager.
+5. Synchronize the projects.
+6. Create a SAS Event Stream Manager deployment whose type is "Cluster".
+7. Run the projects in the Kubernetes cluster. This action creates and starts an ESP server for each project.
 
-#### XML Projects
+## Check Prerequisites
 
-- This example will assume that at same level as this Jupyter Notebook there is an *xml_projects* folder with XML files representing proejcts the user wants to import and publish to ESP.
-- 
-#### Variables to assign
-
-- server - the SAS Viya server URL
-- username
-- password
-- chosen_deployment_name - the nmae of the ESM deployment cluster we want to create
-
-### Packages and Python Version
-- python 3
+Ensure that Python 3 is available and the following Python packages are available:
 - requests
 - json
 - epoch
@@ -35,12 +25,17 @@ In this notebook we will loop through all XML projects in xml_projects folder an
 - ElementTree
 - time
 
-## Usage
+## Using the Example
 1. Download the Python program or the Jupyter Notebook file.
-2. Edit your variables to match your environment.
-3. Proceed to run the program or Notebook commands.
+2. Ensure that the `xml_projects` folder (which contains the project XML files used by this example) is located at the same level as this Jupyter Notebook.
+3. Edit the following variables to match your environment:
+   - `server`: the URL of the SAS Viya platform server
+   - `username`
+   - `password`
+   - `chosen_deployment_name`: specify a name for the SAS Event Stream Manager deployment that this example creates
+4. Run the program or Jupyter Notebook commands.
 
-## Endpoints Used
+## Endpoints Used by This Example
 
 ### SAS Event Stream Processing Studio
 - [/esp-project](https://developers.sas.com/rest-apis/SASEventStreamProcessingStudio-v3?operation=getListModels) - List all projects
@@ -52,9 +47,4 @@ In this notebook we will loop through all XML projects in xml_projects folder an
 ### SAS Event Stream Manager
 - [/deployment](https://developers.sas.com/rest-apis/SASEventStreamManager-v3?operation=getListDeployments) - List all deployments
 - [/deployment](https://developers.sas.com/rest-apis/SASEventStreamManager-v3?operation=createDeployment) - Create a deployment
-- [/server/cluster](https://developers.sas.com/rest-apis/SASEventStreamManager-v3?operation=createStartProjectOnCluster) - Run a project on a cluster
-
-## Supported Versions
-
-- Viya 4
-- 2023.08 onwards
+- [/server/cluster](https://developers.sas.com/rest-apis/SASEventStreamManager-v3?operation=createStartProjectOnCluster) - Run a project in a cluster
