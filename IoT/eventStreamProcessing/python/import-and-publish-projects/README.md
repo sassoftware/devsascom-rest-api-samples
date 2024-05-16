@@ -39,6 +39,10 @@ Ensure that Python 3 is available and the following Python packages are availabl
 
 ## Endpoints Used by This Example
 
+_**Note:** The IoT SAS Event Stream Processing Studio Rest API and the SAS Event Stream Manager Rest API documentation 
+is currently for internal use only and not available to external customers on developers.sas.com. 
+You must be signed in with your SAS email address to access the content on the external site._
+
 ### SAS Event Stream Processing Studio
 - [/esp-project](https://developers.sas.com/rest-apis/SASEventStreamProcessingStudio-v3?operation=getListModels) - List all projects
 - [/esp-project](https://developers.sas.com/rest-apis/SASEventStreamProcessingStudio-v3?operation=createProject) - Create a project
