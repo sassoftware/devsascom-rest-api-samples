@@ -12,7 +12,7 @@ This Jupyter notebook uses the project XML files in the `xml_projects` folder an
 1. Check whether the projects have already been imported to SAS Event Stream Processing Studio.
 2. If a project has been previously imported, then import it using the next version number. Otherwise, import the project as version 1.
 3. Make the projects public so that they are visible to all users.
-4. Publish the projects from SAS Event Stream Processing Studio (ESP) to SAS Event Stream Manager (ESM).
+4. Publish the projects from SAS Event Stream Processing Studio to SAS Event Stream Manager.
 5. Synchronize the projects.
 6. Create a SAS Event Stream Manager deployment whose type is "Cluster".
 7. Run the projects in the Kubernetes cluster. This action creates and starts an ESP server for each project.
