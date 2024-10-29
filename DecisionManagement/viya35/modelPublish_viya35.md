@@ -3,9 +3,9 @@ The Model Publish API provides support for publishing objects to CAS, Hadoop, Pr
 
 Here are the functions that this API provides:
 
-* Define, update, and delete publishing destinations
-* Publish models, decisions, or rule sets to a predefined destination
-* Retrieve a list of published objects (such as models, decisions, and rule sets)
+- Define, update, and delete publishing destinations
+- Publish models, decisions, or rule sets to a predefined destination
+- Retrieve a list of published objects (such as models, decisions, and rule sets)
 
 <b>Note:</b> By default only SAS Administrators can define, update, and delete publishing destinations. Authenticated users can perform all of the other functions.
 
@@ -14,39 +14,42 @@ Here are the functions that this API provides:
 <details>
 <summary>Destinations</summary>
 
-* [Create a CAS destination](#create-cas-destination)
-* [Create a SAS Micro Analytic Service destination](#CreateSASMASDestination)
-* [Create an Amazon Web Services destination](#create-aws-destination)
-* [Create a private docker destination](#create-docker-destination)
-* [Create a Teradata destination](#create-teradata-destination)
-* [Create a Hadoop destination](#create-hadoop-destination)
-* [Update a CAS destination](#update-cas-destination)
-* [Update a Teradata destination](#update-teradata-destination)
-* [Update a Hadoop destination](#update-hadoop-destination)
-* [Get a destination](#get-destination)
-* [Delete a destination](#delete-destination)
-* [Get the collection of destinations](#get-collection-destinations)
+- [Create a CAS destination](#create-cas-destination)
+- [Create a SAS Micro Analytic Service destination](#create-mas-destination)
+- [Create an Amazon Web Services destination](#create-aws-destination)
+- [Create a private docker destination](#create-docker-destination)
+- [Create a Teradata destination](#create-teradata-destination)
+- [Create a Hadoop destination](#create-hadoop-destination)
+- [Update a CAS destination](#update-cas-destination)
+- [Update a Teradata destination](#update-teradata-destination)
+- [Update a Hadoop destination](#update-hadoop-destination)
+- [Get a destination](#get-destination)
+- [Delete a destination](#delete-destination)
+- [Get the collection of destinations](#get-collection-destinations)
+
 </details>
 
 <details>
 <summary>Publish Models</summary>
 
-* [Publish a model to a destination](#publish-model-destination)
-* [Publish a model with an analytic store to a destination](#publish-model-analytic-store-destination)
-* [Get the collection of published models](#get-collection-published-models)
-* [Get the published model](#get-published-model)
+- [Publish a model to a destination](#publish-model-destination)
+- [Publish a model with an analytic store to a destination](#publish-model-analytic-store-destination)
+- [Get the collection of published models](#get-collection-published-models)
+- [Get the published model](#get-published-model)
+
 </details>
 
 <details>
 <summary>See Also</summary>
 
-* [Model Publish API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#model-publish)
-* [Define a remote SAS Micro Analytic Service publishing destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.4&docsetId=edmresttut&docsetTarget=n11fzlp8s4zvson1gwv1xjty0099.htm&locale=en)
-* [Publish a decision to the maslocal destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.4&docsetId=edmresttut&docsetTarget=p0scry8g4y8v6gn13esxsf9jg9xp.htm&locale=en)
+- [Model Publish API documentation](https://developer.sas.com/rest-apis/modelPublish?cadence=Viya_35)
+- [Define a remote SAS Micro Analytic Service publishing destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.6&docsetId=edmresttut&docsetTarget=n11fzlp8s4zvson1gwv1xjty0099.htm&locale=en)
+- [Publish a decision to the maslocal destination API tutorial](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.6&docsetId=edmresttut&docsetTarget=p0scry8g4y8v6gn13esxsf9jg9xp.htm&locale=en)
+
 </details>
 
-
 #### <a name='create-cas-destination'>Create a CAS Destination</a>
+
 Here is an example of creating a definition for a CAS (SAS Cloud Analytic Services) publishing destination.
 
 ```json
@@ -57,17 +60,17 @@ Here is an example of creating a definition for a CAS (SAS Cloud Analytic Servic
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
-	"name":"casDestination",
-	"casServerName":"cas-shared-default",
-	"casLibrary" : "Public",
-	"destinationTable" : "sasmodels",
-	"destinationType":"cas"
+    "name":"casDestination",
+    "casServerName":"cas-shared-default",
+    "casLibrary" : "Public",
+    "destinationTable" : "sasmodels",
+    "destinationType":"cas"
   }
 }
 ```
-<br>
 
-#### <a name='CreateSASMASDestination'>Create a SAS Micro Analytic Service Destination</a>
+#### <a name='create-mas-destination'>Create a SAS Micro Analytic Service Destination</a>
+
 Here is an example of creating a definition for a SAS Micro Analytic Service publishing destination that exists on an alternate SAS Viya deployment.
 
 ```json
@@ -78,16 +81,16 @@ Here is an example of creating a definition for a SAS Micro Analytic Service pub
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
-	"name":"remoteMasEnv",
-	"masUri":"http://remoteViyaEnv.com",
-	"authenticationDomain" : "remoteDomain",
-	"destinationType":"microAnalyticService"
+    "name":"remoteMasEnv",
+    "masUri":"http://remoteViyaEnv.com",
+    "authenticationDomain" : "remoteDomain",
+    "destinationType":"microAnalyticService"
   }
 }
 ```
-<br>
 
 #### <a name='create-aws-destination'>Create an Amazon Web Services Destination</a>
+
 Here is an example of creating a definition for an Amazon Web Services (AWS) publishing destination.
 If the property `accessKeyId` or `secretAccessKey` is not specified, the service uses the default AWS credentials provider chain.
 If the property 'region' is not specified, the `us-east-1` property value is used by default.
@@ -100,24 +103,24 @@ If the property 'region' is not specified, the `us-east-1` property value is use
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
-	"name":"myAWS",
+    "name":"myAWS",
     "destinationType":"aws",
-    "properties": [{"name": "accessKeyId",                
+    "properties": [{"name": "accessKeyId",
                  "value": "myKeyId"},
-                {"name": "secretAccessKey",                 
+                {"name": "secretAccessKey",
                  "value": "myAccessKey"},
-                {"name": "region",                 
+                {"name": "region",
                  "value": "us-east-1"},
-                {"name": "kubernetesCluster",                 
+                {"name": "kubernetesCluster",
                  "value": "myEks"}
                    ]
   }
 }
 ```
-<br>
 
 #### <a name='create-docker-destination'>Create a Private Docker Destination</a>
-Here is an example of creating a definition for a private docker publishing destination. 
+
+Here is an example of creating a definition for a private docker publishing destination.
 The property `baseRepoUrl` is required. If the property `dockerHost` is not specified, the service uses the docker socket in the local system by default.
 
 ```json
@@ -128,19 +131,19 @@ The property `baseRepoUrl` is required. If the property `dockerHost` is not spec
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
-	"name":"myDocker",
+    "name":"myDocker",
     "destinationType":"privateDocker",
-    "properties": [{"name": "baseRepoUrl",                
+    "properties": [{"name": "baseRepoUrl",
                  "value": "docker.mycompany.com/myfolder"},
-                 {"name": "dockerHost",                
+                 {"name": "dockerHost",
                  "value": "tcp://10.10.10.88:2375"}
                   ]
   }
 }
 ```
-<br>
 
 #### <a name='create-teradata-destination'>Create a Teradata Destination</a>
+
 Here is an example of creating a definition for a Teradata publishing destination.
 
 ```json
@@ -160,9 +163,9 @@ Here is an example of creating a definition for a Teradata publishing destinatio
   }
 }
 ```
-<br>
 
 #### <a name='create-hadoop-destination'>Create a Hadoop Destination</a>
+
 Here is an example of creating a definition for a Hadoop publishing destination.
 
 ```json
@@ -173,18 +176,18 @@ Here is an example of creating a definition for a Hadoop publishing destination.
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
-	"name":"hadoopDestination",
-	"casServerName":"cas-shared-default",
-	"casLibrary" : "hadoopLibrary",
-	"destinationType":"hadoop",
-	"hdfsDir":"/data/model/dlm/ds2",
-	"configDir":"/opt/sas/hadoop/hadoopjars/cdh58p1/prod:/opt/sas/hadoop/hadoopcfg/cdh58p1/prod"
+    "name":"hadoopDestination",
+    "casServerName":"cas-shared-default",
+    "casLibrary" : "hadoopLibrary",
+    "destinationType":"hadoop",
+    "hdfsDir":"/data/model/dlm/ds2",
+    "configDir":"/opt/sas/hadoop/hadoopjars/cdh58p1/prod:/opt/sas/hadoop/hadoopcfg/cdh58p1/prod"
   }
 }
 ```
-<br>
 
 #### <a name='update-cas-destination'>Update a CAS Destination</a>
+
 Here is an example of updating the description for a CAS publishing destination.
 
 ```json
@@ -196,18 +199,18 @@ Here is an example of updating the description for a CAS publishing destination.
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
-	"name":"casDestination",
-	"casServerName":"cas-shared-default",
-	"casLibrary" : "Public",
-	"destinationTable" : "sasmodels",
-	"destinationType":"cas",
-	"description":"new description"
+    "name":"casDestination",
+    "casServerName":"cas-shared-default",
+    "casLibrary" : "Public",
+    "destinationTable" : "sasmodels",
+    "destinationType":"cas",
+    "description":"new description"
   }
 }
 ```
-<br>
 
 #### <a name='update-teradata-destination'>Update a Teradata Destination</a>
+
 Here is an example of updating the description for a Teradata publishing destination.
 
 ```json
@@ -229,9 +232,9 @@ Here is an example of updating the description for a Teradata publishing destina
   }
 }
 ```
-<br>
 
 #### <a name='update-hadoop-destination'>Update a Hadoop Destination</a>
+
 Here is an example of updating the description for a Hadoop publishing destination.
 
 ```json
@@ -243,19 +246,19 @@ Here is an example of updating the description for a Hadoop publishing destinati
     "Accept": "application/vnd.sas.models.publishing.destination+json"
   },
   "body": {
-	"name":"hadoopDestination",
-	"casServerName":"cas-shared-default",
-	"casLibrary" : "hadoopLibrary",
-	"destinationType":"hadoop",
-	"hdfsDir":"/data/model/dlm/ds2",
-	"configDir":"/opt/sas/hadoop/hadoopjars/cdh58p1/prod:/opt/sas/hadoop/hadoopcfg/cdh58p1/prod",
-	"description":"new description"
+    "name":"hadoopDestination",
+    "casServerName":"cas-shared-default",
+    "casLibrary" : "hadoopLibrary",
+    "destinationType":"hadoop",
+    "hdfsDir":"/data/model/dlm/ds2",
+    "configDir":"/opt/sas/hadoop/hadoopjars/cdh58p1/prod:/opt/sas/hadoop/hadoopcfg/cdh58p1/prod",
+    "description":"new description"
   }
 }
 ```
-<br>
 
 #### <a name='get-destination'>Get a Destination</a>
+
 Here is an example of retrieving the definition for a specified destination name.
 
 ```json
@@ -266,9 +269,9 @@ Here is an example of retrieving the definition for a specified destination name
   }
 }
 ```
-<br>
 
 #### <a name='delete-destination'>Delete a Destination</a>
+
 Here is an example of deleting the publishing destination for a specified destination name.
 
 ```json
@@ -276,9 +279,9 @@ Here is an example of deleting the publishing destination for a specified destin
   "DELETE": "/modelPublish/destinations/{destinationName}"
 }
 ```
-<br>
 
 #### <a name='get-collection-destinations'>Get the Collection of Destinations</a>
+
 Here is an example of retrieving a list of the publishing destinations.
 
 ```json
@@ -289,9 +292,9 @@ Here is an example of retrieving a list of the publishing destinations.
   }
 }
 ```
-<br>
 
 #### <a name='publish-model-destination'>Publish a Model to a Destination</a>
+
 Here is an example of publishing a model to a specified publishing destination.
 
 ```json
@@ -302,7 +305,7 @@ Here is an example of publishing a model to a specified publishing destination.
     "Accept": "application/vnd.sas.models.publishing.model+json"
   },
   "body": {
-	"name": "Published model name",
+    "name": "Published model name",
     "note": "Publishing a model",
     "modelContents":[
         {
@@ -318,10 +321,9 @@ Here is an example of publishing a model to a specified publishing destination.
   }
 }
 ```
-<br>
-
 
 #### <a name='publish-model-analytic-store-destination'>Publish a Model with an Analytic Store to a Destination</a>
+
 Here is an example of publishing a model that contains an analytic store CAS table to a specified destination.
 
 ```json
@@ -332,7 +334,7 @@ Here is an example of publishing a model that contains an analytic store CAS tab
     "Accept": "application/vnd.sas.models.publishing.model+json"
   },
   "body": {
-	"name": "Published model name",
+    "name": "Published model name",
     "note": "Publishing a model",
     "modelContents":[
         {
@@ -348,9 +350,9 @@ Here is an example of publishing a model that contains an analytic store CAS tab
   }
 }
 ```
-<br>
 
 #### <a name='get-collection-published-models'>Get the Collection of Published Models</a>
+
 Here is an example of retrieving a list of published models.
 
 ```json
@@ -361,9 +363,9 @@ Here is an example of retrieving a list of published models.
   }
 }
 ```
-<br>
 
 #### <a name='get-published-model'>Get the Published Model</a>
+
 Here is an example of retrieving a published model.
 
 ```json
@@ -375,5 +377,4 @@ Here is an example of retrieving a published model.
 }
 ```
 
-
-version 4, last updated on 16 July, 2020
+version 4, last updated on 29 October, 2024

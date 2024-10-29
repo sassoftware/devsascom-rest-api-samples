@@ -50,7 +50,7 @@ Treatment definition groups can be added to decisions. When decisions with treat
 <details>
 <summary>See Also</summary>
 
-* [Treatment Definitions API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#treatment-defintions)
+* [Treatment Definitions API documentation](https://developer.sas.com/rest-apis/treatmentDefinitions)
 * [Decision Management REST API Examples](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=v_014&docsetId=edmresttut&docsetTarget=titlepage.htm)
 </details>
 
@@ -229,7 +229,7 @@ Here is an example of how to replace all parts of a treatment with new content.
 Here are examples of how to search a treatment definition.
 <br/>
  Example 1: Search by name.
- 
+
 ```json
 {
   "GET": "/definitions?filter=eq(name,'<name to match>')",
@@ -241,7 +241,7 @@ Here are examples of how to search a treatment definition.
 ```
 
  Example 2: Search by attribute name.
- 
+
 ```json
 {
   "GET": "/definitions?filter=eq(attributes.name,'<name to match>')",
@@ -324,7 +324,7 @@ Here is an example of how to lock a current revision and create a new revision w
 ### <a name='searching-treatment-definition-revision'>Searching a Treatment Definition Revision</a>
 Here is an example of how to search a treatment definition revision by attribute name.
 
- 
+
 ```json
 {
   "GET": "/definitions/{definitionId}/revisions?filter=eq(attributes.name,'<name to match>')",
@@ -347,7 +347,7 @@ Here is an example of how to get a list of treatment definition revisions with s
   "body": {
     "type": "id",
     "resources" : [
-      "1593d98f-f126-41ce-9df7-abd316cd2926", 
+      "1593d98f-f126-41ce-9df7-abd316cd2926",
       "8a59b913-eba2-4e69-9b1a-91560495fa5d",
       "ee8a1b50-2c09-4dcf-a4da-e2a2a8965a7"
     ]
@@ -431,7 +431,7 @@ Here is an example of how to create a treatment definition group.
         ]
       }
     ]
-  } 
+  }
 }
 ```
 
@@ -480,7 +480,7 @@ Here is an example of how to replace all parts of the treatment definition group
         ]
       }
     ]
-  } 
+  }
 }
 ```
 
@@ -488,7 +488,7 @@ Here is an example of how to replace all parts of the treatment definition group
 Here are examples of how to search a treatment definition group.
 <br/>
  Example 1: Search by name.
- 
+
 ```json
 {
   "GET": "/definitionGroups?filter=eq(name,'<name to match>')",
@@ -500,7 +500,7 @@ Here are examples of how to search a treatment definition group.
 ```
 
  Example 2: Search by treatment definition name.
- 
+
 ```json
 {
   "GET": "/definitionGroups?filter=eq(members.definitionName,'<name to match>')",
@@ -557,14 +557,14 @@ Here is an example of how to lock a current revision and create a new revision w
         ]
       }
     ]
-  } 
+  }
 }
 ```
 
 ### <a name='searching-treatment-definition-group-revision'>Searching a Treatment Definition Group Revision</a>
 Here is an example of how to search a treatment definition group by treatment definition name.
 
- 
+
 ```json
 {
   "GET": "/definitionGroups/{groupId}/revisions?filter=eq(members.definitionName,'<name to match>')",
@@ -587,7 +587,7 @@ Here is an example of how to get a list of revisions for a treatment definition 
   "body": {
     "type": "id",
     "resources" : [
-      "1593d98f-f126-41ce-9df7-abd316cd2926", 
+      "1593d98f-f126-41ce-9df7-abd316cd2926",
       "8a59b913-eba2-4e69-9b1a-91560495fa5d",
       "ee8a1b50-2c09-4dcf-a4da-e2a2a8965a7"
     ]
@@ -640,4 +640,4 @@ Here is an example of how to delete a treatment definition group version.
 }
 ```
 
-version 9, last updated 21 March 2024
+version 9, last updated on 29 October, 2024

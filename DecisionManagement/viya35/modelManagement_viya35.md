@@ -52,7 +52,7 @@ For more information, see [_SAS Model Manager: User's Guide_](https://documentat
 <details>
 <summary>See Also</summary>
 
-* [Model Management API documentation](https://developer.sas.com/apis/rest/v3.5/DecisionManagement/#model-management)
+* [Model Management API documentation](https://developer.sas.com/rest-apis/modelManagement?cadence=Viya_35)
 </details>
 
 #### <a name='create-performance-task'>Create a Performance Task</a>
@@ -561,4 +561,4 @@ Here is an example of the response:
 }
 ```
 
-version 3, last updated on 25 January, 2021
+version 3, last updated on 29 October, 2024

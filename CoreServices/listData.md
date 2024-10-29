@@ -8,7 +8,7 @@ For information about configuring the List Data service for Redis, see [sas.list
 
 **See also:**
 
-* [List Data API documentation](https://developer.sas.com/apis/rest/CoreServices/#list-data)
+* [List Data API documentation](https://developer.sas.com/rest-apis/listData)
 
 
 ## API Request Examples

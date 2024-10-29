@@ -354,6 +354,6 @@ Here is an example of how to convert a rule condition to a different target type
 ```
 <br>
 
-version 5, last updated 19 NOV, 2019
+version 5, last updated on 29 October, 2024
 
 
