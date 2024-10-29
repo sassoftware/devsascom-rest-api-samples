@@ -1,6 +1,6 @@
 # SAS REST API Examples
 
-## Visualization
+## Visualization and Reports
 
 This repository contains SAS contributed examples that show the capabilities of the Visualization REST APIs. You can use these examples for learning or for validating your environment.
 

@@ -1,6 +1,6 @@
 # SAS REST API Examples
 
-## Decision Management
+## Decision Management (Models and Decisions)
 
 This repository contains SAS contributed examples that show the capabilities of the Decision Management REST APIs. You can use these examples for learning or for validating your environment.
 

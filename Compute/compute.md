@@ -138,7 +138,7 @@ The following attributes can be set in the media types for requests that are use
 
 ##### sessionInactiveTimeout
 
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request), [`Session Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.session.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request), [`Session Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.session.request)
 * Type: Integer
 * Units: Seconds
 
@@ -151,7 +151,7 @@ session that is created from that context.  If specified in a session request, t
 
 ##### resetLogLineNumbers
 
-* Valid: [`Job Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.job.request)
+* Valid: [`Job Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.job.request)
 * Type: Boolean
 * Availability: Added in version 2 of the resource.
 
@@ -159,7 +159,7 @@ If this attribute is set for a job request, then the log line numbers are reset 
 execution.
 
 ##### allowXCMD
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request)
 * Type: String
 * Availability:  Added in version 3 of the API.
 
@@ -170,7 +170,7 @@ such as *"powerUsers"*, then the users that are members of that Identity group a
 
 ##### homeDirectory
 
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request), [`Session Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.session.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request), [`Session Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.session.request)
 * Type: String
 * Availability:  Added in version 3 of the API.
 
@@ -182,7 +182,7 @@ The home directory has the same life time as the Compute session.
 
 ##### unsafeJobCharacters
 
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request)
 * Type: String
 * Availability: Added in version 3 of the API.
 
@@ -206,7 +206,7 @@ Even when the attribute is disabled, semicolons (;) are always stripped from a v
 
 ##### runServerAs
 
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request)
 * Type: String
 * Availability:  Added in version 3 of the API.
 
@@ -218,7 +218,7 @@ in the Examples section for more information.
 
 ##### reuseServerProcesses
 
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request)
 * Type: Boolean
 * Availability:  Added in version 3 of the API.
 
@@ -227,7 +227,7 @@ also have a *runServerAs* attribute specified.
 
 ##### serverInactiveTimeout
 
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request)
 * Type: Integer
 * Availability:  Added in version 3 of the API.
 
@@ -237,7 +237,7 @@ active Compute sessions.
 
 ##### reuseServerLimit
 
-* Valid: [`Context Request`](https://developer.sas.com/apis/rest/Compute/#application-vnd.sas.compute.context.request)
+* Valid: [`Context Request`](https://developer.sas.com/rest-apis/compute#application-vnd.sas.compute.context.request)
 * Type: Integer
 * Availability:  Added in version 3 of the API.
 
@@ -422,17 +422,17 @@ to control the reuse of a Compute server process.
 
 * reuseServerProcesses - A Boolean value that indicates that servers should be reused.
 * serverInactiveTimeout - A time-out value, in seconds, that indicates how long an idle
-                          server continues to run before it is shut down. A server is idle when it
-                          does not currently have an active Compute session. The default value
-                          is 600 (10 minutes).
+  server continues to run before it is shut down. A server is idle when it
+  does not currently have an active Compute session. The default value
+  is 600 (10 minutes).
 * serverReuseLimit - A value that indicates the maximum number of times that a server can be reused. This value is optional.
-                     By default, the server can be reused as
-                     many times as necessary. If the limit is specified as *n*, then when the *nth* session is deleted,
-                     the server shuts down.
+  By default, the server can be reused as
+  many times as necessary. If the limit is specified as *n*, then when the *nth* session is deleted,
+  the server shuts down.
 * serverMinAvailable - A value that indicates the minimum number of available servers that the Compute
-                     service attempts to keep available.  This value is optional.  When this
-                     attribute is set, an application should not need to wait for the launching
-                     of a server process when a request for a Compute session is made.
+  service attempts to keep available.  This value is optional.  When this
+  attribute is set, an application should not need to wait for the launching
+  of a server process when a request for a Compute session is made.
 
 You can specify these attributes when you create a context:
 ```
@@ -670,13 +670,13 @@ To get a list of currently defined contexts, issue the following request.
   GET /compute/contexts
 ```
 An application/vnd.sas.collection is returned from this request. Standard paging, filtering, and sorting options are
- allowed in a request. Here are some examples.
+allowed in a request. Here are some examples.
 
 ```
   GET /compute/contexts?start=2&limit=5
   GET /compute/contexts?filter=(startsWith(name,SASStudio)
 ```
-**Note:** The previous filter is for example purposes only. There is no implication that name or SASStudio are valid
+**Note:** The previous filter is for example only. There is no implication that name or SASStudio are valid
 parameters for a filter on your request.
 
 ##### <a name='CreateSession'>Create a Session</a>
@@ -692,11 +692,11 @@ includes information and links to the Compute session that was created by applic
 
 **Notes:**
 * Only users who are allowed to use the context can create a session. This is governed by the authentication rules
-that are defined when the context is created.
+  that are defined when the context is created.
 * The Compute server process runs under the identity of the user that is requesting the session.
 
 ##### <a name='AddSessionOpts'>Add Session Options</a>
-A session can be created with customized start up options that use the options array in the environment object of
+A session can be created with customized start-up options that use the options array in the environment object of
 application/vnd.sas.compute.session.request.
 
 The options apply directly to the SAS session that is started.
@@ -779,30 +779,30 @@ remains after the job completes.
 Here are the currently supported types that you can use as a resource.
 
 * **application/vnd.sas.file** - For resources of this type, the Compute server
-expects the URI to point to a Files API resource, and the Compute server creates
-a fileref for that resource. The name that you provide becomes the fileref. Any
-options that are specified become options for the assigned fileref, similar to
-how you define a fileref in a FILENAME statement. For filerefs that have JOB
-scope, the fileref is deassigned when the associated job completes.
-Resources that are marked for output use are shown in the results.
+  expects the URI to point to a Files API resource, and the Compute server creates
+  a fileref for that resource. The name that you provide becomes the fileref. Any
+  options that are specified become options for the assigned fileref, similar to
+  how you define a fileref in a FILENAME statement. For filerefs that have JOB
+  scope, the fileref is deassigned when the associated job completes.
+  Resources that are marked for output use are shown in the results.
 
 * **application/vnd.sas.preference** - For resources of this type, the Compute
-server expects the URI to point to a Preferences API resource. A macro variable
-with the same name as the Preferences resource is created, and the macro
-variable is assigned to the value of the Preferences resource. You can then
-access this macro variable in your code. For resources that are assigned JOB
-scope, the macro variable is deleted when the associated job completes.
-Variables are never shown in results, so the output member has no effect here.
+  server expects the URI to point to a Preferences API resource. A macro variable
+  with the same name as the Preferences resource is created, and the macro
+  variable is assigned to the value of the Preferences resource. You can then
+  access this macro variable in your code. For resources that are assigned JOB
+  scope, the macro variable is deleted when the associated job completes.
+  Variables are never shown in results, so the output member has no effect here.
 
 * **application/vnd.sas.data.source.definition** - For resources of this type, the
-Compute server expects the URI to point to a source definition
-resource that has been created using the DataSources API. A SAS libref with the same name as the source definition resource is
-created, and the libref is defined to reference the information that is stored in this
-source definition resource. Your code can then access this SAS libref and the tables
-that are available in this library. For resources that are assigned JOB scope, the
-libref is deassigned when the associated job completes.
+  Compute server expects the URI to point to a source definition
+  resource that has been created using the DataSources API. A SAS libref with the same name as the source definition resource is
+  created, and the libref is defined to reference the information that is stored in this
+  source definition resource. Your code can then access this SAS libref and the tables
+  that are available in this library. For resources that are assigned JOB scope, the
+  libref is deassigned when the associated job completes.
 
-##### <a name='RuntimeResourceUsage'>Specify Whether a Resource is Required</a>
+##### <a name='RuntimeResourceUsage'>Specify Whether a Resource Is Required</a>
 By default, resources are not required to be available when they are used by a session or job.
 That is, if the item defined by a resource cannot be created during the
 session or job initialization, the session or job is not put into a Failed
@@ -833,7 +833,7 @@ domain ID can be any unique value such as a UUID. These requests must be perform
 user in the SAS Administrators group.
 
 ```
-PUT /credentials/9fba5e25-9238-4d02-8a2f-ece09cccc2dd/domainId
+PUT /credentials/domains/9fba5e25-9238-4d02-8a2f-ece09cccc2dd
 ```
 ```json
 {
@@ -1346,7 +1346,7 @@ a member query parameter. The body of the request is written to the file.
   PUT /compute/sessions/{sessionId}/filerefs/{filreref}/content?member={memberName}
 ```
 To append a member file in the directory, submit a POST request to the content endpoint for the directory fileref with
- a member query parameter. The body of the request is appended to the file.
+a member query parameter. The body of the request is appended to the file.
 
 ```
   POST /compute/sessions/{sessionId}/filerefs/{filreref}/content?member={memberName}
@@ -1455,5 +1455,4 @@ This forces the Session to be destroyed.
 **Note:** All resources, logs, results, jobs, and so on that are tied directly to this session are also destroyed and
 are no longer reachable.
 
-
-version 5, last updated 19 March, 2021
+version 18, last updated 29 October, 2024

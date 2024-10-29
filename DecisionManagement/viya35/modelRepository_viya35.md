@@ -1,5 +1,7 @@
-# Model Repository API
+# Model Repository API for SAS Viya 3.5
+
 The Model Repository API provides access to a common model repository and provides support for registering, organizing, and managing models.
+
 Here are the functions that this API provides:
 
 * Create, update, and delete repositories within the common model repository
@@ -10,13 +12,16 @@ Here are the functions that this API provides:
 * Add, update, and delete model content and project content
 
 Models that are located within projects can also be monitored for performance and scored.
+
 The operations of the Model Repository API can be called by other APIs.  Here are some examples:
 
 * Model Studio can register models within the common model repository by submitting a request to the Model Repository API.
 * The Model Management API can submit a request to monitor performance of models that are managed by the Model Repository API.
 
-
 For more information, see the <a href="https://support.sas.com/en/software/model-manager-support.html#documentation" target="_blank">SAS Model Manager</a> software product support page.
+
+
+For more information, see [_SAS Model Manager: User's Guide_](https://documentation.sas.com/?cdcId=mdlmgrcdc&cdcVersion=15.4&docsetId=mdlmgrug).
 
 ## API Request Examples Grouped by Object Type
 
@@ -83,7 +88,6 @@ For more information, see the <a href="https://support.sas.com/en/software/model
 - [Create a model version](#create-model-version)
 - [Get a model version](#get-model-version)
 - [Get the collection of model versions](#get-model-version-list)
-- [Get a model with a list of versions](#get-model-with-version-list)
 </details>
 
 <details>
@@ -96,13 +100,12 @@ For more information, see the <a href="https://support.sas.com/en/software/model
 - [Get the collection of model contents](#get-model-content-list)
 - [Get the collection of analytic stores for a model](#get-model-astore-list)
 - [Copy the collection of analytic stores for a model](#copy-astore)
-
 </details>
 
 <details>
 <summary>See Also</summary>
 
-* [Model Repository API documentation](https://developer.sas.com/rest-apis/modelRepository)
+- [Model Repository API documentation](https://developer.sas.com/rest-apis/modelRepository?cadence=Viya_35)
 
 </details>
 
@@ -596,22 +599,6 @@ Here is an example of retrieving a list of versions for a specific model.
 
 <br>
 
-##### <a name='get-model-with-version-list'>Get a Model with a List of Versions</a>
-
-Here is an example of retrieving a list of model versions for a specific model,
-including the model itself.
-
-```json
-{
-  "GET": "/modelRepository/models/{modelId}/versions",
-  "headers": {
-    "Accept": "application/vnd.sas.collection+json"
-  }
-}
-```
-
-<br>
-
 #### Model Contents
 
 ##### <a name='add-model-file'>Add a Model File</a>
@@ -844,4 +831,5 @@ the model. The response code is 202.
 
 <br>
 
-version 8, last updated 14 December 2023
+
+version 3, last updated on 17 October, 2024

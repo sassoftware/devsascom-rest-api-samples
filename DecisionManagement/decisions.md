@@ -102,8 +102,8 @@ This API enables users to build and retrieve decision-making processes that can 
 <details>
 <summary>See Also</summary>
 
-* [Decisions API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#decisions)
-* [Decision Management REST API Examples](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=5.4&docsetId=edmresttut&docsetTarget=titlepage.htm&locale=en)
+* [Decisions API documentation](https://developer.sas.com/rest-apis/decisions)
+* [Decision Management REST API Examples](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=default&docsetId=edmresttut&docsetTarget=titlepage.htm)
 </details>
 
 #### <a name='top-level-api'>Get API Resource Links</a>

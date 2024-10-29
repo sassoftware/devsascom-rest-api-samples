@@ -56,7 +56,7 @@ Here are the functions that this API provides:
 <details>
 <summary>See Also</summary>
 
-* [Model Management API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#model-management)
+* [Model Management API documentation](https://developer.sas.com/rest-apis/modelManagement)
 </details>
 
 #### <a name='create-performance-task'>Create a Performance Task</a>

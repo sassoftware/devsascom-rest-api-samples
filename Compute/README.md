@@ -1,6 +1,6 @@
 # SAS REST API Examples
 
-## Decision Management
+## Compute and Jobs
 
 This repository contains SAS contributed examples that show the capabilities of the CAS Management REST APIs. You can use these examples for learning or for validating your environment.
 

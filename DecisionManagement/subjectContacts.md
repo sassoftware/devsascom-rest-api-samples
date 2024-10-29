@@ -57,7 +57,7 @@ You can also use the Subject Contacts API to record text that is produced when e
 <details>
 <summary>See Also</summary>
 
-* [Subject Contacts API documentation](https://developer.sas.com/apis/rest/DecisionManagement/#subject-contacts)
+* [Subject Contacts API documentation](https://developer.sas.com/rest-apis/subjectContacts)
 * [Decision Management REST API Examples](https://documentation.sas.com/?cdcId=edmcdc&cdcVersion=default&docsetId=edmresttut&docsetTarget=titlepage.htm)
 </details>
 <br>

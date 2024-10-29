@@ -1,6 +1,6 @@
 # SAS REST API Examples
 
-## Core Services
+## Core Services (Platform Administration)
 
 This repository contains SAS contributed examples that show the capabilities of the Core Services REST APIs. You can use these examples for learning or for validating your environment.
 
