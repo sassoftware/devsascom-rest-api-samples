@@ -1,0 +1,87 @@
+<project name="lua_connector" pubsub="auto" threads="4" heartbeat-interval="1" index="pi_EMPTY" luaroot="@ESP_PROJECT_OUTPUT@/luaroot">
+  <description><![CDATA[This project contains a Source window with a Lua connector that reads RSS feeds from scientific sites and publishes them into the project.]]></description>
+  <metadata>
+    <meta id="studioUploadedBy">fsduser</meta>
+    <meta id="studioUploaded">1715251562335</meta>
+    <meta id="studioModifiedBy">fsduser</meta>
+    <meta id="studioModified">1715251567920</meta>
+    <meta id="layout">{}</meta>
+    <meta id="studioTags">Example</meta>
+  </metadata>
+  <contqueries>
+    <contquery name="cq">
+      <windows>
+        <window-source name="Source">
+          <schema>
+            <fields>
+              <field name="id" type="string" key="true"/>
+              <field name="source" type="string"/>
+              <field name="title" type="string"/>
+              <field name="date" type="string"/>
+              <field name="description" type="string"/>
+              <field name="link" type="string"/>
+            </fields>
+          </schema>
+          <connectors>
+            <connector class="lua" name="pub">
+              <properties>
+                <property name="type"><![CDATA[pub]]></property>
+                <property name="interval"><![CDATA[5 seconds]]></property>
+                <property name="code"><![CDATA[
+
+                  local   feeds = {
+                     "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
+                     "https://beta.nsf.gov/rss/rss_www_news.xml",
+                     "https://www.newscientist.com/section/news/feed/"
+                    }
+
+                  function publish()
+                      for i,feed in ipairs(feeds)
+                      do
+                          events = getFeed(feed)
+
+                          if esp_inject(events) == false
+                          then
+                              return true
+                          end
+                      end
+
+                      return false
+                  end
+
+                  function getFeed(feed)
+                      local   request = {}
+
+                      request.url = feed
+                      request.tolua = true
+
+                      local   data = esp_sendHttp(request)
+                      local   events = {}
+                      local   index = 1
+
+                      for i,entry in ipairs(data.response.rss.item_array)
+                      do
+                          local   event = {}
+                          event.id = entry.item.guid["*value"]
+                          event.source = feed
+                          event.title = entry.item.title
+                          event.date = entry.item.pubDate
+                          event.description = entry.item.description
+                          event.link = entry.item.link
+                          event._opcode = "upsert"
+                          events[index] = event
+                          index = index + 1
+                      end
+
+                      return events
+                  end
+
+                ]]></property>
+              </properties>
+            </connector>
+          </connectors>
+        </window-source>
+      </windows>
+    </contquery>
+  </contqueries>
+</project>
