@@ -377,5 +377,4 @@ Here is an example of retrieving a published model.
 }
 ```
 
-
-version 4, last updated on October 17, 2024
+version 4, last updated on 29 October, 2024

@@ -582,4 +582,4 @@ The key data in this example are the following:
 
 These parameters are used in the bootstrap configuration for the Model Management API service. The result is an RSS feed https://communities.sas.com/plugins/custom/sasinstitute/sasinstitute/featured-rss
 
-version 11, last updated on 21 March 2024
+version 11, last updated on 29 October, 2024

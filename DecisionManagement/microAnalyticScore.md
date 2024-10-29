@@ -887,7 +887,4 @@ Create a job to asynchronously publish DS2 source into memory. This takes a modu
 }
 ```
 
-
-
-
-version 6, last updated 21 February, 2022
+version 6, last updated on 29 October, 2024

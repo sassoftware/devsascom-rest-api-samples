@@ -829,7 +829,4 @@ the model. The response code is 202.
 }
 ```
 
-<br>
-
-
-version 3, last updated on 17 October, 2024
+version 3, last updated on 29 October, 2024

@@ -2797,8 +2797,6 @@ Here is an example of retrieving decision step code for a specific decision node
   }
 }
 ```
-<br>
 
-
-version 7, last updated 17 November, 2020
+version 7, last updated on 29 October, 2024
 

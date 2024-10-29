@@ -3736,6 +3736,5 @@ Here is an example of deleting a decision type.
   "DELETE": "/decisions/flowTypes/{flowTypeId}"
 }
 ```
-<br>
 
-version 23, last updated 20 March 2024
+version 23, last updated on 29 October, 2024
