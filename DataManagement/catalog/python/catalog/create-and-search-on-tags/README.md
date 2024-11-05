@@ -22,10 +22,10 @@ This python notebook leverages the Catalog API to create and search tags.
 2. Edit your variables to match your environment.
 3. Proceed to run the program or Notebook commands.
 ## Endpoints Used
-- [/catalog/instances](https://developer.sas.com/apis/rest/DataManagement/#create-an-instance) - Create instances
-- [/catalog/tags](https://developer.sas.com/apis/rest/DataManagement/#catalog-tags) - Create/Get/Update a tag
-- [/catalog/search](https://developer.sas.com/apis/rest/DataManagement/#catalog-search) - Search
-- [/catalog/deletions](https://developer.sas.com/apis/rest/DataManagement/#catalog-deletions) - Deletions
+- [/catalog/instances](https://developer.sas.com/rest-apis/catalog/createInstance) - Create instances
+- [/catalog/tags](https://developer.sas.com/rest-apis/catalog#tags) - Create/Get/Update a tag
+- [/catalog/search](https://developer.sas.com/rest-apis/catalog#search) - Search
+- [/catalog/deletions](https://developer.sas.com/rest-apis/catalog#deletions) - Deletions
 
 ## Supported Versions
 

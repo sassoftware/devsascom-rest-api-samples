@@ -28,10 +28,10 @@ Other variables are assigned programmatically during the REST calls using code i
 3. Authenticate to your server before testing the endpoints by running the first request: `0. Get token`.
 - For the Postman collection only, the IDs for the created sample instances are saved in environment variables that follow the pattern: `sample_instance[0|1|2]_id`. If you wish to have a specific name (ex: `expense0_id`), be sure to make that change within the other requests as well. These changes are made in the Tests tab and the request body.
 ## Endpoints Used
-- [/catalog/instances](https://developer.sas.com/apis/rest/DataManagement/#create-an-instance) - Create instances
-- [/catalog/tags](https://developer.sas.com/apis/rest/DataManagement/#catalog-tags) - Create/Get/Update a tag
-- [/catalog/search](https://developer.sas.com/apis/rest/DataManagement/#catalog-search) - Search
-- [/catalog/deletions](https://developer.sas.com/apis/rest/DataManagement/#catalog-deletions) - Deletions
+- [/catalog/instances](https://developer.sas.com/rest-apis/catalog/createInstance) - Create instances
+- [/catalog/tags](https://developer.sas.com/rest-apis/catalog#tags) - Create/Get/Update a tag
+- [/catalog/search](https://developer.sas.com/rest-apis/catalog#search) - Search
+- [/catalog/deletions](https://developer.sas.com/rest-apis/catalog#deletions) - Deletions
 ## Supported Versions
 - Viya 4
 - 2023.09
