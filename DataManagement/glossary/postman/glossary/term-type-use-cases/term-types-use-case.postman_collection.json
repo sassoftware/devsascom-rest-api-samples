@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "3e570ae6-d462-4bce-98b7-f4b8f4289e5a",
+		"name": "term-types-use-case",
+		"description": "**Get Token**\n\n**Create a term type**\n\n- Create a term type.\n    \n- Specify appropriate name, label, description, and custom attributes if necessary.\n    \n\n**Get Term Type by ID**\n\n- Get the created term type via id.\n    \n\n**Get Term Types via filter**\n\n- Get the created term types using a filter.\n    \n- Use the filter parameter to retrieve the term types, filter can be done by name. If a standard naming convention or common prefix is available, it can be used to retrieve or create term types.\n    \n\n**Update term type**\n\n- Updates can be applied to the name, description, or label fields. Additionally, attributes' default values, required/hidden status, and edits to the name, label, or description can be changed.\n    \n\n**Delete term types by ID**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27839702"
+	},
+	"item": [
+		{
+			"name": "0. Get token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code === 200) {",
+							"    console.log(\"0. Authenticated successfully\");",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+							"    postman.setEnvironmentVariable(\"bearerToken\", jsonData.access_token);",
+							"} else {",
+							"    console.log(\"0. Failed with status: \" + pm.response.status);",
+							"}",
+							" ",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic c2FzLmVjOg=="
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "default"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{sasserver}}/SASLogon/oauth/token",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"SASLogon",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Create Term Type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code === 201) {",
+							"    console.log(\"1. Created Term Type successfully\");",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"termTypeId\", jsonData.id);",
+							"    pm.environment.set('etag', pm.response.headers.get('Etag'));",
+							"} else {",
+							"    console.log(\"1. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Example Term Type\",\r\n    \"description\": \"Example Term Type with all attribute values populated\",\r\n    \"label\": \"Example Term Type\",\r\n    \"attributes\": [\r\n    {\r\n      \"name\": \"singleLineTextAttribute\",\r\n      \"label\": \"A single-line text attribute\",\r\n      \"description\": \"This is a description of the attribute. Single-line text attributes can be up to 4000 characters long and cannot contain newline characters.\",\r\n      \"required\": true,\r\n      \"type\": \"single-line\",\r\n      \"defaultValue\": \"This is an example of a single-line text attribute.\"\r\n    },\r\n    {\r\n      \"name\": \"multiLineTextAttribute\",\r\n      \"label\": \"A multi-line text attribute\",\r\n      \"description\": \"Multi-line text attributes can be up to 4000 characters.  Newline characters are allowed.\",\r\n      \"type\": \"multi-line\",\r\n      \"defaultValue\": \"This is an example of a multi-line text attribute\\\\nwith\\\\nnewline\\\\ncharacters.\"\r\n    },\r\n    {\r\n      \"name\": \"booleanAttribute\",\r\n      \"label\": \"A boolean attribute\",\r\n      \"description\": \"Boolean attributes can be either \\\"true\\\" or \\\"false\\\"\",\r\n      \"type\": \"boolean\",\r\n      \"defaultValue\": \"true\"\r\n    },\r\n    {\r\n      \"name\": \"dateAttribute\",\r\n      \"label\": \"A date attribute\",\r\n      \"description\": \"Date attributes should be specified with the format \\\"YYYY-MM-DD\\\"\",\r\n      \"type\": \"date\"\r\n    },\r\n    {\r\n      \"name\": \"timeAttribute\",\r\n      \"label\": \"A time attribute\",\r\n      \"description\": \"Time attributes should be specified with the format \\\"hh:mm:ssZ\\\"\",\r\n      \"type\": \"time\",\r\n      \"defaultValue\": \"10:23:45Z\"\r\n    },\r\n    {\r\n      \"name\": \"dateTimeAttribute\",\r\n      \"label\": \"A date-time attribute\",\r\n      \"description\": \"Date-time attributes should be specified with the format \\\"YYYY-MM-DDThh:mm:ssZ\\\"\",\r\n      \"type\": \"date-time\",\r\n      \"defaultValue\": \"2024-02-12T10:23:45.000Z\"\r\n    },\r\n    {\r\n      \"name\": \"singleSelectAttribute\",\r\n      \"label\": \"A single-select attribute\",\r\n      \"description\": \"Single-select attributes must specify at least one item in the \\\"items\\\" field\",\r\n      \"type\": \"single-select\",\r\n      \"items\": [\r\n        \"Item 1\",\r\n        \"Item 2\",\r\n        \"Item 3\"\r\n      ],\r\n      \"defaultValue\": \"Item 1\"\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{sasserver}}/glossary/termTypes",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"termTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get Term Type by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code === 200) {\r",
+							"    console.log(\"2. Get Term Type by ID Successful\");\r",
+							"    pm.environment.set('etag', pm.response.headers.get('Etag'));\r",
+							"} else {\r",
+							"    console.log(\"2. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/glossary/termTypes/{{termTypeId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"termTypes",
+						"{{termTypeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Get Term Types via filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code === 200) {\r",
+							"    console.log(\"3. Get Term Type via filter Successful\");\r",
+							"} else {\r",
+							"    console.log(\"3. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.collection+json"
+					},
+					{
+						"key": "Accept-Item",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/glossary/termTypes?filter=contains(name,'Example Term Type')",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"termTypes"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "contains(name,'Example Term Type')"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Update Term Type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code === 200) {\r",
+							"    console.log(\"4. Successfully Updated Term Type\");\r",
+							"    pm.environment.set('etag', pm.response.headers.get('Etag'));\r",
+							"} else {\r",
+							"    console.log(\"4. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					},
+					{
+						"key": "If-Match",
+						"value": "{{etag}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{termTypeId}}\",\r\n    \"name\": \"Updated Term Type\",\r\n    \"description\": \"Updated Term Type\",\r\n    \"label\": \"updatedTermType\",\r\n    \"attributes\": [\r\n    \t{\r\n\t        \"name\": \"singleLineAttribute\",\r\n\t        \"label\": \"Single line attribute\",\r\n\t        \"description\": \"a single-line attribute with a narrow input field\",\r\n\t        \"required\": true,\r\n\t        \"hidden\": false,\r\n\t        \"type\": \"single-line\",\r\n\t        \"editorOptions\": {\r\n\t            \"width\": \"small\"\r\n\t        }\r\n    \t}\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{sasserver}}/glossary/termTypes/{{termTypeId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"termTypes",
+						"{{termTypeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Delete Term Type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code === 204) {\r",
+							"    console.log(\"5. Successfully Deleted Term Type\");\r",
+							"} else {\r",
+							"    console.log(\"5. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/glossary/termTypes/{{termTypeId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"termTypes",
+						"{{termTypeId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

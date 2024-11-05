@@ -1,0 +1,6 @@
+﻿Name,Type,Path,Description,singleLineTextAttribute,multiLineTextAttribute,singleSelectAttribute,
+Sample_DefaultTerm,,,A term using the default term type,,,,
+Sample_ChildTerm,,Sample_DefaultTerm,A child of Sample_DefaultTerm,,,,
+Sample_GrandchildTerm,,Sample_DefaultTerm\Sample_ChildTerm,A child of Sample_ChildTerm,,,,
+Sample_CustomTerm,Sample Term Type,,A term using a custom term type with attributes,singleLine,"multi
+line",Item 1,

@@ -1,0 +1,1485 @@
+{
+	"info": {
+		"_postman_id": "e351ecc4-7fb1-4d0c-94f6-2b6f25587e9e",
+		"name": "terms-use-case",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30197860"
+	},
+	"item": [
+		{
+			"name": "0. Get token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(200)){",
+							"    console.log(\"0. Authenticated successfully.\");",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"bearerToken\", jsonData.access_token);",
+							"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+							"}",
+							" else {",
+							"    console.log(\"0. Failed with status: \" + pm.response.status);",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"prefix\", \"Sample\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic c2FzLmVjOg=="
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "default"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{sasserver}}/SASLogon/oauth/token",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"SASLogon",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Create term type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"1. Successfully created term type.\");",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"termTypeId\", jsonData.id);",
+							"}",
+							"else {",
+							"    console.log(\"1. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{prefix}} Term Type\",\r\n    \"description\": \"Sample Term Type with all attribute values populated\",\r\n    \"label\": \"Sample Term Type\",\r\n    \"attributes\": [\r\n    {\r\n      \"name\": \"singleLineTextAttribute\",\r\n      \"label\": \"A single-line text attribute\",\r\n      \"description\": \"This is a description of the attribute. Single-line text attributes can be up to 4000 characters long and cannot contain newline characters.\",\r\n      \"required\": true,\r\n      \"type\": \"single-line\",\r\n      \"defaultValue\": \"This is an example of a single-line text attribute.\"\r\n    },\r\n    {\r\n      \"name\": \"multiLineTextAttribute\",\r\n      \"label\": \"A multi-line text attribute\",\r\n      \"description\": \"Multi-line text attributes can be up to 4000 characters.  Newline characters are allowed.\",\r\n      \"type\": \"multi-line\",\r\n      \"defaultValue\": \"This is an example of a multi-line text attribute\\\\nwith\\\\nnewline\\\\ncharacters.\"\r\n    },\r\n    {\r\n      \"name\": \"booleanAttribute\",\r\n      \"label\": \"A boolean attribute\",\r\n      \"description\": \"Boolean attributes can be either \\\"true\\\" or \\\"false\\\"\",\r\n      \"type\": \"boolean\",\r\n      \"defaultValue\": \"true\"\r\n    },\r\n    {\r\n      \"name\": \"dateAttribute\",\r\n      \"label\": \"A date attribute\",\r\n      \"description\": \"Date attributes should be specified with the format \\\"YYYY-MM-DD\\\"\",\r\n      \"type\": \"date\"\r\n    },\r\n    {\r\n      \"name\": \"timeAttribute\",\r\n      \"label\": \"A time attribute\",\r\n      \"description\": \"Time attributes should be specified with the format \\\"hh:mm:ssZ\\\"\",\r\n      \"type\": \"time\",\r\n      \"defaultValue\": \"10:23:45Z\"\r\n    },\r\n    {\r\n      \"name\": \"dateTimeAttribute\",\r\n      \"label\": \"A date-time attribute\",\r\n      \"description\": \"Date-time attributes should be specified with the format \\\"YYYY-MM-DDThh:mm:ssZ\\\"\",\r\n      \"type\": \"date-time\",\r\n      \"defaultValue\": \"2024-02-12T10:23:45.000Z\"\r\n    },\r\n    {\r\n      \"name\": \"singleSelectAttribute\",\r\n      \"label\": \"A single-select attribute\",\r\n      \"description\": \"Single-select attributes must specify at least one item in the \\\"items\\\" field\",\r\n      \"type\": \"single-select\",\r\n      \"items\": [\r\n        \"Item 1\",\r\n        \"Item 2\",\r\n        \"Item 3\"\r\n      ],\r\n      \"defaultValue\": \"Item 1\"\r\n    }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{sasserver}}/glossary/termTypes",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"termTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Create term",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"2. Successfully created term.\");",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"parentId\", jsonData.id);",
+							"    var responseHeader = JSON.stringify(pm.response.headers);",
+							"    pm.environment.set(\"parentEtag\", JSON.parse(responseHeader)[6].value);",
+							"} ",
+							"else {",
+							"    console.log(\"2. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.glossary.term+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{prefix}} Term\",\r\n    \"description\": \"Sample Term With Attributes\",\r\n    \"label\": \"Sample Term\",\r\n    \"termTypeId\": \"{{termTypeId}}\",\r\n    \"attributes\": {\r\n        \"singleLineTextAttribute\": \"This is an example of a single-line text attribute.\",\r\n        \"multiLineTextAttribute\": \"This is an example of a multi-line text attribute\\\\nwith\\\\nnewline\\\\ncharacters.\",\r\n        \"singleSelectAttribute\": \"Item 2\",\r\n        \"booleanAttribute\": true,\r\n        \"dateAttribute\": \"2024-05-24\",\r\n        \"timeAttribute\": \"09:50:59Z\",\r\n        \"dateTimeAttribute\": \"2024-05-24T09:50:59Z\"\r\n    }  \r\n}"
+				},
+				"url": {
+					"raw": "{{sasserver}}/glossary/terms?publish=true",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"terms"
+					],
+					"query": [
+						{
+							"key": "publish",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Create child term",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"3. Successfully created term.\");",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"childTermId\", jsonData.id);",
+							"    var responseHeader = JSON.stringify(pm.response.headers);",
+							"} ",
+							"else {",
+							"    console.log(\"3. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.glossary.term+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{prefix}} Child Term\",\r\n    \"description\": \"Sample Child Term With Atributes\",\r\n    \"label\": \"Sample Child Term\",\r\n    \"termTypeId\": \"{{termTypeId}}\",\r\n    \"parentId\": \"{{parentId}}\",\r\n    \"attributes\": {\r\n        \"singleLineTextAttribute\": \"NC\",\r\n        \"multiLineTextAttribute\": \"NC\",\r\n        \"singleSelectAttribute\": \"Item 3\",\r\n        \"booleanAttribute\": true,\r\n        \"dateAttribute\": \"2024-05-24\",\r\n        \"timeAttribute\": \"09:50:59Z\",\r\n        \"dateTimeAttribute\": \"2024-05-24T09:50:59Z\"\r\n    }  \r\n}"
+				},
+				"url": {
+					"raw": "{{sasserver}}/glossary/terms?publish=true",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"terms"
+					],
+					"query": [
+						{
+							"key": "publish",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Get term by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(200)){\r",
+							"    console.log(\"4. Successfully retrieved term.\");\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"} else {\r",
+							"    console.log(\"4. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/glossary/terms/{{parentId}}?allowDrafts=none",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"terms",
+						"{{parentId}}"
+					],
+					"query": [
+						{
+							"key": "allowDrafts",
+							"value": "none"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Get terms using filter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(200)){",
+							"    console.log(\"5. Successfully retrieved term.\");",
+							"    var jsonData = JSON.parse(responseBody);",
+							"} else {",
+							"    console.log(\"5. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.collection+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/glossary/terms?filter=startsWith(name,'{{prefix}}')&allowDrafts=none",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"terms"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "startsWith(name,'{{prefix}}')"
+						},
+						{
+							"key": "allowDrafts",
+							"value": "none"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Update term",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(200)){\r",
+							"    console.log(\"6. Successfully updated term.\");\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"} else {\r",
+							"    console.log(\"6. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.glossary.term+json"
+					},
+					{
+						"key": "If-Match",
+						"value": "{{parentEtag}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"{{parentId}}\",\r\n    \"name\": \"{{prefix}} Updated Term\",\r\n    \"description\": \"Sample Updated Term\",\r\n    \"label\": \"Sample Updated Term\",\r\n    \"termTypeId\": \"{{termTypeId}}\",\r\n    \"parentId\": \"\", //remove parent\r\n    \"attributes\": {\r\n        \"singleLineTextAttribute\": \"This is an example of a single-line text attribute.\",\r\n        \"multiLineTextAttribute\": \"This is an example of a multi-line text attribute\\\\nwith\\\\nnewline\\\\ncharacters.\",\r\n        \"singleSelectAttribute\": \"Item 1\",\r\n        \"booleanAttribute\": true,\r\n        \"dateAttribute\": \"2024-05-24\",\r\n        \"timeAttribute\": \"09:50:59Z\",\r\n        \"dateTimeAttribute\": \"2024-05-24T09:50:59Z\"\r\n    }    \r\n}"
+				},
+				"url": {
+					"raw": "{{sasserver}}/glossary/terms/{{parentId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"terms",
+						"{{parentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Patch a Term",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code === 200) {",
+							"    console.log(\"7. Successfully patched term.\");",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set('grandchildEtag', pm.response.headers.get('Etag'));",
+							"} else {",
+							"    console.log(\"7. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json-patch+json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term+json"
+					},
+					{
+						"key": "If-Match",
+						"value": "{{parentEtag}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"op\": \"add\",\n        \"path\": \"/parentId\",\n        \"value\": \"\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{sasserver}}/glossary/terms/{{childTermId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"terms",
+						"{{childTermId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Search for terms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(200)){\r",
+							"    console.log(\"8. Successfully retrieved term.\");\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"} else {\r",
+							"    console.log(\"8. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept-Item",
+						"value": "application/vnd.sas.metadata.search.result+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/catalog/search?q=*&indices=terms",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "*",
+							"description": "A pattern to use when matching the name of an instance."
+						},
+						{
+							"key": "indices",
+							"value": "terms"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9a. Create table entity instance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"9a. Successfully created instance.\");",
+							"    var jsonData = pm.response.json();",
+							"    const rs = pm.response.json();",
+							"    pm.environment.set(\"tableId\", rs.id);",
+							"}",
+							"else {",
+							"    console.log(\"9a. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function randomString(length=1) {",
+							"    let randomString = \"\";",
+							"    for (let i = 0; i < length; i++){",
+							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
+							"    }",
+							"    return randomString;",
+							"}",
+							"",
+							"STRING_LEN = 4",
+							"pm.variables.set('randomString', randomString(STRING_LEN));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.metadata.instance.entity+json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.metadata.instance.entity.detail+json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sample Table\",\r\n    \"type\": \"casTable\",\r\n    \"instanceType\": \"entity\",\r\n    \"definition\": \"casTable\",\r\n    \"resourceId\": \"/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/ATable\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9b. Create column entity instance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"9b. Successfully created instance.\");",
+							"    var jsonData = pm.response.json();",
+							"    const rs = pm.response.json();",
+							"    pm.environment.set(\"columnId\", rs.id);",
+							"}",
+							"else {",
+							"    console.log(\"9b. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function randomString(length=1) {",
+							"    let randomString = \"\";",
+							"    for (let i = 0; i < length; i++){",
+							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
+							"    }",
+							"    return randomString;",
+							"}",
+							"",
+							"STRING_LEN = 4",
+							"pm.variables.set('randomString', randomString(STRING_LEN));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.metadata.instance.entity+json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.metadata.instance.entity.detail+json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"instanceType\": \"entity\",\r\n    \"definition\": \"casColumn\",\r\n    \"definitionId\": \"87d48d12-53c0-473c-ab34-531817319e79\",\r\n    \"name\": \"Column\",\r\n    \"type\": \"casColumn\",\r\n    \"attributes\": {\r\n        \"analysisTimeStamp\": \"2023-09-05T08:55:23.435Z\",\r\n        \"bestChartType\": \"frequency\",\r\n        \"cardinalityCount\": 5,\r\n        \"casDataType\": \"double\",\r\n        \"completenessPercent\": 100,\r\n        \"dataType\": \"num\",\r\n        \"hasOutliers\": false,\r\n        \"hasUniqueField\": false,\r\n        \"kurtosis\": -0.872407215,\r\n        \"leastCommonValue\": 800,\r\n        \"max\": 2975,\r\n        \"mean\": 1720.8333333,\r\n        \"median\": 1425,\r\n        \"min\": 800,\r\n        \"missingCount\": 0,\r\n        \"mode\": 1250,\r\n        \"mostCommonValue\": 1250,\r\n        \"nOutliers\": 0,\r\n        \"ordinalPosition\": 5,\r\n        \"quantiles25\": 1250,\r\n        \"quantiles50\": 1425,\r\n        \"quantiles75\": 2450,\r\n        \"rawLength\": 8,\r\n        \"sasDataType\": \"num\",\r\n        \"skewness\": 0.7290807562,\r\n        \"standardDeviation\": 825.89597812,\r\n        \"statisticalScale\": \"nominal\",\r\n        \"uniquenessPercent\": 83.333333333\r\n    },\r\n    \"resourceId\": \"/dataTables/dataSources/cas~fs~cas-shared-default~fs~Public/tables/Table/columns/Column\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9c. Create table-column relationship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"9c. Successfully created relationship.\");",
+							"    var jsonData = pm.response.json();",
+							"    const rs = pm.response.json();",
+							"    pm.environment.set(\"tabColId\", rs.id);",
+							"}",
+							"else {",
+							"    console.log(\"9c. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function randomString(length=1) {",
+							"    let randomString = \"\";",
+							"    for (let i = 0; i < length; i++){",
+							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
+							"    }",
+							"    return randomString;",
+							"}",
+							"",
+							"STRING_LEN = 4",
+							"pm.variables.set('randomString', randomString(STRING_LEN));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.metadata.instance.relationship+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.metadata.instance.relationship+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sample Column And Table Relationship\",\r\n    \"description\": \"Column And Table Relationship\",\r\n    \"label\": \"Column And Table Relationship\",\r\n    \"instanceType\": \"relationship\",\r\n    \"endpoint1Id\": \"{{tableId}}\",\r\n    \"endpoint2Id\": \"{{columnId}}\",\r\n    \"definition\": \"dataSetDataFields\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9d. Create termAsset relationship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"9d. Successfully created relationship.\");",
+							"    var jsonData = pm.response.json();",
+							"    const rs = pm.response.json();",
+							"    pm.environment.set(\"termAssetId\", rs.id);",
+							"}",
+							"else {",
+							"    console.log(\"9d. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function randomString(length=1) {",
+							"    let randomString = \"\";",
+							"    for (let i = 0; i < length; i++){",
+							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
+							"    }",
+							"    return randomString;",
+							"}",
+							"",
+							"STRING_LEN = 4",
+							"pm.variables.set('randomString', randomString(STRING_LEN));"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.metadata.instance.relationship+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.sas.metadata.instance.relationship+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{prefix}} Term And Column Relationship\",\r\n    \"label\": \"Term And Column Relationship\",\r\n    \"description\": \"Term And Column Relationship\",\r\n    \"instanceType\": \"relationship\",\r\n    \"endpoint1Id\": \"{{parentId}}\",\r\n    \"endpoint2Id\": \"{{columnId}}\",\r\n    \"definition\": \"termAsset\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9e. Get relationship instance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(200)){",
+							"    console.log(\"9e. Successfully retrieved term.\");",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    const rs = pm.response.json();",
+							"    pm.environment.set(\"relInstId\", rs.id);",
+							"} else {",
+							"    console.log(\"9e. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.metadata.instance.relationship+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances/{{termAssetId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances",
+						"{{termAssetId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Search for term",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(200)){\r",
+							"    console.log(\"10. Successfully retrieved asset.\");\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"} else {\r",
+							"    console.log(\"10. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept-Item",
+						"value": "application/vnd.sas.metadata.search.result+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/catalog/search?q=Column.Term: \"{{prefix}}\"",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Column.Term: \"{{prefix}}\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11. Get terms assigned to asset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    if (jsonData.count > 0) {",
+							"    pm.environment.set(\"instId\", jsonData.items[0].id);",
+							"    pm.environment.set(\"instUri\", jsonData.items[0].resourceId);",
+							"    pm.environment.set(\"defnId\", jsonData.items[0].definitionId);",
+							"    }",
+							"",
+							"    if (pm.response.to.have.status(200)) {",
+							"        // Retrieve the response JSON",
+							"        var jsonData = pm.response.json();",
+							"",
+							"        // Create an empty array to store the ids",
+							"        var idList = [];",
+							"",
+							"        // Check if there are any items in the response",
+							"        if (jsonData.count > 0) {",
+							"            // Iterate through each item and extract the id",
+							"            jsonData.items.forEach(function(item) {",
+							"                idList.push('\"' + item.id + '\"');",
+							"            });",
+							"        }",
+							"",
+							"        // Set the idList as an environment variable",
+							"        pm.environment.set(\"idList\", idList);",
+							"    }",
+							"});",
+							"",
+							"if(pm.response.to.have.status(200)){",
+							"    console.log(\"11. Successfully retrieved asset.\");",
+							"    var jsonData = JSON.parse(responseBody);",
+							"} else {",
+							"    console.log(\"11. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Item",
+						"value": "application/vnd.sas.metadata.instance.relationship+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances?limit=10&filter=contains(name, \"Term And Column Relationship\")",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "filter",
+							"value": "contains(name, \"Term And Column Relationship\")"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12. Delete relationship instance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(204)){",
+							"    console.log(\"12. Successfully deleted relationship.\");",
+							"} else {",
+							"    console.log(\"12. Failed with status: \" + pm.response.status);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// This will make a GET request before deleting the instance, allowing the body information to be found in the console.",
+							"pm.sendRequest({",
+							"    url:  pm.environment.replaceIn(\"{{saserver}}/catalog/instances/{{instId}}\"), ",
+							"    method: 'GET',",
+							"    header: {",
+							"        'Authorization': pm.environment.replaceIn(\"Bearer {{bearerToken}}\"),",
+							"        'Accept': pm.environment.replaceIn(\"{{INSTANCE_RELATIONSHIP_JSON}}\")",
+							"    }",
+							"    }, function (err, res) {",
+							"    if (err) {",
+							"        console.log(err)",
+							"    }",
+							"    console.log(res)",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances/{{termAssetId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances",
+						"{{termAssetId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13. Delete term",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(204)){\r",
+							"    console.log(\"13. Successfully deleted term.\");\r",
+							"} else {\r",
+							"    console.log(\"13. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{sasserver}}/glossary/terms/{{childTermId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"terms",
+						"{{childTermId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14. Get and delete instances",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let host=pm.environment.get(\"sasserver\");",
+							"let token=pm.environment.get(\"access_token\");",
+							"let items = pm.response.json().items;",
+							"",
+							"function deleteTerms(index) {",
+							"    if (index >= items.length) {",
+							"        console.log('14. All terms have been processed.');",
+							"        return;",
+							"    }",
+							"",
+							"    aTerm=items[index]",
+							"    ",
+							"    delLink = aTerm.links.find(link=>link.rel===\"delete\").href;",
+							"",
+							"    delRequest = {",
+							"        url: host + delLink,",
+							"        method: 'DELETE',",
+							"        header: 'Authorization: bearer ' + token",
+							"    };",
+							"",
+							"    pm.sendRequest(delRequest, function (err, response) {",
+							"        if (err) {",
+							"            console.error('14. Error deleting term:', err);",
+							"        } else {",
+							"            console.log('14. Deleted term with id:', aTerm.id);",
+							"        }",
+							"        deleteTerms(index + 1); // Proceed to the next item after the current one is processed",
+							"    });",
+							"}",
+							"",
+							"// Start the deletion process from the first item",
+							"deleteTerms(0);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.collection+json"
+					},
+					{
+						"key": "Accept-Item",
+						"value": "application/vnd.sas.glossary.term+json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances?filter=startsWith(name,'{{prefix}}')&limit=20&sortBy=creationTimeStamp:descending",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "startsWith(name,'{{prefix}}')"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "sortBy",
+							"value": "creationTimeStamp:descending"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "15. Delete termType",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(204)){\r",
+							"    console.log(\"15. Successfully deleted term type.\");\r",
+							"} else {\r",
+							"    console.log(\"15. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.glossary.term.type+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/glossary/termTypes/{{termTypeId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"glossary",
+						"termTypes",
+						"{{termTypeId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
