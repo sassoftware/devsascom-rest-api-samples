@@ -42,7 +42,7 @@ It is recommended that you use this feature only if it is absolutely necessary. 
 
 ## API Request Examples
 
-The examples are expressed in [UnRAVL](http://www.github.com/sassoftware/unravl) notation.
+The examples are expressed in [UnRAVL](https://github.com/DavidBiesack/unravl/blob/master/doc/Reference.md) notation.
 
 
 <details>
