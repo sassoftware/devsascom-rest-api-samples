@@ -11,8 +11,8 @@ This differs from the SAS VIYA Search service, which provides free text and face
 * [use case three: Get detailed vertex information](#use-case-three)
 * [use case four: Import configuration](#use-case-four)
 * [use case five: Re-index all person objects](#use-case-five)
-* [use case six: Define Events for Time and Geospatial Searching](#use-case-six)
-* [use case seven: Calculate Network Centrality](#use-case-seven)
+* [use case six: Define events for time and geospatial searching](#use-case-six)
+* [use case seven: Calculate network centrality](#use-case-seven)
 
 #### <a name='use-case-one'>Use Case One</a>: Search Person Objects
 
