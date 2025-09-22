@@ -6,13 +6,13 @@ This differs from the SAS VIYA Search service, which provides free text and face
 
 ## API Request Examples
 
-* [use case one: Search person objects](#Use-Case-One)
-* [use case two: Expand person vertex](#Use-Case-Two)
-* [use case three: Get detailed vertex information](#Use-Case-Three)
-* [use case four: Import configuration](#Use-Case-Four)
-* [use case five: Re-index all person objects](#Use-Case-Five)
-* [use case six: Define Events for Time and Geospatial Searching](#Use-Case-Six)
-* [use case seven: Calculate Network Centrality](#Use-Case-Seven)
+* [use case one: Search person objects](#use-case-one)
+* [use case two: Expand person vertex](#use-case-two)
+* [use case three: Get detailed vertex information](#use-case-three)
+* [use case four: Import configuration](#use-case-four)
+* [use case five: Re-index all person objects](#use-case-five)
+* [use case six: Define Events for Time and Geospatial Searching](#use-case-six)
+* [use case seven: Calculate Network Centrality](#use-case-seven)
 
 #### <a name='use-case-one'>Use Case One</a>: Search Person Objects
 
