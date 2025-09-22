@@ -6,20 +6,22 @@ This differs from the SAS VIYA Search service, which provides free text and face
 
 ## API Request Examples
 
-* [Use case one: Search person objects](#Use-Case-One)
-* [Use case two: Expand person vertex](#Use-Case-Two)
-* [Use case three: Get detailed vertex information](#Use-Case-Three)
-* [Use case four: Import configuration](#Use-Case-Four)
-* [Use case five: Re-index all person objects](#Use-Case-Five)
+* [use case one: Search person objects](#use-case-one)
+* [use case two: Expand person vertex](#use-case-two)
+* [use case three: Get detailed vertex information](#use-case-three)
+* [use case four: Import configuration](#use-case-four)
+* [use case five: Re-index all person objects](#use-case-five)
+* [use case six: Define events for time and geospatial searching](#use-case-six)
+* [use case seven: Calculate network centrality](#use-case-seven)
 
-#### <a name='Use-Case-One'>Use Case One</a>: Search Person Objects
+#### <a name='use-case-one'>Use Case One</a>: Search Person Objects
 
-A user wishes to search for all person objects with the name John Smith and aged between 20 and 30.
+A user wants to search for all person objects with the name John Smith and aged between 20 and 30.
 
 POST to /searches:
 
 ```json {
-  // The query parameter specifies the search query
+  // The query parameter specifies the search query.
   "query": 
   {
     // The type parameter specifies the type of query. "text" is a free text query.
@@ -31,8 +33,8 @@ POST to /searches:
   },
   // The optional types parameter specifies which object types to include in the search.
   "types": ["person"],
-  // The optional filter parameter allows a filter to be applied in order to be limit which objects are included in the results.
-  // (This is separate from the query so that aggregations may be applied to the query results prior to filtering.)
+  // The optional filter parameter allows a filter to be applied in order to limit which objects are included in the results.
+  // (This is separate from the query so that aggregations can be applied to the query results prior to filtering.)
   "filter":
   {
     // This range filter includes objects only if their age field contains a value between 20 and 30 (inclusive of 20 and 30).
@@ -46,10 +48,10 @@ POST to /searches:
   // The keys allow each visualization to be identified in the response.
   "visualizations":
   {
-    // The first visualization. Any string can be used as the key so long as it is unique.
+    // The first visualization. Any string can be used as the key as long as it is unique.
     "1":
     {
-      // The Hits visualization returns a break down of the number of hits per object type.
+      // The Hits visualization returns a breakdown of the number of hits per object type.
       "type": "hits"
     }, 
     // The second visualization.
@@ -68,8 +70,9 @@ POST to /searches:
 
 Response:
 
-```json {
-  // The requested visualizations
+```json
+{
+  // The requested visualizations.
   "visualizations":
   {
     // The Hits visualization.
@@ -100,7 +103,7 @@ Response:
           "label": "Smith, John",
           // The number of attachments on the object.
           "attachmentsCount": 4,
-          // fields contains the list of summary fields (as defined via the /admin/config endpoints).
+          // fields contains the list of summary fields (as defined by the /admin/config endpoints).
           "fields": [
             {"name": "age", "type": "integer", "value": 25},
             {"name": "city", "type": "text", "value": "Glasgow"}
@@ -118,13 +121,14 @@ Response:
 }
 ```
 
-#### <a name='Use-Case-Two'>Use Case Two</a>: Expand Person Vertex
+#### <a name='use-case-two'>Use Case Two</a>: Expand Person Vertex
 
-A user wishes to traverse the relationships for a person vertex in the network visualization in order to find related people, reports and addresses.
+A user wishes to traverse the relationships for a person vertex in the Network visualization in order to find related people, reports and addresses.
 
 POST to /traversals:
 
-```json ​{
+```json
+{
     // The vertexTypes parameter specifies which object types to include in the resultant graph.
     "vertexTypes":
     [
@@ -139,9 +143,9 @@ POST to /traversals:
             {"type": "person", "id": "9g8ds"}
         ]
     },
-    // The user wishes to see vertices up to two levels away from the initial person vertex.
+    // The user wants to see vertices up to two levels away from the initial person vertex.
     "depth": 2,
-    // The extendedFormat parameter specifies whether or not to include additional information such as vertex degree and adjacent counts in the response.
+    // The extendedFormat parameter specifies whether to include additional information such as vertex degree and adjacent counts in the response.
     "extendedFormat": true,
     // The edgeFilter parameter allows a filter to be specified that limits which relationships are included in the resultant graph.
     "edgeFilter":
@@ -150,16 +154,16 @@ POST to /traversals:
         "field" : "description",
         "terms" :
         [
-          // specific relationship descriptions for person
+          // Specific relationship descriptions for person.
           "seen with", "friends with", "travelled with",
-          // specific relationship descriptions for report
+          // Specific relationship descriptions for report.
           "mentioned in",
-          // specific relationship descriptions for address
+          // Specific relationship descriptions for address.
           "owns", "rents", "lets"
         ]
     },
     // The vertexFilter parameter allows a filter to be specified that limits which objects are included in the graph.
-    // In this case, person, address, and report objects are to be included but in particular only persons aged between 20 and 40 (inclusively).
+    // In this case, person, address, and report objects are to be included for persons aged between 20 and 40 (inclusively).
     "vertexFilter":
     {
         "type": "or",
@@ -179,12 +183,13 @@ POST to /traversals:
 
 Response:
 
-```json {
+```json
+{
     "counts":
     {
-        // edges specifies the total number of edges aka relationships in the graph.
+        // edges specifies the total number of edges (relationships) in the graph.
         "edges": 5,
-        // vertices specifies the total number of vertices aka objects in the graph.
+        // vertices specifies the total number of vertices (objects) in the graph.
         "vertices": 6
     },
     // vertices lists the objects in the graph.
@@ -209,13 +214,14 @@ Response:
 }
 ```
 
-#### <a name='Use-Case-Three'>Use Case Three</a>: Get Detailed Vertex Information
+#### <a name='use-case-three'>Use Case Three</a>: Get Detailed Vertex Information
 
-A user wishes to retrieve detailed information about a single report object in the network visualization. This information includes the label, adjacent count, and degree count as well as a breakdown of adjacent by object type and degree by relationship type.
+A user wants to retrieve detailed information about a single report object in the Network visualization. This information includes the label, adjacent count, and degree count as well as a breakdown of adjacent by object type and degree by relationship type.
 
 GET on /vertices/report/337:
 
-```json {
+```json
+{
     // The identifier of the vertex.
     "id": "337",
     // The object type of the vertex.
@@ -254,7 +260,7 @@ GET on /vertices/report/337:
     "validFrom": "2001-08-16T05:00Z",
     // The datetime to which the report is valid.
     "validTo": "2014-10-25T17:00Z",
-    // The style of the object
+    // The style of the object.
     "style":
     {
         "iconName": "reportIcon1",
@@ -272,13 +278,14 @@ GET on /vertices/report/337:
 }
 ```
 
-#### <a name='Use-Case-Four'>Use Case Four</a>: Import Configuration
+#### <a name='use-case-four'>Use Case Four</a>: Import Configuration
 
-A user wishes to import configuration into a new system.
+A user wants to import a configuration into a new system.
 
 POST to /admin/config:
 
-```json {
+```json
+{
     "types":
     {
         // The configuration for the person entity.
@@ -381,19 +388,18 @@ POST to /admin/config:
 }
 ```
 
-#### <a name='Use-Case-Five'>Use Case Five</a>: Re-index All Person Objects
+#### <a name='use-case-five'>Use Case Five</a>: Re-index All Person Objects From the Source Database in the Background
 
-Re-index all person objects from the source database in the background (so as not to interrupt ongoing searches).
-
-A user wishes to delete all person objects in order to re-index them from the source database while not interrupting ongoing searches, which requires three separate calls:
+A user wants to delete all person objects in order to re-index them from the source database while not interrupting ongoing searches, which requires three separate calls:
 
 1. POST to /admin/indices/person?searchable=false (without a request body) to create a new unsearchable index for person objects.
 
-2. POST directly to the underlying search engine to index the person objects into the newly created index. Refer to the [Elasticsearch Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/6.5/docs-bulk.html) for details.
+2. POST directly to the underlying search engine to index the person objects into the newly created index. For more information, see [OpenSearch Bulk API](https://opensearch.org/docs/2.16/api-reference/document-apis/bulk/). 
 
 3. POST on /admin/operations with the following request body to make the new person index searchable and delete all older person indices.
 
-```json {
+```json
+{
     "operation": "makeIndexSearchable",
     "parameters":
     {
@@ -402,6 +408,294 @@ A user wishes to delete all person objects in order to re-index them from the so
 }
 ```
 
-While the above calls demonstrate how to re-index the data, the DataHub component is responsible for this and the [API](https://developer.sas.com/apis/vi/rest/VisualInvestigator/#sas-visual-investigator-data-hub-rest-api) should be used in practice.
+While the above calls demonstrate how to re-index the data, the DataHub component is responsible for this and the [API](https://developer.sas.com/rest-apis/svi-datahub) should be used in practice.
 
-version 3, last updated on 19 March, 2021
+#### <a name='use-case-six'>Use Case Six</a>: Define Events for Time and Geospatial Searching
+
+A user wants to view account objects on the Map and Time Line visualizations.
+
+To achieve this the user defines events in the account object type that capture the account opened date and account holder addresses:
+
+```json
+{
+    "category": "entity",
+    "fields":
+    {
+        "account_holder_forename": {"type": "text"},
+        "account_holder_surname": {"type": "text"},
+        "opendate": {"type": "date"},
+        "account_holder_address":
+        {
+            "type": "object",
+            "innerFields":
+            {
+                "city": {"type": "text"},
+                "state": {"type": "text"},
+                "lon": {"type": "double"},
+                "lat": {"type": "double"}
+            }
+        },
+        "account_holder_prev_addresses":
+        {
+            "type": "object",
+            "innerFields":
+            {
+                "city": {"type": "text"},
+                "state": {"type": "text"},
+                "date_from": {"type": "date"},
+                "date_to": {"type": "date"},
+                "location": {"type": "geoShape"}
+            }
+        }
+    },
+    "config":
+    {
+        "events":
+        [
+            {
+                "fields":
+                {
+                    "category": "Account Opened",
+                    "pointTimestamp": "{opendate}",
+                    "description": "opened by {account_holder_forename} {account_holder_surname}"
+                }
+            },
+            {
+                "root": "account_holder_address",
+                "fields":
+                {
+                    "category": "Primary Address",
+                    "description": "lives in {city}, {state}",
+                    "longitude": "lon",
+                    "latitude": "lat"
+                }
+            },
+            {
+                "root": "account_holder_prev_addresses",
+                "fields":
+                {
+                    "category": "Previous Address",
+                    "intervalStartTimestamp": "{date_from}",
+                    "intervalEndTimestamp": "{date_to}",
+                    "description": "lived in {city}, {state}",
+                    "geoJson": "location"
+                },
+                "requiredFields": ["state"]
+            }
+        ]
+    }
+}
+```
+
+Here is an example of an account object prior to the events being extracted:
+
+```json
+{
+    "account_holder_forename": "John",
+    "account_holder_surname": "Smith",
+    "opendate": "1999-12-31",
+    "account_holder_address":
+    {
+        "city": "Glasgow",
+        "state": "UK",
+        "lon": -11.111,
+        "lat": 22.222
+    },
+    "account_holder_prev_addresses":
+    [
+        {
+            "city": "New York",
+            "state": "NY",
+            "date_from": "2001-10-31",
+            "date_to": "2005-01-01",
+            "location": {
+                "type": "point",
+                "coordinates": [-33.333, 44.444]
+            }
+        },
+        {
+            "city": "Raleigh",
+            "date_from": "1995-07-04",
+            "date_to": "2001-10-31",
+            "location": {
+                "type": "point",
+                "coordinates": [-55.555, 66.666]
+            }
+        },
+        {
+            "city": "Los Angeles",
+            "state": "CA",
+            "date_from": "1987-10-31",
+            "date_to": "1995-07-04",
+            "location": {
+                "type": "point",
+                "coordinates": [-77.777, 88.888]
+            }
+        }
+    ]
+}
+```
+
+The first declared event category, "Account Opened", shows how to reference fields in the incoming object using the {} syntax. Note that the pointTimestamp field references an ISO formatted date field in the incoming object. Also note how the description field combines literal text with multiple {} references.
+
+The second declared event category, "Primary Address", uses the root declaration to point to a single sub-field such that a single event is extracted from the inner fields of "account_holder_address".
+
+The third declared event category, "Previous Address", uses the root declaration to point to an array of sub-fields such that an event is extracted for each sub-field in "account_holder_prev_addresses". This example also uses the require_fields declaration so that events are extracted only if the "state" field is present (not null) in the object. Because the second item in the array (with "city":"Raleigh") does not contain the "state" field, no event is created for this item. This does not represent an error; it is meant as a conditional way to create events. Processing continues on to the next item in the array (with "city":"Los Angeles") where it does successfully extract another event.
+
+Here is the account object with the extracted events (one "Account Opened" event, one "Primary Address" event, and two "Previous Address" events):
+
+```json
+{
+    "account_holder_forename": "John",
+    "account_holder_surname": "Smith",
+    "opendate": "1999-12-31",
+    "account_holder_address":
+    {
+        "city": "Glasgow",
+        "state": "UK",
+        "lon": -11.111,
+        "lat": 22.222
+    },
+    "account_holder_prev_addresses":
+    [
+        {
+            "city": "New York",
+            "state": "NY",
+            "date_from": "2001-10-31",
+            "date_to": "2005-01-01",
+            "location": {
+                "type": "point",
+                "coordinates": [-33.333, 44.444]
+            }
+        },
+        {
+            "city": "Raleigh",
+            "date_from": "1995-07-04",
+            "date_to": "2001-10-31",
+            "location": {
+                "type": "point",
+                "coordinates": [-55.555, 66.666]
+            }
+        },
+        {
+            "city": "Los Angeles",
+            "state": "CA",
+            "date_from": "1987-10-31",
+            "date_to": "1995-07-04",
+            "location": {
+                "type": "point",
+                "coordinates": [-77.777, 88.888]
+            }
+        }
+    ],
+    "_events": // SAND stores events in this system field
+    [
+        {
+            "category": "Account Opened",
+            "description": "opened by John Smith",
+            "pointTimestamp": "1999-12-31"
+        },
+        {
+            "category": "Primary Address",
+            "description": "lives in Glasgow, UK",
+            "location":
+            {
+                "shape":
+                {
+                    "type": "Point",
+                    "coordinates": [-11.111, 22.222]
+                },
+                "points": [-11.111, 22.222]
+            }
+        },
+        {
+            "category": "Previous Address",
+            "location":
+            {
+                "shape":
+                {
+                    "type": "Point",
+                    "coordinates": [-33.333, 44.444]
+                },
+                "points": [-33.333, 44.444]
+            },
+            "description":"lived in New York, NY",
+            "intervalEndTimestamp":"2005-01-01",
+            "intervalStartTimestamp":"2001-10-31"
+        },
+        {
+            "category": "Previous Address",
+            "location":
+            {
+                "shape":
+                {
+                    "type": "Point",
+                    "coordinates": [-77.777, 88.888]
+                },
+                "points": [-77.777, 88.888]
+            },
+            "description":"lived in Los Angeles, CA",
+            "intervalEndTimestamp":"1995-07-04",
+            "intervalStartTimestamp":"1987-10-31"
+        }
+    ]
+}
+```
+
+Note the event location field stores both the GeoJSON and longitude and latitude values as they are both needed for search purposes.
+
+#### <a name='use-case-seven'>Use Case Seven</a>: Calculate Network Centrality
+
+A user wants to see the centrality metrics for the objects on a network.
+
+POST to /centrality:
+
+```json
+{
+    "edges": [
+        {"id": "policyToClaim#1", "source": "policy#1", "target": "claim#1" },
+        {"id": "policyToClaim#2", "source": "policy#1", "target": "claim#2" }
+    ]
+}
+```
+
+Response:
+
+```json
+{
+    "name": "items",
+    "accept": "application/vnd.sas.network.analytics.centrality.metrics",
+    "items":
+    [
+        {
+            "id": "policy#1",
+            "degree": 2,
+            "eigen": 1,
+            "close": 1,
+            "between": 1,
+            "influence1": 0.6666666666666666,
+            "influence2": 0.6666666666666666
+        },
+        {
+            "id": "claim#1",
+            "degree": 1,
+            "eigen": 0.7071067811865479,
+            "close": 0.6666666666666666,
+            "between": 0,
+            "influence1": 0.3333333333333333,
+            "influence2": 0.6666666666666666
+        },
+        {
+            "id": "claim#2",
+            "degree": 1,
+            "eigen": 0.7071067811865479,
+            "close": 0.6666666666666666,
+            "between": 0,
+            "influence1": 0.3333333333333333,
+            "influence2": 0.6666666666666666
+        }
+    ]
+}
+```
+
+version 7, last updated on 18 September, 2025
