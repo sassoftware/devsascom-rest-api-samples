@@ -6,15 +6,15 @@ This differs from the SAS VIYA Search service, which provides free text and face
 
 ## API Request Examples
 
-* [Use case one: Search person objects](#Use-Case-One)
-* [Use case two: Expand person vertex](#Use-Case-Two)
-* [Use case three: Get detailed vertex information](#Use-Case-Three)
-* [Use case four: Import configuration](#Use-Case-Four)
-* [Use case five: Re-index all person objects](#Use-Case-Five)
-* [Use case six: Define Events for Time and Geospatial Searching](#Use-Case-Six)
-* [Use case seven: Calculate Network Centrality](#Use-Case-Seven)
+* [use case one: Search person objects](#Use-Case-One)
+* [use case two: Expand person vertex](#Use-Case-Two)
+* [use case three: Get detailed vertex information](#Use-Case-Three)
+* [use case four: Import configuration](#Use-Case-Four)
+* [use case five: Re-index all person objects](#Use-Case-Five)
+* [use case six: Define Events for Time and Geospatial Searching](#Use-Case-Six)
+* [use case seven: Calculate Network Centrality](#Use-Case-Seven)
 
-#### <a name='Use-Case-One'>Use Case One</a>: Search Person Objects
+#### <a name='use-case-one'>Use Case One</a>: Search Person Objects
 
 A user wants to search for all person objects with the name John Smith and aged between 20 and 30.
 
@@ -121,7 +121,7 @@ Response:
 }
 ```
 
-#### <a name='Use-Case-Two'>Use Case Two</a>: Expand Person Vertex
+#### <a name='use-case-two'>Use Case Two</a>: Expand Person Vertex
 
 A user wishes to traverse the relationships for a person vertex in the Network visualization in order to find related people, reports and addresses.
 
@@ -214,7 +214,7 @@ Response:
 }
 ```
 
-#### <a name='Use-Case-Three'>Use Case Three</a>: Get Detailed Vertex Information
+#### <a name='use-case-three'>Use Case Three</a>: Get Detailed Vertex Information
 
 A user wants to retrieve detailed information about a single report object in the Network visualization. This information includes the label, adjacent count, and degree count as well as a breakdown of adjacent by object type and degree by relationship type.
 
@@ -278,7 +278,7 @@ GET on /vertices/report/337:
 }
 ```
 
-#### <a name='Use-Case-Four'>Use Case Four</a>: Import Configuration
+#### <a name='use-case-four'>Use Case Four</a>: Import Configuration
 
 A user wants to import a configuration into a new system.
 
@@ -388,13 +388,13 @@ POST to /admin/config:
 }
 ```
 
-#### <a name='Use-Case-Five'>Use Case Five</a>: Re-index All Person Objects From the Source Database in the Background
+#### <a name='use-case-five'>Use Case Five</a>: Re-index All Person Objects From the Source Database in the Background
 
 A user wants to delete all person objects in order to re-index them from the source database while not interrupting ongoing searches, which requires three separate calls:
 
 1. POST to /admin/indices/person?searchable=false (without a request body) to create a new unsearchable index for person objects.
 
-2. POST directly to the underlying search engine to index the person objects into the newly created index. Refer to the [OpenSearch Bulk API](https://opensearch.org/docs/2.16/api-reference/document-apis/bulk/) for details.
+2. POST directly to the underlying search engine to index the person objects into the newly created index. For more information, see [OpenSearch Bulk API](https://opensearch.org/docs/2.16/api-reference/document-apis/bulk/) 
 
 3. POST on /admin/operations with the following request body to make the new person index searchable and delete all older person indices.
 
@@ -410,7 +410,7 @@ A user wants to delete all person objects in order to re-index them from the sou
 
 While the above calls demonstrate how to re-index the data, the DataHub component is responsible for this and the [API](https://developer.sas.com/rest-apis/svi-datahub) should be used in practice.
 
-#### <a name='Use-Case-Six'>Use Case Six</a>: Define Events for Time and Geospatial Searching
+#### <a name='use-case-six'>Use Case Six</a>: Define Events for Time and Geospatial Searching
 
 A user wants to view account objects on the Map and Time Line visualizations.
 
@@ -644,7 +644,7 @@ Here is the account object with the extracted events (one "Account Opened" event
 
 Note the event location field stores both the GeoJSON and longitude and latitude values as they are both needed for search purposes.
 
-#### <a name='Use-Case-Seven'>Use Case Seven</a>: Calculate Network Centrality
+#### <a name='use-case-seven'>Use Case Seven</a>: Calculate Network Centrality
 
 A user wants to see the centrality metrics for the objects on a network.
 
@@ -697,3 +697,5 @@ Response:
     ]
 }
 ```
+
+version 7, last updated on 18 September, 2025
