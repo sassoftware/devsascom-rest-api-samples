@@ -394,7 +394,7 @@ A user wants to delete all person objects in order to re-index them from the sou
 
 1. POST to /admin/indices/person?searchable=false (without a request body) to create a new unsearchable index for person objects.
 
-2. POST directly to the underlying search engine to index the person objects into the newly created index. For more information, see [OpenSearch Bulk API](https://opensearch.org/docs/2.16/api-reference/document-apis/bulk/) 
+2. POST directly to the underlying search engine to index the person objects into the newly created index. For more information, see [OpenSearch Bulk API](https://opensearch.org/docs/2.16/api-reference/document-apis/bulk/). 
 
 3. POST on /admin/operations with the following request body to make the new person index searchable and delete all older person indices.
 
