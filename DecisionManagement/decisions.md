@@ -34,6 +34,7 @@ This API enables users to build and retrieve decision-making processes that can 
 
 * [Get API resource links](#top-level-api)
 * [Create a decision](#create-decision)
+* [Create a decision with variable assignment](#create-decision-variable-assignment)
 * [Create a decision with treatments](#create-decision-treatments)
 * [Create a decision with branches](#create-decision-branches)
 * [Create a decision with links](#create-decision-links)
@@ -511,6 +512,64 @@ Here is an example of creating a decision.
         }
 }
 
+```
+<br>
+
+#### <a name='create-decision-variable-assignment'>Create a Decision with Variable Assignment</a>
+
+Here is an example of creating a decision that uses a variable assignment node.
+
+```json
+{
+    "POST": "/decisions/flows/",
+    "headers": {
+        "Accept": "application/vnd.sas.decision+json",
+        "Content-Type": "application/vnd.sas.decision+json"
+    },
+    "body": {
+        "name": "Variable Assignment Decision",
+        "signature": [
+            {
+                "name": "customerSegment",
+                "direction": "inOut",
+                "dataType": "string"
+            },
+            {
+                "name": "scoreBand",
+                "direction": "inOut",
+                "dataType": "integer"
+            },
+            {
+                "name": "eligibleFlag",
+                "direction": "inOut",
+                "dataType": "boolean"
+            }
+        ],
+        "flow": {
+            "steps": [
+                {
+                    "type": "application/vnd.sas.decision.step.variable.assignment",
+                    "name": "Assign decision variables",
+                    "description": "Assign values directly to decision variables.",
+                    "assignments": [
+                        {
+                            "variableName": "customerSegment",
+                            "value": "'GOLD'"
+                        },
+                        {
+                            "variableName": "scoreBand",
+                            "value": "720"
+                        },
+                        {
+                            "variableName": "eligibleFlag",
+                            "value": "true"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
 ```
 <br>
 
