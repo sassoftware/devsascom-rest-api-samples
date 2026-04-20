@@ -1,0 +1,71 @@
+<project name="python_connector" threads="1" pubsub="auto" heartbeat-interval="1" luaroot="@ESP_PROJECT_OUTPUT@/luaroot">
+  <description><![CDATA[This project contains a Source window with a Python connector that calls a REST API to obtain Star Wars data and publishes that data into the project.]]></description>
+  <metadata>
+    <meta id="layout">{"cq1":{"Source":{"x":-435,"y":-400}}}</meta>
+    <meta id="studioUploadedBy">fsduser</meta>
+    <meta id="studioUploaded">1715251658799</meta>
+    <meta id="studioModifiedBy">fsduser</meta>
+    <meta id="studioModified">1715251663688</meta>
+    <meta id="studioTags">Example</meta>
+  </metadata>
+  <contqueries>
+    <contquery name="cq1">
+      <windows>
+        <window-source index="pi_HASH" name="Source">
+          <description><![CDATA[This project contains a Source window with a Python connector that calls a REST API to obtain Star Wars data and publishes that data into the project.]]></description>
+          <schema>
+            <fields>
+              <field name="name" type="string" key="true"/>
+              <field name="description" type="string"/>
+            </fields>
+          </schema>
+          <connectors>
+            <connector class="python" name="pub">
+              <properties>
+                <property name="type"><![CDATA[pub]]></property>
+                <property name="interval"><![CDATA[3 seconds]]></property>
+                <property name="code"><![CDATA[import esp
+import json
+import urllib.request
+STARWARS_SPECIES_URL = 'https://starwars-databank-server.vercel.app/api/v1/species'  # Star Wars Species
+next_page = f"{STARWARS_SPECIES_URL}?page=1"
+
+def publish():
+    global next_page
+    esp.logMessage(logcontext="my_connector",
+                        message=f'Making API call to {next_page}',
+                        level="info")
+    response = urllib.request.urlopen(next_page)
+    response = response.read().decode('utf-8')
+    response = json.loads(response)
+    
+    events = []
+    # loop through species results
+    for result in response['data']:
+        keep_keys = ['name', 'description']
+        event = dict((k, result[k]) for k in keep_keys if k in result)
+        events.append(event)
+    
+    done = False
+
+    if response['info']['next'] is None:
+        done = True
+        esp.logMessage(logcontext="my_connector",
+                        message='Connector finished',
+                        level="info")
+    elif type(response['info']['next']) == str:
+        next_page = 'https://starwars-databank-server.vercel.app' + response['info']['next']
+
+    return {
+        "events": events,
+        "done": done
+    }
+    ]]></property>
+              </properties>
+            </connector>
+          </connectors>
+        </window-source>
+      </windows>
+    </contquery>
+  </contqueries>
+</project>

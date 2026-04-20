@@ -4,14 +4,15 @@ This is a preview repository containing examples showing the capabilities of SAS
 
 The APIs are group into the following categories:
 
-| API Category | Description |
-| ------ | ------ |
-| Visualization | Provide access to reports and report images |
-| Compute | Act on SAS compute and analytic servers, including Cloud Analytic Services (CAS) | 
-| Text Analytics | Provide analysis and categorization of text documents | 
-| Data Management | Enable data manipulation and data quality operations on data sources | 
-| Decision Management | Provide access to machine scoring and business rules | 
-| Core Services | Provide operations for shared resources such as files and folders | 
+| API Category        | Description                                                                       |
+|---------------------|-----------------------------------------------------------------------------------|
+| Visualization       | Provides access to reports and report images                                      |
+| Compute             | Acts on SAS compute and analytic servers, including Cloud Analytic Services (CAS) | 
+| Text Analytics      | Provides analysis and categorization of text documents                            | 
+| Data Management     | Enables data manipulation and data quality operations on data sources             | 
+| Decision Management | Provides access to machine scoring and business rules                             | 
+| Core Services       | Provides operations for shared resources such as files and folders                ||
+| IoT                 | Provides operations for IoT analytics and Event Stream Processing                 ||
 
 Within each grouping will be a folder for SAS and User contributions (we encourage external participation).
 
