@@ -15,15 +15,12 @@
 						"exec": [
 							"if(pm.response.to.have.status(200)){",
 							"    console.log(\"0. Authenticated successfully.\");",
-							"    var jsonData = JSON.parse(responseBody);",
-							"    postman.setEnvironmentVariable(\"bearerToken\", jsonData.access_token);",
-							"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"bearerToken\", jsonData.access_token);",
 							"}",
 							" else {",
 							"    console.log(\"0. Failed with status: \" + pm.response.status);",
-							"}",
-							"",
-							""
+							"}"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -161,8 +158,7 @@
 							"    console.log(\"2. Successfully created term.\");",
 							"    var jsonData = pm.response.json();",
 							"    pm.environment.set(\"parentId\", jsonData.id);",
-							"    var responseHeader = JSON.stringify(pm.response.headers);",
-							"    pm.environment.set(\"parentEtag\", JSON.parse(responseHeader)[6].value);",
+							"    pm.environment.set(\"parentEtag\", pm.response.headers.get(\"etag\"));",
 							"} ",
 							"else {",
 							"    console.log(\"2. Failed with status: \" + pm.response.status);",
@@ -244,7 +240,7 @@
 							"    console.log(\"3. Successfully created term.\");",
 							"    var jsonData = pm.response.json();",
 							"    pm.environment.set(\"childTermId\", jsonData.id);",
-							"    var responseHeader = JSON.stringify(pm.response.headers);",
+							"    pm.environment.set(\"childEtag\", pm.response.headers.get(\"etag\"));",
 							"} ",
 							"else {",
 							"    console.log(\"3. Failed with status: \" + pm.response.status);",
@@ -314,7 +310,6 @@
 						"exec": [
 							"if(pm.response.to.have.status(200)){\r",
 							"    console.log(\"4. Successfully retrieved term.\");\r",
-							"    var jsonData = JSON.parse(responseBody);\r",
 							"} else {\r",
 							"    console.log(\"4. Failed with status: \" + pm.response.status);\r",
 							"}"
@@ -376,7 +371,6 @@
 						"exec": [
 							"if(pm.response.to.have.status(200)){",
 							"    console.log(\"5. Successfully retrieved term.\");",
-							"    var jsonData = JSON.parse(responseBody);",
 							"} else {",
 							"    console.log(\"5. Failed with status: \" + pm.response.status);",
 							"}"
@@ -441,7 +435,6 @@
 						"exec": [
 							"if(pm.response.to.have.status(200)){\r",
 							"    console.log(\"6. Successfully updated term.\");\r",
-							"    var jsonData = JSON.parse(responseBody);\r",
 							"} else {\r",
 							"    console.log(\"6. Failed with status: \" + pm.response.status);\r",
 							"}"
@@ -509,8 +502,6 @@
 						"exec": [
 							"if(pm.response.code === 200) {",
 							"    console.log(\"7. Successfully patched term.\");",
-							"    var jsonData = pm.response.json();",
-							"    pm.environment.set('grandchildEtag', pm.response.headers.get('Etag'));",
 							"} else {",
 							"    console.log(\"7. Failed with status: \" + pm.response.status);",
 							"}"
@@ -548,13 +539,13 @@
 					},
 					{
 						"key": "If-Match",
-						"value": "{{parentEtag}}",
+						"value": "{{childEtag}}",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n    {\n        \"op\": \"add\",\n        \"path\": \"/parentId\",\n        \"value\": \"\"\n    }\n]",
+					"raw": "[\n    {\n        \"op\": \"remove\",\n        \"path\": \"/parentId\"\n    }\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -584,7 +575,6 @@
 						"exec": [
 							"if(pm.response.to.have.status(200)){\r",
 							"    console.log(\"8. Successfully retrieved term.\");\r",
-							"    var jsonData = JSON.parse(responseBody);\r",
 							"} else {\r",
 							"    console.log(\"8. Failed with status: \" + pm.response.status);\r",
 							"}"
@@ -650,31 +640,11 @@
 							"if(pm.response.to.have.status(201)){",
 							"    console.log(\"9a. Successfully created instance.\");",
 							"    var jsonData = pm.response.json();",
-							"    const rs = pm.response.json();",
-							"    pm.environment.set(\"tableId\", rs.id);",
+							"    pm.environment.set(\"tableId\", jsonData.id);",
 							"}",
 							"else {",
 							"    console.log(\"9a. Failed with status: \" + pm.response.status);",
 							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"function randomString(length=1) {",
-							"    let randomString = \"\";",
-							"    for (let i = 0; i < length; i++){",
-							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
-							"    }",
-							"    return randomString;",
-							"}",
-							"",
-							"STRING_LEN = 4",
-							"pm.variables.set('randomString', randomString(STRING_LEN));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -736,31 +706,11 @@
 							"if(pm.response.to.have.status(201)){",
 							"    console.log(\"9b. Successfully created instance.\");",
 							"    var jsonData = pm.response.json();",
-							"    const rs = pm.response.json();",
-							"    pm.environment.set(\"columnId\", rs.id);",
+							"    pm.environment.set(\"columnId\", jsonData.id);",
 							"}",
 							"else {",
 							"    console.log(\"9b. Failed with status: \" + pm.response.status);",
 							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"function randomString(length=1) {",
-							"    let randomString = \"\";",
-							"    for (let i = 0; i < length; i++){",
-							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
-							"    }",
-							"    return randomString;",
-							"}",
-							"",
-							"STRING_LEN = 4",
-							"pm.variables.set('randomString', randomString(STRING_LEN));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -822,31 +772,11 @@
 							"if(pm.response.to.have.status(201)){",
 							"    console.log(\"9c. Successfully created relationship.\");",
 							"    var jsonData = pm.response.json();",
-							"    const rs = pm.response.json();",
-							"    pm.environment.set(\"tabColId\", rs.id);",
+							"    pm.environment.set(\"tabColId\", jsonData.id);",
 							"}",
 							"else {",
 							"    console.log(\"9c. Failed with status: \" + pm.response.status);",
 							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"function randomString(length=1) {",
-							"    let randomString = \"\";",
-							"    for (let i = 0; i < length; i++){",
-							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
-							"    }",
-							"    return randomString;",
-							"}",
-							"",
-							"STRING_LEN = 4",
-							"pm.variables.set('randomString', randomString(STRING_LEN));"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -898,19 +828,17 @@
 			"response": []
 		},
 		{
-			"name": "9d. Create termAsset relationship",
+			"name": "9d. Retrieve term entity",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"if(pm.response.to.have.status(201)){",
-							"    console.log(\"9d. Successfully created relationship.\");",
+							"if(pm.response.to.have.status(200)){",
+							"    console.log(\"9d. Successfully retrieved term entity.\");",
 							"    var jsonData = pm.response.json();",
-							"    const rs = pm.response.json();",
-							"    pm.environment.set(\"termAssetId\", rs.id);",
-							"}",
-							"else {",
+							"    pm.environment.set(\"termEntityId\", jsonData.items[0].id);",
+							"} else {",
 							"    console.log(\"9d. Failed with status: \" + pm.response.status);",
 							"}"
 						],
@@ -922,16 +850,70 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"function randomString(length=1) {",
-							"    let randomString = \"\";",
-							"    for (let i = 0; i < length; i++){",
-							"        randomString += pm.variables.replaceIn(\"{{$randomAlphaNumeric}}\");",
-							"    }",
-							"    return randomString;",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.sas.collection+json"
+					}
+				],
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances?filter=eq(resourceId,'/glossary/terms/{{parentId}}')",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "eq(resourceId,'/glossary/terms/{{parentId}}')"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9e. Create glossaryTermAsset relationship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(201)){",
+							"    console.log(\"9e. Successfully created relationship.\");",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"termAssetId\", jsonData.id);",
 							"}",
-							"",
-							"STRING_LEN = 4",
-							"pm.variables.set('randomString', randomString(STRING_LEN));"
+							"else {",
+							"    console.log(\"9e. Failed with status: \" + pm.response.status);",
+							"}"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -962,7 +944,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"{{prefix}} Term And Column Relationship\",\r\n    \"label\": \"Term And Column Relationship\",\r\n    \"description\": \"Term And Column Relationship\",\r\n    \"instanceType\": \"relationship\",\r\n    \"endpoint1Id\": \"{{parentId}}\",\r\n    \"endpoint2Id\": \"{{columnId}}\",\r\n    \"definition\": \"termAsset\"\r\n}",
+					"raw": "{\r\n    \"name\": \"{{prefix}} Term And Asset Relationship\",\r\n    \"label\": \"Term And Asset Relationship\",\r\n    \"description\": \"Term And Asset Relationship\",\r\n    \"instanceType\": \"relationship\",\r\n    \"endpoint1Id\": \"{{termEntityId}}\",\r\n    \"endpoint2Id\": \"{{columnId}}\",\r\n    \"definition\": \"glossaryTermAsset\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -983,71 +965,6 @@
 			"response": []
 		},
 		{
-			"name": "9e. Get relationship instance",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"if(pm.response.to.have.status(200)){",
-							"    console.log(\"9e. Successfully retrieved term.\");",
-							"    var jsonData = JSON.parse(responseBody);",
-							"    const rs = pm.response.json();",
-							"    pm.environment.set(\"relInstId\", rs.id);",
-							"} else {",
-							"    console.log(\"9e. Failed with status: \" + pm.response.status);",
-							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{bearerToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.sas.metadata.instance.relationship+json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{sasserver}}/catalog/instances/{{termAssetId}}",
-					"host": [
-						"{{sasserver}}"
-					],
-					"path": [
-						"catalog",
-						"instances",
-						"{{termAssetId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "10. Search for term",
 			"event": [
 				{
@@ -1056,7 +973,6 @@
 						"exec": [
 							"if(pm.response.to.have.status(200)){\r",
 							"    console.log(\"10. Successfully retrieved asset.\");\r",
-							"    var jsonData = JSON.parse(responseBody);\r",
 							"} else {\r",
 							"    console.log(\"10. Failed with status: \" + pm.response.status);\r",
 							"}"
@@ -1124,39 +1040,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"",
-							"    var jsonData = JSON.parse(responseBody);",
-							"    if (jsonData.count > 0) {",
-							"    pm.environment.set(\"instId\", jsonData.items[0].id);",
-							"    pm.environment.set(\"instUri\", jsonData.items[0].resourceId);",
-							"    pm.environment.set(\"defnId\", jsonData.items[0].definitionId);",
-							"    }",
-							"",
-							"    if (pm.response.to.have.status(200)) {",
-							"        // Retrieve the response JSON",
-							"        var jsonData = pm.response.json();",
-							"",
-							"        // Create an empty array to store the ids",
-							"        var idList = [];",
-							"",
-							"        // Check if there are any items in the response",
-							"        if (jsonData.count > 0) {",
-							"            // Iterate through each item and extract the id",
-							"            jsonData.items.forEach(function(item) {",
-							"                idList.push('\"' + item.id + '\"');",
-							"            });",
-							"        }",
-							"",
-							"        // Set the idList as an environment variable",
-							"        pm.environment.set(\"idList\", idList);",
-							"    }",
-							"});",
-							"",
-							"if(pm.response.to.have.status(200)){",
-							"    console.log(\"11. Successfully retrieved asset.\");",
-							"    var jsonData = JSON.parse(responseBody);",
+							"if (pm.response.to.have.status(200)) {",
+							"    console.log(\"11. Successfully retrieved terms.\");",
 							"} else {",
 							"    console.log(\"11. Failed with status: \" + pm.response.status);",
 							"}"
@@ -1185,7 +1070,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{sasserver}}/catalog/instances?limit=10&filter=contains(name, \"Term And Column Relationship\")",
+					"raw": "{{sasserver}}/catalog/instances?limit=10&filter=contains(name, \"Term And Asset Relationship\")",
 					"host": [
 						"{{sasserver}}"
 					],
@@ -1200,7 +1085,7 @@
 						},
 						{
 							"key": "filter",
-							"value": "contains(name, \"Term And Column Relationship\")"
+							"value": "contains(name, \"Term And Asset Relationship\")"
 						}
 					]
 				}
@@ -1219,29 +1104,6 @@
 							"} else {",
 							"    console.log(\"12. Failed with status: \" + pm.response.status);",
 							"}"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"// This will make a GET request before deleting the instance, allowing the body information to be found in the console.",
-							"pm.sendRequest({",
-							"    url:  pm.environment.replaceIn(\"{{saserver}}/catalog/instances/{{instId}}\"), ",
-							"    method: 'GET',",
-							"    header: {",
-							"        'Authorization': pm.environment.replaceIn(\"Bearer {{bearerToken}}\"),",
-							"        'Accept': pm.environment.replaceIn(\"{{INSTANCE_RELATIONSHIP_JSON}}\")",
-							"    }",
-							"    }, function (err, res) {",
-							"    if (err) {",
-							"        console.log(err)",
-							"    }",
-							"    console.log(res)",
-							"});"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -1276,14 +1138,14 @@
 			"response": []
 		},
 		{
-			"name": "13. Delete term",
+			"name": "13. Delete child term",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
 							"if(pm.response.to.have.status(204)){\r",
-							"    console.log(\"13. Successfully deleted term.\");\r",
+							"    console.log(\"13. Successfully deleted child term.\");\r",
 							"} else {\r",
 							"    console.log(\"13. Failed with status: \" + pm.response.status);\r",
 							"}"
@@ -1326,45 +1188,17 @@
 			"response": []
 		},
 		{
-			"name": "14. Get and delete instances",
+			"name": "14. Delete parent term",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"let host=pm.environment.get(\"sasserver\");",
-							"let token=pm.environment.get(\"access_token\");",
-							"let items = pm.response.json().items;",
-							"",
-							"function deleteTerms(index) {",
-							"    if (index >= items.length) {",
-							"        console.log('14. All terms have been processed.');",
-							"        return;",
-							"    }",
-							"",
-							"    aTerm=items[index]",
-							"    ",
-							"    delLink = aTerm.links.find(link=>link.rel===\"delete\").href;",
-							"",
-							"    delRequest = {",
-							"        url: host + delLink,",
-							"        method: 'DELETE',",
-							"        header: 'Authorization: bearer ' + token",
-							"    };",
-							"",
-							"    pm.sendRequest(delRequest, function (err, response) {",
-							"        if (err) {",
-							"            console.error('14. Error deleting term:', err);",
-							"        } else {",
-							"            console.log('14. Deleted term with id:', aTerm.id);",
-							"        }",
-							"        deleteTerms(index + 1); // Proceed to the next item after the current one is processed",
-							"    });",
-							"}",
-							"",
-							"// Start the deletion process from the first item",
-							"deleteTerms(0);",
-							""
+							"if(pm.response.to.have.status(204)){\r",
+							"    console.log(\"14. Successfully deleted parent term.\");\r",
+							"} else {\r",
+							"    console.log(\"14. Failed with status: \" + pm.response.status);\r",
+							"}"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -1387,40 +1221,17 @@
 						}
 					]
 				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.sas.collection+json"
-					},
-					{
-						"key": "Accept-Item",
-						"value": "application/vnd.sas.glossary.term+json",
-						"disabled": true
-					}
-				],
+				"method": "DELETE",
+				"header": [],
 				"url": {
-					"raw": "{{sasserver}}/catalog/instances?filter=startsWith(name,'{{prefix}}')&limit=20&sortBy=creationTimeStamp:descending",
+					"raw": "{{sasserver}}/glossary/terms/{{parentId}}",
 					"host": [
 						"{{sasserver}}"
 					],
 					"path": [
-						"catalog",
-						"instances"
-					],
-					"query": [
-						{
-							"key": "filter",
-							"value": "startsWith(name,'{{prefix}}')"
-						},
-						{
-							"key": "limit",
-							"value": "20"
-						},
-						{
-							"key": "sortBy",
-							"value": "creationTimeStamp:descending"
-						}
+						"glossary",
+						"terms",
+						"{{parentId}}"
 					]
 				}
 			},
@@ -1476,6 +1287,56 @@
 						"glossary",
 						"termTypes",
 						"{{termTypeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "16. Delete table and related instances",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.to.have.status(204)){\r",
+							"    console.log(\"16. Successfully deleted table and related instances.\");\r",
+							"} else {\r",
+							"    console.log(\"16. Failed with status: \" + pm.response.status);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{sasserver}}/catalog/instances/{{tableId}}",
+					"host": [
+						"{{sasserver}}"
+					],
+					"path": [
+						"catalog",
+						"instances",
+						"{{tableId}}"
 					]
 				}
 			},
